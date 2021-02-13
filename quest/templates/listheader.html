@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<script language="javascript">
+
+function Enroll(){
+    var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=750, height=580, left=50, top=10';
+    window.open("/list/enroll", "수리제작의뢰 신청서", settings);
+}
+</script>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+mainc{
+    	font-family:  'Do Hyeon', sans-serif;
+        text-align:center;
+        font-size:28px;
+        font-weight:bold;
+        padding-top:0.7%;
+    }
+mainheader{
+        height:56px;
+        background:white;
+        font-weight:bold;
+        display:flex;
+        justify-content:space-between;
+        z-index:10;
+        }
+mainheader2{
+        height:2px;
+        background:#EEEEEE;
+        display:flex;
+        justify-content:space-between;
+        position:fixed;
+        left:0;
+        right:0;
+        margin-left:11%;
+        margin-right:0.5%;
+}
+.myButton {
+    border:0px;
+	font-family:  'Hammersmith One', sans-serif;
+	font-size:16px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+}
+navi1{
+    padding-top:2.0%;
+
+    }
+navi2{
+    padding-top:2.0%;
+
+    }
+search{
+    padding-top:1.5%;
+    padding-right:2%;
+}
+.searchtext{
+    font-family:  'Hammersmith One', sans-serif;
+	font-size:15px;
+    }
+.selecttext{
+    font-family:  'Hammersmith One', sans-serif;
+	font-size:15px;
+    }
+.myButton2 {
+    border:0px;
+	font-family:  'Hammersmith One', sans-serif;
+	font-size:14px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+}
+    </style>
+</head>
+<body2>
+
+<mainheader>
+            <mainc>&nbsp;&nbsp;수리제작의뢰서</mainc>
+    <navi1>
+        <form>
+            <input type="hidden" value={{idd2}} id="idd2">
+            <input type="hidden" value={{username}} id="username">
+            <input type="hidden" value={{userteam}} id="userteam">
+            <input type="button"  class="myButton" value="Require" onclick="Enroll();">
+            </form>
+    </navi1>
+    <navi2>
+        <form action="{%url 'list'%}" method="post">
+                 {% csrf_token %}
+            <input type="hidden" value={{idd2}} name="idd2" >
+            <input type="submit"  class="myButton" value="Main Page">
+            </form>
+    </navi2>
+
+    <search>
+        <form action="search" method="post">
+            {% csrf_token %}
+            <select class="selecttext" name="selecttext">&nbsp;
+            <option value="job">Job No.</option>
+            <option value="status">Status</option>
+            <option value="team">Team</option>
+            <option value="rep">신청자</option></select>
+            <input type="search"  class="searchtext" placeholder="검색어를 입력하세요" name="searchtext">
+            <input type="hidden" value={{idd2}} name="idd2" >
+            <input type="submit"  class="myButton2" value="Search"></form>
+    </search>
+</mainheader>
+
+<mainheader2>
+</mainheader2>
+
+</body2>
+</html>

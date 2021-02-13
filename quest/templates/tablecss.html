@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+main{
+        padding-top:60px;
+        padding-bottom:20px;
+        }
+#tablehead{
+    	font-family: arial;
+        text-align:center;
+        font-size:20px;
+        font-weight:bold;
+        background-color:#FFEEEE;
+        border:1px solid white;
+        position:fixed;
+        width:60%;
+}
+
+.button {
+	background-color:transparent;
+	border-radius:10px;
+	border:2px solid #5777d9;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:arial;
+	font-size:14px;
+	padding:1px 5px;
+	text-decoration:none;
+}
+.button:hover {
+	background-color:transparent;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+tr:nth-child(even){
+    background-color:#EEEEEE;
+}
+
+f#msg{
+      fond-size:12px;
+      color:red;
+	  font-family:arial;
+	  font-size:15px;
+	  font-weight:3px;
+}
+
+.container{
+            display: grid;
+            grid-template-columns: 10% 50% 1fr;
+            grid-template-rows:5% 1% 1fr;
+            height: 100%;
+            grid-gap:10px;
+            grid-template-areas:
+            "sidemenubar listheader listheader"
+            "sidemenubar tablehead popup"
+            "sidemenubar side popup";
+      }
+#tablehead{
+      grid-area:tablehead;
+      position:fixed; left:0%;
+      font-size:16px;
+      margin-left:10.8%;
+      margin-top:3.4%;
+      width:49.5%;
+          }
+#side{
+    	font-family: arial;
+        font-size:14px;
+        grid-area:side;
+        position:absolute;top:20%; left:11%; right:40%;
+        overflow:auto;
+        height:75%
+}
+#popup{
+        width:39%;
+        margin-left:60%;
+        border-spacing:0;
+        border: 10px red;
+        grid-area:popup;
+        position:fixed;top:16%;
+    }
+#sidemenubar{
+    grid-area:sidemenubar;
+    position:fixed;
+    z-index:14;
+    width:9.5%;
+}
+#listheader{
+    grid-area:listheader;
+    position:fixed;
+    margin-left:10%;
+    width:90%;
+    z-index:10;
+    margin-top:0%;
+    clear:both;
+}
+.radius1 {
+        border: 5px solid red;
+        border-radius: 5px;
+    }
+body{overflow:hidden;}
+maintext{
+    	font-family:'Do Hyeon', sans-serif;
+        text-align:center;
+        font-size:35px;
+        font-weight:bold;
+        padding-left:2%;
+}
+recieve{
+    	font-family:arial;
+        text-align:center;
+        font-size:20px;
+}
+a{
+    	font-family:arial;
+        text-align:center;
+        font-size:20px;
+        font-weight:bold;
+}
+alarm{
+       font-family:arial;
+        text-align:center;
+        font-size:23px;
+        font-weight:bold;
+}
+</style>
+
+
+</head>
+<body>
+
+</body>
+</html>

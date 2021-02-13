@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+     <meta charset="UTF-8">
+    <script language="javascript">
+    function changerm(){
+        alert("Room 정보가 변경되었습니다")
+        }
+    </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+</style>
+</head>
+<body>
+<header>
+    {% include "adminhead.html" %}
+    <c align="center"> &nbsp;&nbsp;&nbsp;Room Name & Room No. Tap</c>
+</header>
+
+<main>
+ <form>
+<div class="container">
+<div id="tablehaed">
+ <table>
+        <thead>
+        <tr>
+            <td width="100" align="center"><B>No.</B></td>
+            <td width="280" align="right"><B>Room Name &emsp;||</B></td>
+            <td width="300" align="left"><B>&nbsp;&nbsp;New Room Name</B></td>
+            <td width="300" align="right"><B>Room No.&emsp;||</B></td>
+            <td width="300" align="left"><B>&nbsp;&nbsp;&nbsp;&nbsp;New Room No.</B></td>
+            <td width="400" align="center"><B>Change</B></td>
+        </tr>
+        </thead>
+ </table>
+ </div>
+     <div  id="tabledesc">
+     <table>
+        <tbody>
+        {% for rm in room %}
+        <tr>
+            <form action="changerm" method="post">
+             {% csrf_token %}
+            <td width="100" align="center">{{rm.no}}</td>
+            <td width="300" align="right">{{rm.roomname}}&emsp;&emsp;||</td>
+            <td width="300" align="left"><input type="text" name="newname"></td>
+            <td width="300" align="right">{{rm.roomno}}&emsp;&emsp;||</td>
+            <td width="300" align="left"><input type="text" name="newno"></td>
+            <td width="400" align="center">
+                <input type="hidden" value={{rm.roomname}} name="oldname">
+                <input type="hidden" value={{rm.roomno}} name="oldno">
+                <input type = "submit"  value="수정" onclick="changerm();"></td>
+
+        </form>
+        </tr>
+        {% endfor %}
+        </tbody>
+         </table>
+     </div>
+</div>
+</form>
+</main>
+<footer>
+        {% include "adminfooter.html" %}
+</footer>
+</body>
+</html>

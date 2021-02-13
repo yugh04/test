@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <style>
+#sidemenubar{
+dislapy:inline-block;
+    grid-area:sidemenu;
+    height:100%;
+}
+#sideline{
+background:#EEEEEE;
+height:900px;
+grid-area:sideline;
+top:0;
+bottom:0;
+justify-content:space-between;
+dislapy:inline-block;
+}
+.container2{
+            display: grid;
+            height: 100%;
+            grid-template-columns: 98.5% 1.5%;
+            grid-gap:10px;
+            grid-template-areas:
+            "sidemenubar sideline";
+      }
+comment{
+background:#EEEEEE;
+left:0;
+right:0;
+justify-content:space-between;
+position:fixed; right:89.5%;
+height:5%;
+text-align:center;
+font-weight:bold;
+padding-top:1%;
+}
+.f{
+    font-family:'Do Hyeon', sans-serif;
+    font-size:20px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	border:0px;
+}
+</style>
+<script language="javascript">
+     function Info(){
+        window.open("/media/FLOWCHART.pdf","DM Bio Register", "width=880, height=1000, left=50, top=10, location=no, resizable=no");
+        }
+</script>
+</head>
+<body3>
+<div class="container2">
+
+<div id="sidemenubar">
+<comment>Go To Applications</comment><br><br><br><br>
+    <form action="{%url 'list'%}" method="post">
+        {% csrf_token %}
+        <i class="xi-wrench">
+        <input type="hidden" value={{idd2}} name="idd2">
+        <input type="hidden" value={{username}} name="username">
+        <input type="hidden" value={{userteam}} name="userteam">
+        <input type="submit"value="수리제작의뢰서" class="f"></i></form><br>
+
+    <form action="{%url 'supply'%}" method="post">
+        {% csrf_token %}
+        <i class="xi-package">
+        <input type="hidden" value={{idd2}} name="idd2">
+        <input type="hidden" value={{username}} name="username">
+        <input type="hidden" value={{userteam}} name="userteam">
+        <input type="submit"value="사무용품신청" class="f"></i></form><br>
+    <form>
+        <i class="xi-lightbulb">
+        <input type="button"value="알 림" class="f" onclick="Info();"></i></form><br>
+</div>
+<div id="sideline">
+<mainline>
+</mainline>
+</div>
+</div>
+</body3>
+</html>

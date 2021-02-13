@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <script language="javascript">
+    function changeteam(){
+        alert("Team Manager 정보가 변경되었습니다")
+    </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+</style>
+
+</head>
+<header>
+        {% include "adminhead.html" %}
+        <c align="center"> &nbsp;&nbsp;&nbsp;Team Manager Information Change</c>
+</header>
+<main>
+
+<form>
+<div class="container">
+<div id="tablehaed">
+ <table>
+        <thead>
+        <tr>
+            <td width="100" align="center"><B>No.</B></td>
+            <td width="200" align="right"><B>Team Name&nbsp;||&nbsp;&nbsp;&nbsp;</B></td>
+            <td width="200" align="left"><B>&nbsp;&nbsp;&nbsp;New Team</B></td>
+            <td width="200" align="right"><B>Manager Name&nbsp;||&nbsp;&nbsp;&nbsp;</B></td>
+            <td width="200" align="left"><B>&nbsp;&nbsp;&nbsp;New Name</B></td>
+            <td width="200" align="right"><B>Manager Id&nbsp;||&nbsp;&nbsp;</B></td>
+            <td width="200" align="left"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;New Id</B></td>
+            <td width="400" align="center"><B>Change</B></td>
+        </tr>
+        </thead>
+ </table>
+ </div>
+     <div  id="tabledesc">
+     <table>
+        <tbody>
+        <tr>
+        {% for tm in teammanager %}
+        <form action="changeteam" method="post">
+             {% csrf_token %}
+            <td width="100" align="center">{{tm.no}}</td>
+            <td width="200"  align="right">{{tm.teamname}}&nbsp;||</td>
+            <td width="200" align="left"><input type="text" name="newteamname"></td>
+            <td width="200"  align="right">{{tm.name}}&nbsp;|| </td>
+            <td width="200" align="left"><input type="text" name="newname"></td>
+            <td width="200"  align="right">{{tm.id}}&nbsp;|| </td>
+            <td width="200" align="left"><input type="text" name="newid"></td>
+            <td width="400"  align="center">
+                <input type="hidden" value={{tm.id}} name="oldid">
+                <input type = "submit"  value="수정" onclick="changeteam();"></td>
+        </form>
+        </tr>
+        {% endfor %}
+        </tbody>
+     </table>
+     </div>
+</div>
+</form>
+</main>
+
+<footer>
+        {% include "adminfooter.html" %}
+</footer>
+</body>
+</html>

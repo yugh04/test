@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Title</title>
+</head>
+<script language="javascript">
+function Close(){
+    self.close();
+    }
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+
+b {
+	font-family:Verdana;
+	font-size:26px;
+	font-weight:2px;
+
+}
+.textcss {
+	background-color:white;
+	border-radius:4px;
+	border:2px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#080808;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	padding:5px 10px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b8a3c;
+}
+.myButton {
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #85de59 5%, #67bf3b 100%);
+	background-color:#85de59;
+	border-radius:4px;
+	border:2px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#080808;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	padding:5px 120px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b8a3c;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #67bf3b 5%, #85de59 100%);
+	background-color:#67bf3b;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+#mainlogin{
+padding-left:32%;
+padding-top:5%;
+}
+footer{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:30px;
+        background:burlywood;
+        font-weight:bold;
+        justify-content:space-between;
+        }
+i{
+padding-left:87%;
+}
+ .btn3 {
+    font-family:'Hammersmith One', sans-serif;
+    font-size:20px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	border:0px;
+	font-color:black;
+}
+#location{
+    font-family:'Hammersmith One', sans-serif;
+    padding-left:32.5%;
+    color:red;
+    font-size:20px;
+    font-weight:bold;
+}
+</style>
+
+<body>
+<div id="mainlogin">
+<b>&nbsp;Information Change</b><br>&nbsp;<br>
+<form action="changeinfocomp" method="post">
+{% csrf_token %}
+<input id="id" name="idd2" class="textcss" placeholder="Id를 입력하세요" required><br><br>
+<input id="pw" name="pww" type="password" class="textcss" placeholder="Password를 입력하세요" required><br><br>
+<input type="submit" class="myButton" value="Log In">
+</form>
+</div>
+
+<div id="location">
+{%if messages %}
+{%for message in messages%}
+<br>{{message}}
+{%endfor%}
+{%endif%}
+</div>
+
+<footer>
+    <i class="xi-close-circle"><input type="button" class="btn3" value="Close" onclick="Close();"></i>
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script language="javascript">
+      window.onload = function(){
+       username = opener.document.getElementById("username").value;
+       document.idd.username.value = username;
+       document.idd.action="mysqltable";
+       document.idd.submit();
+       }
+    </script>
+</head>
+<body>
+
+<form action="mysqltable" method="get" name="idd" id="idd">
+    <input type="hidden" name="username">
+</form>
+{% for worktable in worktables %}
+            <td width="12%" align="center">{{worktable.job}}</td>
+ {% endfor %}
+</body>
+</html>

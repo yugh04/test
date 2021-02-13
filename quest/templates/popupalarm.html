@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>popup</title>
+    <script language="javascript">
+      function Approvalbtn() {
+        let status = document.getElementsByName('status3')[0].value;
+        if (status == '신청'){
+            alert("수리제작의뢰서 신청메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+
+      function Acceptbtn() {
+        let status = document.getElementsByName('status1')[0].value;
+        if (status == '신청완료'){
+            alert("접수메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+#js -> html ->views 즁요
+      function Rejectbtn() {
+        var reason = window.prompt("반려사유를 입력해주세요.","");
+        document.Reject.rejectreason.value = reason;
+        let status = document.getElementsByName('status2')[0].value;
+            if (status == '신청완료'){
+                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+
+      function Updatebtn() {
+            setTimeout(function(){
+                if(opener){
+                alert("정보가 수정되었습니다.");
+                self.close();
+                }
+            },100);
+      }
+
+       function deletebtn() {
+            setTimeout(function(){
+                if(opener){
+                alert("신청서가 삭제되었습니다.");
+                self.close();
+                }
+            },100);
+      }
+
+      function Close() {
+        self.close();
+      }
+    </script>
+<style>
+
+recieve{
+    	font-family:arial;
+        text-align:center;
+        font-size:30px;
+
+}
+a{
+    	font-family: arial;
+        text-align:center;
+        font-size:30px;
+        font-weight:bold;
+}
+td#td11{
+   font-family:'arial;
+   font-size:30px;
+   font-weight:3px;
+}
+#tb2{
+   margin-left:40px;
+   width:140px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
+    }
+td#td22{
+   font-family:arial;
+   font-size:20px;
+   font-weight:3px;
+}
+#tb3{
+   margin-left:38px;
+    }
+#buttonlocation{
+    margin-left:65%;
+}
+.radius2 {
+        padding: 10px;
+        border: 5px solid red;
+        border-radius: 5px;
+    }
+</style>
+
+<head>
+    {% include "topmenu.html" %}
+</head>
+
+<body>
+<main>
+        {% include "tablecss.html" %}
+<div class="container">
+        {% include "sidetable.html" %}
+<div id="popup">
+       <maintext> Alarm Message</maintext><br>
+    <div class="radius2">
+    <br>
+        {%if messages %}
+        {%for message in messages%}
+        <alarm>{{message}}</alarm>
+        {%endfor%}
+        {%endif%}
+    <br><br>
+    </div>
+    </div>
+<div id="sidemenubar">
+{% include "sidemenubar.html"%}
+</div>
+
+<div id="listheader">
+{% include "listheader.html"%}
+</div>
+</div>
+</main>
+
+<footer>
+{% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+<f id="msg">
+{%if messages %}
+{%for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+</f>
+</footer>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>popup</title>
+    <script language="javascript">
+    function completemsg(){
+        alert("완료메일을 발송 중에 있습니다.\n 잠시만 기다려주시기 바랍니다.");
+        }
+
+        //window.onload = function(){
+        alert("test1");
+        }
+    </script>
+<style>
+recieve{
+    	font-family:arial;
+        text-align:center;
+        font-size:26px;
+}
+a{
+    	font-family:arial;
+        text-align:center;
+        font-size:26px;
+        font-weight:bold;
+}
+td#td11{
+   font-family:arial;
+   font-size:20px;
+   font-weight:3px;
+}
+#tb2{
+   margin-left:40px;
+   width:140px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
+    }
+td#td22{
+   font-family:arial;
+   font-size:20px;
+   font-weight:3px;
+}
+#tb3{
+   margin-left:38px;
+    }
+#buttonlocation{
+    margin-left:65%;
+}
+textarea {
+            width: 90%;
+            height: 100px;
+            box-sizing: border-box;
+            padding: 5px;
+            border: 1px solid #000;
+            font-size: 20px;
+            font-family:arial;
+            resize: none;
+            margin-top: 10px;
+            margin-left: 4.6%;
+        }
+location{
+    margin-left: 83%;}
+
+.click2 {
+    border:0px;
+	font-family:  'Hammersmith One', sans-serif;
+	font-size:14px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+	}
+
+td#td111{
+   font-family:arial;
+   font-size:20px;
+   padding-left:4%;
+   width:40%;
+}
+</style>
+
+<head>
+    {% include "topmenu.html" %}
+</head>
+
+<body>
+<main>
+    {% include "tablecss.html" %}
+<div class="container">
+    {% include "sidetable.html" %}
+<div id="popup">
+    <maintext> 수리제작의뢰서 신청서 </maintext><br>
+    <div>
+    <div class="radius1">
+        <br>
+    {% for work in comp2 %}
+        <a>&nbsp;◈ Job no. : </a><recieve>{{work.job}}</recieve><br>
+        <a>&nbsp;◈ Team : </a><recieve>{{work.team}}</recieve><br>
+        <a>&nbsp;◈ Name : </a><recieve>{{work.rep}}</recieve><br>
+    {% endfor %}
+    {% for rm in room2 %}
+        <a>&nbsp;◈ Room Name : </a><recieve>{{rm.roomname}}</recieve><br>
+    {% endfor %}
+    {% for work in comp2 %}
+        <a>&nbsp;◈ Room No. : </a><recieve>{{work.roomno}}</recieve><br>
+        <a>&nbsp;◈ Description : </a>
+        <table>
+            <tr>
+        <td id="td111">{{work.description}}</td>
+        </table>
+        <a>&nbsp;◈ Result : </a><br>
+    <form action = "completebtn", method="post">
+        {% csrf_token %}
+    <textarea name="result1" placeholder="조치사항을 입력해주세요." required></textarea>
+    <br>
+        {% for loginid in idd3 %}
+        <input type="hidden" value={{loginid.userid}} name="idd2" >
+        {% endfor %}
+        {% for work in comp2 %}
+        <input type="hidden" value={{work.job}} name="complete1" >
+        <input type="hidden" value={{work.roomno}} name="roomno" >
+        {% endfor %}
+        <location><k class="xi-send"><input type="submit" value="Submit" class="click2" onclick="completemsg();"></k></location><br><br>
+    </form>
+    {% endfor %}
+
+</div>
+</div>
+</div>
+<div id="sidemenubar">
+{% include "sidemenubar.html"%}
+</div>
+
+<div id="listheader">
+{% include "listheader.html"%}
+</div>
+</div>
+
+</main>
+
+<footer>
+{% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+<f id="msg">
+{%if messages %}
+{%for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+</f>
+</footer>
+</body>
+</html>

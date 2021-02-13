@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>popup</title>
+    <script language="javascript">
+      function Approvalbtn() {
+        let status = document.getElementsByName('status3')[0].value;
+        if (status == '신청'){
+            alert("수리제작의뢰서 신청메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+
+      function Acceptbtn() {
+        let status = document.getElementsByName('status1')[0].value;
+        if (status == '신청완료'){
+            alert("접수메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+//js -> html ->views 즁(document.폼이름.name.value)
+      function Rejectbtn() {
+        var reason = window.prompt("반려사유를 입력해주세요.","");
+        document.Reject.rejectreason.value = reason;
+        let status = document.getElementsByName('status2')[0].value;
+            if (status == '신청완료'){
+                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+
+      function Teamrejectbtn() {
+        var reason = window.prompt("반려사유를 입력해주세요.","");
+        document.Teamreject.teamrejectreason.value = reason;c
+        let status = document.getElementsByName('status2')[0].value;
+            if (status == '신청완료'){
+                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+
+      function Updatebtn() {
+        var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=710, height=570, left=50, top=10';
+         window.open("/list/popup/update", "정보값 변경", settings);
+        }
+
+       function deletebtn() {
+            setTimeout(function(){
+                if(opener){
+                alert("신청서가 삭제되었습니다.");
+                self.close();
+                }
+            },100);
+      }
+
+      function Close() {
+        self.close();
+      }
+
+    </script>
+<style>
+
+td#td11{
+   font-family:arial;
+   font-size:20px;
+   padding-left:4%;
+   width:40%;
+}
+#tb2{
+   margin-left:30px;
+   width:145px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
+    }
+td#td22{
+   font-family:arial;
+   font-size:16px;
+   font-weight:3px;
+}
+#tb3{
+   margin-left:4.6%;
+    }
+#buttonlocation1{
+    display: inline-block;
+    margin-left:50%;
+    margin-top:2%;
+}
+#buttonlocation2{
+    display: inline-block;
+}
+#buttonlocation3{
+    display: inline-block;
+}
+#buttonlocation4{
+    display: inline-block;
+}
+.click2 {
+    border:0px;
+	font-family:  'Hammersmith One', sans-serif;
+	font-size:14px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+	}
+</style>
+
+<head>
+    {% include "topmenu.html" %}
+</head>
+
+<body>
+<main>
+        {% include "tablecss.html" %}
+<div class="container">
+        {% include "sidetable.html" %}
+<div id="popup">
+    <maintext>수리제작의뢰서 신청서</maintext><br>
+    <div>
+    <div class="radius1">
+        <br>
+    {% for work in work2 %}
+        <a>&nbsp;◈ Job no. : </a> <recieve>{{work.job}}</recieve><br>
+        <a>&nbsp;◈ Team : </a> <recieve>{{work.team}}</recieve><br>
+        <a>&nbsp;◈ Name : </a> <recieve>{{work.rep}}</recieve><br>
+    {% endfor %}
+    {% for tel in user %}
+        <a>&nbsp;◈ Tel No. : </a> <recieve>{{tel.usertel}}</recieve><br>
+    {% endfor %}
+    {% for rm in roomname %}
+        <a>&nbsp;◈ Room Name : </a> <recieve>{{rm.roomname}}</recieve><br>
+    {% endfor %}
+    {% for work in work2 %}
+        <a>&nbsp;◈ Room No. : </a> <recieve>{{work.roomno}}</recieve><br>
+        <a>&nbsp;◈ Description :</a><br>
+        <table id="tb1" >
+            <tr>
+                <td id="td11" width="100">{{work.description}}</td>
+            </tr>
+            </table>
+        <a>&nbsp;◈ Approval :</a><br>
+        <table id="tb2">
+            <tr>
+                <td id="td22" align="center">{{work.approval}}</td>
+            </tr>
+        </table>
+        {% if signal %}
+        <table id="tb3">
+            <tr>
+                <td><form action = "approval", method="post">
+                    {% csrf_token %}
+                    {% for loginid in idd3 %}
+                    <input type="hidden" value={{loginid.username}} name="manager1" >
+                    <input type="hidden" value={{loginid.userid}} name="idd2" >
+                    {% endfor %}
+                    <input type="hidden" value={{work.job}} name="jobno" >
+                    <input type="hidden" value={{work.roomno}} name="roomno" >
+                    <i class="xi-check"><input type="submit" class="click2"  value="Accept" onclick="Approvalbtn();"></i>
+                </form></td>
+                <td><form action = "teamreject", method="post" name="Teamreject">
+                    {% csrf_token %}
+                    {% for loginid in idd3 %}
+                    <input type="hidden" value={{loginid.username}} name="manager1" >
+                    <input type="hidden" value={{loginid.userid}} name="idd2" >
+                    {% endfor %}
+                    <input type="hidden" value={{work.job}} name="jobno" >
+                    <input type="hidden" value={{work.roomno}} name="roomno" >
+                    <input type="hidden" name="teamrejectreason">
+                    <input type="hidden" value={{work.status}} name="status2" >
+                    <i class="xi-close"><input type="submit" class="click2"  value="Reject" onclick="Teamrejectbtn();"></i>
+                </form></td>
+                </tr>
+        </table>
+        {% endif %}
+        <br>
+    </div>
+            </div>
+    <div id="buttonlocation1">
+        <form action = "accept", method="post">
+        {% csrf_token %}
+        <input type="hidden" value={{work.job}} name="accept1" >
+            {% for loginid in idd3 %}
+            <input type="hidden" value={{loginid.userid}} name="idd2" >
+            {% endfor %}
+        <input type="hidden" value={{work.status}} name="status1" >
+            <i class="xi-check"><input type="submit" value="Accept" class="click2" onclick="Acceptbtn();"></i>
+        </form>
+     </div>
+    <div id="buttonlocation2">
+        <form action = "reject", method="post" name="Reject">
+        {% csrf_token %}
+         <input type="hidden" value={{work.job}} name="reject1" >
+            {% for loginid in idd3 %}
+            <input type="hidden" value={{loginid.userid}} name="idd2" >
+            {% endfor %}
+        <input type="hidden" value={{work.status}} name="status2" >
+        <input type="hidden" name="rejectreason">
+            <i class="xi-close"><input type="submit" value="Reject" class="click2" onclick="Rejectbtn();"></i>
+        </form>
+    </div>
+    <div id="buttonlocation3">
+        <form action = "popup", method="post">
+        {% csrf_token %}
+        <input type="hidden" value={{work.job}}  name="popup1" id="jobno" >
+        <input type="hidden" value={{work.roomno}} name="popup2" id="roomno">
+        <input type="hidden" value={{work.status}} name="popup3" >
+        <input type="hidden" value={{work.userid}} name="popup4" id="userid">
+        <input type="hidden" value={{work.description}} id="description">
+        <input type="hidden" value={{work.team}} id="team">
+        <input type="hidden" value={{work.rep}} id="rep">
+        {% for loginid in idd3 %}
+        <input type="hidden" value={{loginid.userid}} name="idd2" id="idd2">
+        {% endfor %}
+            <i class="xi-catched"><input type="submit" value="Change" class="click2" onclick="Updatebtn();"></i>
+        </form>
+    </div>
+    <div id="buttonlocation4">
+        <form action = "delete", method="post">
+        {% csrf_token %}
+        <input type="hidden" value={{work.job}} name="cancle1" >
+        {% for loginid in idd3 %}
+        <input type="hidden" value={{loginid.userid}} name="idd2" >
+        {% endfor %}
+            <i class="xi-eraser"><input type="submit" value="Delete" class="click2" onclick="deletebtn();"></i>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<div id="sidemenubar">
+{% include "sidemenubar.html"%}
+</div>
+
+<div id="listheader">
+{% include "listheader.html"%}
+</div>
+</div>
+</main>
+
+<footer>
+{% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+<f id="msg">
+{%if messages %}
+{%for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+</f>
+</footer>
+</body>
+</html>

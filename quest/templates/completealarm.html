@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>popup</title>
+    <script language="javascript">
+    function completemsg(){
+        alert("완료메일을 발송 중에 있습니다.\n 잠시만 기다려주시기 바랍니다.");
+        }
+
+    </script>
+<style>
+td#td11{
+   font-family:arial;
+   font-size:30px;
+   font-weight:3px;
+}
+#tb2{
+   margin-left:40px;
+   width:140px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
+    }
+td#td22{
+   font-family:arial;
+   font-size:20px;
+   font-weight:3px;
+}
+#tb3{
+   margin-left:38px;
+    }
+#buttonlocation{
+    margin-left:65%;
+}
+textarea {
+            width: 90%;
+            height: 100px;
+            box-sizing: border-box;
+            padding: 5px;
+            border: 1px solid #000;
+            font-size: 30px;
+            font-family:arial;
+            resize: none;
+            margin-top: 10px;
+            margin-left: 40px;
+        }
+.radius2 {
+        padding: 30px;
+        border: 5px solid red;
+        border-radius: 5px;
+    }
+</style>
+
+<head>
+    {% include "topmenu.html" %}
+</head>
+
+<body>
+<main>
+    {% include "tablecss.html" %}
+<div class="container">
+    {% include "sidetable.html" %}
+<div id="popup">
+    <maintext>Alarm Message</maintext><br>
+    <div>
+    <div class="radius2">
+    {%if messages %}
+    {%for message in messages%}
+    <alarm>{{message}}</alarm>
+    {%endfor%}
+    {%endif%}
+    </div>
+    </div>
+</div>
+<div id="sidemenubar">
+{% include "sidemenubar.html"%}
+</div>
+
+<div id="listheader">
+{% include "listheader.html"%}
+</div>
+</div>
+
+</main>
+
+<footer>
+{% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+<f id="msg">
+{%if messages %}
+{%for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+</f>
+</footer>
+</body>
+</html>

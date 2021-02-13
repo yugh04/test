@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Complete</title>
+    <script language="javascript">
+    function Teamrejectbtn(){
+    var reason = window.prompt("반려사유를 입력해주세요.","");
+        document.Compreject.comprejectreason.value = reason;
+        let status = document.getElementsByName('status2')[0].value;
+            if (status == '신청완료'){
+                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+    </script>
+<style>
+
+td#td11{
+   font-family:arial;
+   font-size:30px;
+   font-weight:3px;
+}
+#tb2{
+   margin-left:40px;
+   width:140px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
+    }
+td#td22{
+   font-family:'arial;
+   font-size:20px;
+   font-weight:3px;
+}
+#buttonlocation{
+    margin-left:65%;
+}
+
+#tb2{
+   margin-left:4.6%;
+   width:140px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
+    }
+td#td22{
+   font-family:'arial;
+   font-size:20px;
+   font-weight:3px;
+}
+#tb3{
+   margin-left:4.4%;
+    }
+.click2 {
+    border:0px;
+	font-family:  'Hammersmith One', sans-serif;
+	font-size:14px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+	}
+td#td111{
+   font-family:arial;
+   font-size:20px;
+   padding-left:4%;
+   width:40%;
+}
+</style>
+
+<head>
+    {% include "topmenu.html" %}
+</head>
+
+<body>
+<main>
+    {% include "tablecss.html" %}
+<div class="container">
+    {% include "sidetable.html" %}
+<div id="popup">
+    <maintext> 수리제작의뢰서 신청서 </maintext><br>
+    <div>
+    <div class="radius1">
+        <br>
+    {% for work in comp2 %}
+        <a>&nbsp;◈ Job no. : </a><recieve>{{work.job}}</recieve><br>
+        <a>&nbsp;◈ Team : </a><recieve>{{work.team}}</recieve><br>
+        <a>&nbsp;◈ Name : </a><recieve>{{work.rep}}</recieve><br>
+    {% endfor %}
+    {% for rm in room2 %}
+        <a>&nbsp;◈ Room Name : </a><recieve>{{rm.roomname}}</recieve><br>
+    {% endfor %}
+    {% for work in comp2 %}
+        <a>&nbsp;◈ Room No. : </a><recieve>{{work.roomno}}</recieve><br>
+        <a>&nbsp;◈ Description : </a><br>
+        <table>
+            <tr>
+        <td id="td111">{{work.description}}</td>
+            </tr>
+        </table>
+        <a>&nbsp;◈ Result : </a><br>
+        <table>
+        <tr>
+        <td id="td111">{{work.summary}}</td>
+        </tr>
+        </table>
+    {% endfor %}
+        <a>&nbsp;◈ Approval :</a><br>
+        <table id="tb2">
+            <tr>
+                <td id="td22" align="center">{{work.check}}</td>
+            </tr>
+        </table>
+        <table id="tb3">
+            <tr>
+                <td><form action = "completeapproval", method="post">
+                    {% csrf_token %}
+                    {% for loginid in idd3 %}
+                    <input type="hidden" value={{loginid.username}} name="manager1" >
+                    <input type="hidden" value={{loginid.userid}} name="idd2" >
+                    {% endfor %}
+                    {% for work in comp2 %}
+                    <input type="hidden" value={{work.job}} name="jobno" >
+                    <input type="hidden" value={{work.status}} name="status3" >
+                    {% endfor %}
+                    <i class="xi-check"><input type="submit" class="click2"  value="Accept"></i>
+                </form></td>
+                <td><form action = "completereject", method="post" name="Compreject">
+                    {% csrf_token %}
+                    {% for loginid in idd3 %}
+                    <input type="hidden" value={{loginid.username}} name="manager1" >
+                    <input type="hidden" value={{loginid.userid}} name="idd2" >
+                    {% endfor %}
+                    {% for work in comp2 %}
+                    <input type="hidden" value={{work.job}} name="jobno" >
+                    <input type="hidden" value={{work.status}} name="status3" >
+                    <input type="hidden" name="comprejectreason">
+                    {% endfor %}
+                    <i class="xi-close"><input type="submit" class="click2"  value="Reject" onclick="Teamrejectbtn();"></i>
+                </form></td>
+                </tr>
+        </table><br>
+</div>
+</div>
+</div>
+ <div id="sidemenubar">
+{% include "sidemenubar.html"%}
+</div>
+
+<div id="listheader">
+{% include "listheader.html"%}
+</div>
+</div>
+
+</main>
+
+<footer>
+{% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+<f id="msg">
+{%if messages %}
+{%for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+</f>
+</footer>
+</body>
+</html>

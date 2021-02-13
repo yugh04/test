@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<title>Login.html</title>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<script language="javascript">
+    function Adminacc(){
+//input값 받기
+    let id = document.getElementsByName('idd2')[0].value;
+    let pw = document.getElementsByName('pww')[0].value;
+//관리자 아이디 확인
+    if (id == 'j2191509'){
+        if (pw == '2191509'){
+            location.href="adminurl"}
+        else{
+            alert("비밀번호가 일치하지 않습니다.");}
+        }
+     else {
+     alert("관리자권한이 없습니다.");}
+     }
+    function Register(){
+        window.open("/register","DM Bio Employee Sign Up", "width=880, height=500, left=50, top=10, location=no, resizable=no");
+        }
+    function Changeinfo(){
+        window.open("/changeinfo","DM Bio Information Change", "width=880, height=500, left=50, top=10, location=no, resizable=no");
+        }
+ </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+main{
+        padding-top:5%;
+        padding-left:40%;
+        padding-right:40%;
+        }
+warning{
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        height:30px;
+        background:burlywood;
+        color:red;
+        border:3px;
+        font-weight:bold;
+        display:flex;
+        justify-content:space-between;
+        font-family:Verdana;
+        }
+.textcss {
+	background-color:white;
+	border-radius:4px;
+	border:2px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#080808;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	padding:5px 10px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b8a3c;
+}
+
+.myButton {
+	box-shadow: 0px 10px 14px -7px #3e7327;
+	background:linear-gradient(to bottom, #85de59 5%, #67bf3b 100%);
+	background-color:#85de59;
+	border-radius:4px;
+	border:2px solid #4b8f29;
+	display:inline-block;
+	cursor:pointer;
+	color:#080808;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	padding:5px 120px;
+	text-decoration:none;
+	text-shadow:0px 0px 0px #5b8a3c;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #67bf3b 5%, #85de59 100%);
+	background-color:#67bf3b;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+footer{
+    position:fixed;
+    bottom:0;
+    right:0;
+    height:30px;
+    background:burlywood;
+    justify-content:space-between;
+    }
+
+.btn2 {
+    border:0px;
+	font-family: 'Hammersmith One', sans-serif;
+	font-size:15px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	text-shadow:0px 1px 0px #4d3534;
+}
+
+b {
+	font-family:Verdana;
+	font-size:40px;
+	font-weight:2px;
+}
+
+</style>
+</head>
+
+<body>
+<main>
+<b>&nbsp;&nbsp;로그인 페이지</b><br>&nbsp;<br>
+<form action="home" method="post">
+{% csrf_token %}
+<input id="id" name="idd2" class="textcss" placeholder="Id를 입력하세요" required><br><br>
+<input id="pw" name="pww" type="password" class="textcss" placeholder="Password를 입력하세요" required><br><br>
+<input type="submit" class="myButton" value="Log In">
+</form>
+
+</main>
+
+<warning>
+    {%if messages %}
+{%for message in messages%}
+<div role="alert">
+    {{message}}
+
+</div>
+{%endfor%}
+{%endif%}
+</warning>
+
+<footer>
+    <i class="xi-pen"><input type="submit" class="btn2" value="Sign Up" onclick="Register();"></i>&nbsp;&nbsp;
+    <i class="xi-renew"><input type="submit" class="btn2" value="Change" onclick="Changeinfo();"></i>&nbsp;&nbsp;
+    <i class="xi-key"><input type="submit"  value="&nbsp;Admin&nbsp;" class="btn2" onclick="Adminacc();"></i>
+</footer>
+
+</body>
+</html>

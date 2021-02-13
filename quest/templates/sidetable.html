@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="sidemenu">
+     <div>
+        <table id="tablehead" style="word-break:break-all">
+            <tbody>
+        <tr>
+            <td width="5%" align="left"><B>No.</B></td>
+            <td width="15%" align="center"><B>Job No.</B></td>
+            <td width="8%" align="center"><B>신청자</B></td>
+            <td width="8%" align="center"><B>Room</B></td>
+            <td width="27%" align="center"><B>접수내용</B></td>
+            <td width="8%" align="center"><B>상태</B></td>
+            <td width="7%" align="center"><B>확인</B></td>
+            <td width="5%" align="left"><B>접수</B></td>
+            <td width="7%" align="left"><B>완료</B></td>
+        </tr>
+            </tbody>
+        </table>
+     </div>
+</div>
+<div id="side">
+        <table style="word-break:break-all">
+     <tbody>
+        <tr>
+        {% for worktable in worktables %}
+            <td width="5%" align="center" >{{worktable.no}}</td> <!--models.py에서 값받아오기-->
+            <td width="17%" align="center" >{{worktable.job}}</td>
+            <td width="10%" align="center" >{{worktable.rep}}</td>
+            <td width="10%" align="center" >{{worktable.roomno}}</td>
+            <td width="30%" >{{worktable.description}}</td>
+            <td width="10%" align="center">{{worktable.status}}</td>
+
+            <td width="5%" align="center"><form action="{%url 'check'%}" method="post" name="Info">
+                {% csrf_token %}
+                <input type="hidden" value={{worktable.job}} name="jobno#" >
+                <input type="hidden" value={{worktable.roomno}} name="roomno#" >
+                <input type="hidden" value={{worktable.userid}} name="userid#" >
+                <input type="hidden" value={{idd2}} name="idd2">
+                <input type="submit" class="button" value="확인">
+                </form>
+            </td>
+
+            <td width="5%" align="center"><form action="{%url 'popup'%}" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value={{worktable.job}} name="popup1" >
+                <input type="hidden" value={{worktable.roomno}} name="popup2" >
+                <input type="hidden" value={{worktable.status}} name="popup3" >
+                <input type="hidden" value={{worktable.userid}} name="popup4" >
+                <input type="hidden" value={{idd2}} name="idd2" >
+                <input type="submit"  class="button" value="접수" onclick="Msg1();">
+                </form>
+            </td>
+
+            <td width="5%" align="center"><form action="{%url 'complete'%}" method="post" >
+                 {% csrf_token %}
+                <input type="hidden" value={{worktable.job}} name="job1" >
+                <input type="hidden" value={{worktable.roomno}} name="job2" >
+                <input type="hidden" value={{worktable.status}} name="job3" >
+                <input type="hidden" value={{idd2}} name="idd2" >
+                <input type="submit"  class="button" value="완료">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+ </table>
+</div>
+</body>
+</html>

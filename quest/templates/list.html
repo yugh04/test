@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+<script language="javascript">
+
+</script>
+    <title>수리제작의뢰서 List</title>
+</head>
+<style>
+main{
+        padding-top:60px;
+        padding-bottom:20px;
+        }
+
+f#msg{
+     fond-size:12px;
+     color:red;
+     font-family:arial;
+     font-size:15px;
+     font-weight:3px;
+}
+
+tr:nth-child(even){
+    background-color:#EEEEEE;
+}
+#tablemenu{
+    font-family:arial;
+    font-size:16px;
+    font-weight:bold;
+    background-color:#FFEEEE;
+    border:1px solid white;
+    position:fixed;
+    grid-area:tablemenu;
+    margin-left:10.8%;
+    margin-top:3.4%;
+    z-index:10;
+    left:0;
+    right:0;
+    clear:both;
+}
+#sidemenubar{
+    grid-area:sidemenubar;
+    position:fixed;
+    z-index:14;
+    clear:both;
+    width:9.5%;
+}
+#listheader{
+    grid-area:listheader;
+    position:fixed;
+    margin-left:10%;
+    width:90%;
+    z-index:10;
+    margin-top:0%;
+    clear:both;
+}
+#tabledesc{
+    z-index:13;
+    font-size:14px;
+    font-family:arial;
+    grid-area:tabledesc;
+    clear:both;
+    position:absolute;top:20%; left:11%;
+    overflow:auto;
+    height:75%
+}
+.container{
+            display: grid;
+            height: 100%;
+            grid-template-columns: 10% 1fr;
+            grid-template-rows:5% 1% 1fr;
+            grid-gap:10px;
+            grid-template-areas:
+            "sidemenubar listheader"
+            "sidemenubar tablemenu"
+            "sidemenubar tabledesc"
+      }
+
+.button {
+	background-color:transparent;
+	border-radius:10px;
+	border:2px solid #5777d9;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:arial;
+	font-size:14px;
+	padding:1px 5px;
+	text-decoration:none;
+}
+.button:hover {
+	background-color:transparent;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+body{overflow:hidden;}
+</style>
+<body>
+
+<header>
+ {% include "topmenu.html" %}
+</header>
+
+<main>
+<div class="container">
+<div id="tablemenu">
+     <table>
+        <thead>
+        <tr>
+            <td width="2%" align="center">No.</td>
+            <td width="12%" align="center">&nbsp;Job No.</td>
+            <td width="4%" align="center">&nbsp;팀</td>
+            <td width="6%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;신청자</td>
+            <td width="6%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;신청일자</td>
+            <td width="8%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Room No.</td>
+            <td width="20%" align="center">접수내용</td>
+            <td width="20%" align="center">조치내용</td>
+            <td width="5%" align="center">상태&nbsp;&nbsp;</td>
+            <td width="5%" align="center">담당자&nbsp;</td>
+            <td width="4%" align="center">확인&nbsp;&nbsp;</td>
+            <td width="3%" align="center">접수</td>
+            <td width="7%" align="left">&nbsp;&nbsp;완료</td>
+        </tr>
+        </thead>
+     </table>
+</div>
+<div id="tabledesc">
+ <table style="word-break:break-all">
+     <tbody>
+        <tr>
+        {% for worktable in worktables %}
+            <td width="2%" align="center">{{worktable.no}}</td> <!--models.py에서 값받아오기-->
+            <td width="12%" align="center">{{worktable.job}}</td>
+            <td width="5%" align="center">{{worktable.team}} </td>
+            <td width="6%" align="center">{{worktable.rep}}</td>
+            <td width="6%" align="center">{{worktable.date}}</td>
+            <td width="8%" align="center">{{worktable.roomno}}</td>
+            <td width="20%" >{{worktable.description}}</td>
+            <td width="20%" >{{worktable.summary}}</td>
+            <td width="5%" align="center" id="test">{{worktable.status}}</td>
+            <td width="5%" align="center">{{worktable.engrep}}</td>
+
+            <td width="4%" align="center"><form action="{%url 'check'%}" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value={{worktable.job}} name="jobno#" >
+                <input type="hidden" value={{worktable.roomno}} name="roomno#" >
+                <input type="hidden" value={{worktable.userid}} name="userid#" >
+                <input type="hidden" value={{idd2}} name="idd2">
+                <input type="hidden" value="check" name="address">
+                <input type="submit" class="button" value="확인">
+                </form>
+            </td>
+
+            <td width="3%" align="center"><form action="{%url 'popup'%}" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value={{worktable.job}} name="popup1" >
+                <input type="hidden" value={{worktable.roomno}} name="popup2" >
+                <input type="hidden" value={{worktable.status}} name="popup3">
+                <input type="hidden" value={{worktable.userid}} name="popup4" >
+                <input type="hidden" value={{idd2}} name="idd2" >
+                <input type="hidden" value="popup" name="address">
+                <input type="submit" class="button" value="접수">
+                </form>
+            </td>
+
+            <td width="5%" align="center"><form action="{%url 'complete'%}" method="post" >
+                 {% csrf_token %}
+                <input type="hidden" value={{worktable.job}} name="job1" >
+                <input type="hidden" value={{worktable.roomno}} name="job2" >
+                <input type="hidden" value={{worktable.status}} name="job3" >
+                <input type="hidden" value={{idd2}} name="idd2" >
+                <input type="hidden" value="complete" name="address">
+                <input type="submit" class="button" value="완료">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+ </table>
+</div>
+<div id="sidemenubar">
+{% include "sidemenubar.html"%}
+</div>
+
+<div id="listheader">
+{% include "listheader.html"%}
+</div>
+
+</div>
+</main>
+
+<footer>
+{% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+<f id="msg">
+{%if messages %}
+{%for message in messages%}
+{{message}}
+{%endfor%}
+{%endif%}
+</class></f>
+</footer>
+</body>
+</html>

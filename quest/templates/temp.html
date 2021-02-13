@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+       var mysql = require('mysql');
+
+       var connection = mysql.createConnection({
+       host : 'localhost',
+       user : 'root',
+       password : '1234',
+       database :'worktable'});
+
+       connection.connect();
+
+       var sql = 'SELECT * FROM worktable';
+       connection.query(sql, function(err, rows, fields){
+        if(err){
+            console.log(err);}
+        else{
+            console.log('row',rows);
+            console.log('fields',fields};
+            }
+        });
+            }
+</body>
+</html>
+
+///////////////////////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script language="javascript">
+      function Test(){
+       username = opener.document.getElementById("username").value;
+       document.idd.username.value = username;
+       document.idd.action="mysqltable";
+       document.idd.submit();
+       }
+
+    </script>
+</head>
+<body>
+<input type="button" value="test" onclick="Test();">
+
+<form action="mysqltable" method="get" name="idd" id="idd">
+    <input type="hidden" name="username">
+</form>
+{% for worktable in worktables %}
+            <td width="12%" align="center">{{worktable.job}}</td>
+ {% endfor %}
+</body>
+</html>
+
+
+////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<script language="javascript">
+
+function Enroll(){
+    var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=690, height=500, left=50, top=10';
+    window.open("/list/enroll", "수리제작의뢰 신청서", settings);
+}
+
+</script>
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+c{
+    	font-family: arial;
+        text-align:center;
+        font-size:40px;
+        font-weight:bold;
+    }
+mainheader{
+        height:50px;
+        padding:1rem;
+        background:white;
+        front-weight:bold;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:10;
+        }
+mainheader2{
+        height:1px;
+        padding-top:3px;
+        background:dodgerblue;
+        display:flex;
+        justify-content:space-between;
+        position:fixed;
+        top:80px;
+        left:0;
+        right:0;
+        z-index:10;
+}
+.myButton {
+    border:0px;
+	font-family: arial;
+	font-size:20px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+}
+.myButton2 {
+    border:0px;
+	font-family: arial;
+	font-size:15px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+}
+navi1{
+    padding-top:2.2%;
+    padding-left:1%;
+    }
+navi2{
+    padding-top:2.2%;
+    padding-right:1%;
+    }
+navi3{
+    padding-top:2.2%;
+    padding-right:1%;
+    }
+.search{
+    padding-top:1.3%;
+    padding-right:1%;
+    }
+.searchtext{
+    font-family: arial;
+	font-size:15px;
+    }
+.selecttext{
+    font-family: arial;
+    padding-bottom:0.6%;
+    padding-top:0.2%;
+	font-size:15px;
+    }
+</style>
+</head>
+<body>
+<header>
+    <c>&nbsp;수리제작의뢰서</c>
+    <navi1>
+        <form>
+            <input type="hidden" value={{idd2}} id="idd2">
+            <input type="hidden" value={{username}} id="username">
+            <input type="hidden" value={{userteam}} id="userteam">
+            <input type="button"  class="myButton" value="Require" onclick="Enroll();">
+            </form>
+    </navi1>
+    <navi2>
+        <form action="{%url 'list'%}" method="post">
+                 {% csrf_token %}
+            <input type="hidden" value={{idd2}} name="idd2" >
+            <input type="submit"  class="myButton" value="Main Page">
+            </form>
+    </navi2>
+    <navi3>
+        <form action="home2" method="post">
+            {% csrf_token %}
+            <input type="hidden" value={{idd2}} name="idd2">
+            <input type="submit" class="myButton" value="&nbsp;Home&nbsp;"></form>
+    </navi3>
+    <search>
+        <form action="search" method="post">
+            {% csrf_token %}
+            <select class="selecttext" name="selecttext">&nbsp;
+            <option value="job">Job No.</option>
+            <option value="status">Status</option>
+            <option value="team">Team</option>
+            <option value="rep">신청자</option></select>
+            <input type="search"  class="searchtext" placeholder="검색어를 입력하세요" name="searchtext">
+            <input type="hidden" value={{idd2}} name="idd2" >
+            <input type="submit"  class="myButton2" value="Search"></form>
+    </search>
+</header>
+<header2>
+</header2>
+</body>
+</html>
+
+///////////////
+.container{
+            display: grid;
+            height: 100%;
+            grid-template-columns: 10% 1fr;
+            grid-template-rows:5% 0.2% 1fr;
+            grid-gap:10px;
+            grid-template-areas:
+            "sidemenu listheader"
+            "sidemenu tablemenu"
+            "sidemenu tabledesc"
+      }
+
+
+//////////////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<script language="javascript">
+    $(document).ready(function(){
+        document.getElementById("footer").innerHTML='ID: {{idd2}}';
+        })
+
+</script>
+</head>
+
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+
+    c{
+    	font-family: arial;
+        text-align:center;
+        font-size:50px;
+        font-weight:bold;
+    }
+    header{
+        height:80px;
+        padding:1rem;
+        background:papayawhip;
+        font-weight:bold;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        }
+    main{
+        padding-top:150px;
+        padding-left:15%;
+        }
+    .btn2 {
+	    box-shadow:inset 0px 1px 0px 0px #ffffff;
+	    background:linear-gradient(to bottom,dodgerblue; 5%, dodgerblue; 100%);
+	    background-color:skyblue;
+	    border-radius:6px;
+	    border:1px solid #dcdcdc;
+	    display:inline-block;
+	    cursor:pointer;
+	    color:black;
+	    font-family:arial;
+	    font-size:25px;
+	    font-weight:bold;
+	    padding:6px 24px;
+	    text-decoration:none;
+	    text-shadow:0px 1px 0px #ffffff;
+	    width:200px;
+        height:60px;
+    }
+    .btn2:hover {
+	    background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	    background-color:#dfdfdf;
+    }
+    .btn2:active {
+	    position:relative;
+	    top:1px;
+    }
+    div{
+        width:50%;
+        border-collapse: collapse;
+        border-spacing:0;
+        border: 3px dodgerblue;
+    }
+    b{
+	    font-family:Verdana;
+	    font-size:40px;
+	    font-weight:2px;
+	}
+	.radius1 {
+        border: 3px solid dodgerblue;
+        border-radius: 20px;
+
+    }
+    header2{
+        height:1px;
+        padding-top:3px;
+        background:dodgerblue;
+        display:flex;
+        justify-content:space-between;
+        position:fixed;
+        top:80px;
+        left:0;
+        right:0;
+}
+</style>
+<body>
+    <header>
+    <c>DM Bio Non-GMP Management System</c>
+    </header>
+    <header2>
+    </header2>
+    <main>
+        <b>&nbsp;&nbsp; Select Menu</b><br>
+        <div>
+        <div class="radius1">
+            <tr><td>
+                <br>
+                <br>
+                <br>
+        <a align="center"><form action="{%url 'list'%}" method="post">
+        {% csrf_token %}
+        <input type="hidden" value={{idd2}} name="idd2">
+        <input type="submit" class="btn2" value="수리제작의뢰">
+        </form></a>
+        <br>
+        <br>
+        <br>
+        <a align="center"><form action="{%url 'supply'%}">
+        <input type="submit" class="btn2" value="사무용품신청">
+        </form></a>
+        <br>
+        <br>
+        <br>
+        <a align="center"><form action="mysqltest">
+        <input type="submit" class="btn2" value="Spare Button">
+        </form></a>
+                <br>
+                <br>
+                <br>
+            </td></tr>
+        </div>
+        </div>
+    </main>
+</body>
+<footer>
+    {% include "listfooter.html"%}
+<f id="id">ID: {{idd2}}</f>
+</footer>
+
+</html>
+
+
+
+window.onload=function(){
+    let status = document.getElementsById("statustext");
+    if(status=='조치완료'){
+    status.style.color = 'red';}
+}
