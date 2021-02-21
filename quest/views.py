@@ -12,13 +12,13 @@ from django.core.files.storage import FileSystemStorage
 #################################################로그인페이지###################################################
 ##############################################################################################################
 
-def adminmenu(request): #메인홈 // 완료
+def adminmenu(request): #어드민홈 // 완료
     return render(request, 'adminmenu.html') #templates 내 html연결
 
-def changeinfo(request): #메인홈 // 완료
+def changeinfo(request): #가입정보변경 // 완료
     return render(request, 'changeinfo.html') #templates 내 html연결
 
-def changerm(request): #메인홈 // 완료
+def changerm(request): #룸정보변경 // 완료
     if request.method == 'POST':  # 매소드값이 post인 값만 받는다
     #기존 값들 정보 불러오기
         newname1 = request.POST.get('newname')  # html newname의 값을 받는다.
@@ -35,7 +35,7 @@ def changerm(request): #메인홈 // 완료
     context={'room':rooms}
     return render(request, 'adminroom.html', context) #templates 내 html연결
 
-def changeteam(request): #메인홈 // 완료
+def changeteam(request): #팀장변경 // 완료
     if request.method == 'POST':  # 매소드값이 post인 값만 받는다
     #신규 값들 정보 불러오기
         newname1 = request.POST.get('newname')  # html newname의 값을 받는다.
@@ -78,7 +78,7 @@ def home2(request): #메인홈 // 완료
 def register(request): #가입
     return render(request, 'register.html') #templates 내 html연결
 
-def registeok(request): #가입
+def registeok(request): #가입완료
     if request.method =='POST': #매소드값이 post인 값만 받는다
         idcheck=request.POST.get("userid")
         pw1check=request.POST.get("pw1")
@@ -105,7 +105,7 @@ def registeok(request): #가입
             messages.error(request, "WARNING: Password가 일치하지 않습니다.")  # 경고
             return render(request, 'register.html')  # templates 내 html연결
 
-def adminurl(request): #수리제작의뢰서 리스트 // 완료
+def adminurl(request): #어드민창 접속 // 완료
     user = users.objects.all()
     context={"user":user}
     return render(request, 'adminurl.html', context) #templates 내 html연결
@@ -216,7 +216,7 @@ def changeinfook(request):
 
 ##########list 메인창########
 
-def search(request):
+def search(request): #검색창
     if request.method == 'POST':  # 매소드값이 post인 값만 받는다
         searchtext = request.POST.get('searchtext')
         selecttext = request.POST.get('selecttext')
@@ -238,7 +238,7 @@ def search(request):
         return render(request, 'list.html', {'worktables': worktables, "idd2": idd2, "username": username,
                                                  "userteam": userteam})  # templates 내 html연결
 
-def listsidebar(request): #메인홈 // 완료
+def listsidebar(request): #사이드바 // 완료
     worktables = worktable.objects.all().order_by('-no') #db 동기화
     idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
     return render(request, 'listsidebar.html', {'worktables': worktables, "idd2": idd2}) #templates 내 html연결
@@ -255,7 +255,7 @@ def list(request): #수리제작의뢰서 리스트 // 완료
 
 ##########확인버튼########
 
-def check(request): #메인홈 // 완료
+def check(request): #확인창 // 완료
     if request.method == 'POST':  # 매소드값이 post인 값만 받는다
     #기존 값들 정보 불러오기
         search2 = request.POST.get('jobno#')  # html jobno의 값을 받는다.
@@ -320,57 +320,25 @@ def insertok(request): #insertok 클릭시 동작 // 완료
         userid2 = [jobno1.userid]  # id str
         userid2 = userid2[0]
         jobno = job +"/"+ userteam2 +"/"+ lens
-    #Room No.오류값 확인
-        try:
-            confirm = room.objects.get(roomno=request.POST.get("roomno"))
+
     # 이메일 내용 작성
-            titletext = "수리제작의뢰서 요청메일 // Job No:" + jobno
-            team1 = userteam2 #team명
-            rep1 = username2 #신청자명
-            id1 = userid2 #id
-            roomno1 = request.POST.get("roomno") #room no
-            roomname1 = request.POST.get("roomname") #room name
-            description1 = request.POST.get("desc")
-            emailtext = "수리제작의뢰서 Job No:" + jobno + "가 신청되었습니다." + \
+        titletext = "수리제작의뢰서 요청메일 // Job No:" + jobno
+        team1 = userteam2 #team명
+        rep1 = username2 #신청자명
+        id1 = userid2 #id
+        roomno1 = request.POST.get("roomno") #room no
+        roomname1 = request.POST.get("roomname") #room name
+        description1 = request.POST.get("desc")
+        emailtext = "수리제작의뢰서 Job No:" + jobno + "가 신청되었습니다." + \
                         "\n\n팀:" + team1 + "\n신청자: " + rep1 + "(" + id1 + ")" + "\n위치: " + roomname1 + " (" + roomno1 +")" +\
-                        "\n요청내용: " + description1
-    # level4 담당자에게 메일보내기
-            repemail2 = users.objects.filter(auth="4") #레벨4권한담당자한테 메일보내기
-            repemail2 = repemail2.values('useremail') #sql문 dataframe으로 변경
-            df1 = pd.DataFrame.from_records(repemail2)
-            repemail3 = users.objects.filter(auth="5") #레벨5권한담당자한테 메일보내기
-            repemail3 = repemail3.values('useremail') #sql문 dataframe으로 변경
-            df2 = pd.DataFrame.from_records(repemail3)
-            df = pd.concat([df1, df2], axis=0)
-            print(df)
-            dflen = len(df.index)
-            for k in range(dflen):
-                mailaddress = df.iat[k, 0]
-                email = EmailMessage(titletext, emailtext, to=[mailaddress])
-                email.send()
+                        "\n요청내용: " + description1 + \
+                        "\n Link : http://dmbio.synology.me:803"
+
     # 팀장에게 메일보내기
-            managermail2 = manager.objects.get(teamname=team1)
-            managermail = [managermail2.email]
-            email2 = EmailMessage(titletext, emailtext, to=managermail)
-            email2.send()
-
-        except:
-        # 이메일 내용 작성
-            titletext = "수리제작의뢰서 요청메일 // Job No:" + jobno
-            team1 = userteam2  # team명
-            rep1 = username2  # 신청자명
-            id1 = userid2  # id
-            roomno1 = request.POST.get("roomno")  # room no
-            description1 = request.POST.get("desc")
-            emailtext = "수리제작의뢰서 Job No:" + jobno + "가 신청되었습니다." + \
-                        "\n\n팀:" + team1 + "\n담당자: " + rep1 + "(" + id1 + ")" + "\n위치: " + roomno1  + \
-                        "\n요청내용: " + description1
-
-            # 팀장에게 메일보내기
-            managermail2 = manager.objects.get(teamname=team1)
-            managermail = [managermail2.email]
-            email2 = EmailMessage(titletext, emailtext, to=managermail)
-            email2.send()
+        managermail2 = manager.objects.get(teamname=team1)
+        managermail = [managermail2.email]
+        email2 = EmailMessage(titletext, emailtext, to=managermail)
+        email2.send()
 
     #입력값 저장
         worktable( #워크테이블에 저장하기
@@ -392,7 +360,7 @@ def insertok(request): #insertok 클릭시 동작 // 완료
 
 ##########완료버튼########
 
-def completebtn(request): #완료 //
+def completebtn(request): #조치완료버튼 //
     if request.method =='POST': #매소드값이 post인 값만 받는다
     #상태값/조치내용 업데이트
         search2 = request.POST.get('complete1')  # html accept1의 값을 받는다.
@@ -426,8 +394,9 @@ def completebtn(request): #완료 //
                         "신청자: " + summary8 + \
                         "\n위치: " + summary10 + " (" + summary12 +")" +\
                         "\n요청내용: " + summary6 +\
-                        "\n작업내용: " + resultmail +\
-                        "\n담당자: " + userid
+                        "\n담당자: " + userid + \
+                        "\n작업내용: " + resultmail + \
+                        "\n Link : http://dmbio.synology.me:803"
 
         # 이메일 주소 불러오기
                 email1 = [work2.userid] # 이메일 아이디 받아오기
@@ -441,10 +410,10 @@ def completebtn(request): #완료 //
                 teamemail = [team3.email]  # team이메일불러오기
         # 메일보내기
                 email1 = EmailMessage(titletext, emailtext, to=useremail)
-                email2 = EmailMessage(titletext, emailtext, to=teamemail)
                 email1.send()
+                email2 = EmailMessage(titletext, emailtext, to=teamemail)
                 email2.send()
-        #스테이터스 값 업데이트
+        #스테이터스 값 업데이트 /조치완료내용 업로드
                 work2.status = "조치완료"
                 work2.summary = request.POST.get('result1')
                 work2.save()
@@ -573,7 +542,7 @@ def completealarm(request): #삭제 // 완료
             return render(request, 'completealarm.html', {'worktables': worktables, 'comp2': comp2, 'room2': room2,
                                                      "idd2": idd2, "idd3": idd3, "username":username, "userteam":userteam})  # templates 내 html연결
 
-def completecheck(request): #삭제 // 완료
+def completecheck(request): #완료 창 오픈 // 완료
     if request.method =='POST': #매소드값이 post인 값만 받는다
     # 기존 값들 정보 불러오기
         status1 = request.POST.get('job3')  # html job3의 값을 받는다.
@@ -618,7 +587,7 @@ def completecheck(request): #삭제 // 완료
             return render(request, 'completealarm.html', {'worktables': worktables, 'comp2': comp2, 'room2': room2,
                                                      "idd2": idd2, "idd3": idd3, "username": username, "userteam": userteam})  # templates 내 html연결
 
-def completeapproval(request): #삭제 // 완료
+def completeapproval(request): #조치완료승인 // 완료
     if request.method == 'POST':  # 매소드값이 post인 값만 받는다
         jobno1 = request.POST.get('jobno')  # html jobno의 값을 받는다.
         condition = worktable.objects.get(job=jobno1)
@@ -649,11 +618,11 @@ def completeapproval(request): #삭제 // 완료
             messages.error(request, "WARNING: 해당Job 승인권한이 없습니다.")  # 경고
             return render(request, 'completealarm.html', {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
 
-def completereject(request): #삭제 // 완료
+def completereject(request): #조치완료반려 // 완료
     if request.method == 'POST':  # 매소드값이 post인 값만 받는다
         jobno1 = request.POST.get('jobno')  # html jobno의 값을 받는다.
         condition = worktable.objects.get(job=jobno1)
-
+        reason = request.POST.get('comprejectreason')  # html 반려사유 값을 받는다.
     # 설비팀 팀장여부 판단하기
         idd = request.POST.get('idd2') #로그인 이름받기
         idcheck = users.objects.get(userid=idd)
@@ -661,6 +630,36 @@ def completereject(request): #삭제 // 완료
         autocheck = autocheck1[0] #사용자 설비팀 확인
     #팀장 확인 및 값 변경
         if autocheck == 5:
+        # 설비팀 담당자 이메일 생성
+            repcheck1 = [condition.engrep]
+            repcheck = repcheck1[0]
+            repemail1 = users.objects.get(username = repcheck)
+            repemail2 = [repemail1.useremail]
+            repemail = repemail2[0]
+            print(repemail)
+        # 이메일 내용 생성
+            work2 = worktable.objects.get(job=jobno1)
+            summary1 = [work2.summary]
+            summary2 = summary1[0] #완료내용불러오기
+            summary5 = [work2.description]
+            summary6 = summary5[0] #요청내용불러오기
+            summary7 = [work2.rep]
+            summary8 = summary7[0] # 담당자불러오기
+            summary9 = [work2.roomname]
+            summary10 = summary9[0] # room name불러오기
+            summary11 = [work2.roomno]
+            summary12 = summary11[0] # room no불러오기
+            emailtext = "수리제작의뢰서 Job No:" + jobno1 +"가 조치완료가 [반려]되었습니다. \n\n" + \
+                        "신청자: " + summary8 + \
+                        "\n위치: " + summary10 + " (" + summary12 +")" +\
+                        "\n요청내용: " + summary6 +\
+                        "\n작업내용: " + summary2 + \
+                        "\n반려사유: " + reason + \
+                        "\n Link : http://dmbio.synology.me:803"
+            titletext = "수리제작의뢰서 조치완료 반려메일 // Job No:" + jobno1
+            email1 = EmailMessage(titletext, emailtext, to=[repemail])
+            email1.send()
+        # 데이터 업데이트
             condition.summary ="미완료"
             condition.status = "접수"
             condition.save()
@@ -712,7 +711,8 @@ def reject(request): #반려 //
                         "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info6 + ")" + "\n위치: " + info4 + \
                         "\n요청내용: " + info5 + \
                         "\n시스템운영팀 담당자: " + userid +\
-                        "\n반려사유: " + reason
+                        "\n반려사유: " + reason + \
+                        "\n Link : http://dmbio.synology.me:803"
 
             # 이메일 보내기
             repemail2 = users.objects.get(userid=info6)
@@ -768,7 +768,8 @@ def accept(request): #접수 //
                 emailtext = "수리제작의뢰서 Job No:" + info1 + "가 접수되었습니다." + \
                             "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info6 + ")" + "\n위치: " + info4 + \
                             "\n요청내용: " + info5 + \
-                            "\n시스템운영팀 담당자: " + userid
+                            "\n시스템운영팀 담당자: " + userid + \
+                            "\n Link : http://dmbio.synology.me:803"
 
                 #이메일 보내기
                 repemail2 = users.objects.get(userid=info6)
@@ -855,10 +856,11 @@ def teamreject(request): #삭제 // 완료
                 repemail1 = [repemail2.useremail]
                 repemail = repemail1[0] #신청인 이메일 주소
                 #메일 내용 확정 및 메일 보내기
-                titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
-                emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청되었습니다." + \
+                titletext = "수리제작의뢰서 요청 반려메일 // Job No:" + info1
+                emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청서가 [반려]되었습니다." + \
                         "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + \
-                        "\n요청내용: " + info6 +"\n반려사유: " + reason
+                        "\n요청내용: " + info6 +"\n반려사유: " + reason + \
+                        "\n Link : http://dmbio.synology.me:803"
                 email = EmailMessage(titletext, emailtext, to=[repemail])
                 email.send()
                 #화면 전환
@@ -921,24 +923,14 @@ def approval(request): #삭제 // 완료
                 dflen = len(df.index) #담당자 인원수 확인
 
     #룸오류값에 따른 메일보내기
-                try:
-                    roomname2 = room.objects.get(roomno=info5)  # room 이름
-                    info77 = [roomname2.roomname]
-                    info7 = info77[0]
-                    titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
-                    emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청되었습니다." + \
+                info77 = [status2.roomname]
+                info7 = info77[0]
+                titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
+                emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청완료되었습니다." + \
                         "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + " (" + info7 + ")" + \
-                        "\n요청내용: " + info6
-                    for k in range(dflen):
-                        mailaddress = df.iat[k, 0]
-                        email = EmailMessage(titletext, emailtext, to=[mailaddress])
-                        email.send()
-                except:
-                    titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
-                    emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청되었습니다." + \
-                        "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + \
-                        "\n요청내용: " + info6
-                    for k in range(dflen):
+                        "\n요청내용: " + info6 + \
+                        "\n Link : http://dmbio.synology.me:803"
+                for k in range(dflen):
                         mailaddress = df.iat[k, 0]
                         email = EmailMessage(titletext, emailtext, to=[mailaddress])
                         email.send()

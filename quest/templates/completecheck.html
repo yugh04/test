@@ -9,7 +9,7 @@
     var reason = window.prompt("반려사유를 입력해주세요.","");
         document.Compreject.comprejectreason.value = reason;
         let status = document.getElementsByName('status2')[0].value;
-            if (status == '신청완료'){
+            if (status == '조치완료'){
                 alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
             }
         }
@@ -36,22 +36,35 @@ td#td22{
 #buttonlocation{
     margin-left:65%;
 }
-
+@media all and (max-width:1600px){
 #tb2{
    margin-left:4.6%;
    width:140px;
    border:2px solid black;
    height:50px;
    table-layout:fixed;
+}
+#tb3{
+   margin-left:4.4%;
+    }}
+
+@media all and (min-width:1610px){
+#tb2{
+   margin-left:4.0%;
+   width:140px;
+   border:2px solid black;
+   height:50px;
+   table-layout:fixed;
     }
+#tb3{
+   margin-left:3.6%;
+    }}
+
 td#td22{
    font-family:'arial;
    font-size:20px;
    font-weight:3px;
 }
-#tb3{
-   margin-left:4.4%;
-    }
 .click2 {
     border:0px;
 	font-family:  'Hammersmith One', sans-serif;

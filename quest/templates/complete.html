@@ -6,12 +6,10 @@
     <title>popup</title>
     <script language="javascript">
     function completemsg(){
+        let status = document.getElementsByName('status2')[0].value;
+        if (status == '접수'){
         alert("완료메일을 발송 중에 있습니다.\n 잠시만 기다려주시기 바랍니다.");
-        }
-
-        //window.onload = function(){
-        alert("test1");
-        }
+        }}
     </script>
 <style>
 recieve{
@@ -60,8 +58,13 @@ textarea {
             margin-top: 10px;
             margin-left: 4.6%;
         }
+@media all and (max-width:1600px){
 location{
-    margin-left: 83%;}
+    margin-left: 83%;}}
+
+@media all and (min-width:1610px){
+location{
+    margin-left: 85%;}}
 
 .click2 {
     border:0px;
@@ -120,6 +123,7 @@ td#td111{
         {% for work in comp2 %}
         <input type="hidden" value={{work.job}} name="complete1" >
         <input type="hidden" value={{work.roomno}} name="roomno" >
+        <input type="hidden" value={{work.status}} name="status2" >
         {% endfor %}
         <location><k class="xi-send"><input type="submit" value="Submit" class="click2" onclick="completemsg();"></k></location><br><br>
     </form>

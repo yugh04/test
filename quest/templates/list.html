@@ -56,6 +56,7 @@ tr:nth-child(even){
     margin-top:0%;
     clear:both;
 }
+@media all and (max-width:1600px){
 #tabledesc{
     z-index:13;
     font-size:14px;
@@ -64,8 +65,50 @@ tr:nth-child(even){
     clear:both;
     position:absolute;top:20%; left:11%;
     overflow:auto;
-    height:75%
+    height:75%;
 }
+#m1{padding-left:7px;}
+#m2{padding-left:56px;}
+#m3{padding-left:70px;}
+#m4{padding-left:48px;}
+#m5{padding-left:25px;}
+#m6{padding-left:25px;}
+#m7{padding-left:120px;}
+#m8{padding-left:210px;}
+#m9{padding-left:122px;}
+#m10{padding-left:28px;}
+#m11{padding-left:20px;}
+#m12{padding-left:16px;}
+#m13{padding-left:16px;}
+}
+
+@media all and (min-width:1610px){
+#tabledesc{
+    z-index:13;
+    font-size:14px;
+    font-family:arial;
+    grid-area:tabledesc;
+    clear:both;
+    position:absolute;top:17%; left:11%;
+    overflow:auto;
+    height:79%;
+    width:1710px;
+}
+#m1{padding-left:7px;}
+#m2{padding-left:80px;}
+#m3{padding-left:95px;}
+#m4{padding-left:60px;}
+#m5{padding-left:45px;}
+#m6{padding-left:50px;}
+#m7{padding-left:150px;}
+#m8{padding-left:280px;}
+#m9{padding-left:152px;}
+#m10{padding-left:43px;}
+#m11{padding-left:30px;}
+#m12{padding-left:30px;}
+#m13{padding-left:23px;}
+}
+
 .container{
             display: grid;
             height: 100%;
@@ -111,19 +154,19 @@ body{overflow:hidden;}
      <table>
         <thead>
         <tr>
-            <td width="2%" align="center">No.</td>
-            <td width="12%" align="center">&nbsp;Job No.</td>
-            <td width="4%" align="center">&nbsp;팀</td>
-            <td width="6%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;신청자</td>
-            <td width="6%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;신청일자</td>
-            <td width="8%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Room No.</td>
-            <td width="20%" align="center">접수내용</td>
-            <td width="20%" align="center">조치내용</td>
-            <td width="5%" align="center">상태&nbsp;&nbsp;</td>
-            <td width="5%" align="center">담당자&nbsp;</td>
-            <td width="4%" align="center">확인&nbsp;&nbsp;</td>
-            <td width="3%" align="center">접수</td>
-            <td width="7%" align="left">&nbsp;&nbsp;완료</td>
+            <td align="center" id="m1">No.</td>
+            <td align="center" id="m2">Job No.</td>
+            <td align="center" id="m3">팀</td>
+            <td align="center" id="m4">신청자</td>
+            <td align="center" id="m5">신청일자</td>
+            <td align="center" id="m6">Room No.</td>
+            <td align="center" id="m7">접수내용</td>
+            <td align="center" id="m8">조치내용</td>
+            <td align="center" id="m9">상태</td>
+            <td align="center" id="m10">담당자</td>
+            <td align="center" id="m11">확인</td>
+            <td align="center" id="m12">접수</td>
+            <td align="center" id="m13">완료</td>
         </tr>
         </thead>
      </table>

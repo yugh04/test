@@ -30,7 +30,7 @@
 
       function Teamrejectbtn() {
         var reason = window.prompt("반려사유를 입력해주세요.","");
-        document.Teamreject.teamrejectreason.value = reason;c
+        document.Teamreject.teamrejectreason.value = reason;
         let status = document.getElementsByName('status2')[0].value;
             if (status == '신청완료'){
                 alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
@@ -76,14 +76,27 @@ td#td22{
    font-size:16px;
    font-weight:3px;
 }
-#tb3{
-   margin-left:4.6%;
-    }
+
+@media all and (max-width:1600px){
 #buttonlocation1{
     display: inline-block;
     margin-left:50%;
     margin-top:2%;
 }
+#tb3{
+   margin-left:4.6%;
+}}
+
+@media all and (min-width:1610px){
+#buttonlocation1{
+    display: inline-block;
+    margin-left:58%;
+    margin-top:2%;
+}
+#tb3{
+   margin-left:3.8%;
+}}
+
 #buttonlocation2{
     display: inline-block;
 }
@@ -153,6 +166,7 @@ td#td22{
                     {% endfor %}
                     <input type="hidden" value={{work.job}} name="jobno" >
                     <input type="hidden" value={{work.roomno}} name="roomno" >
+                    <input type="hidden" value={{work.status}} name="status3" >
                     <i class="xi-check"><input type="submit" class="click2"  value="Accept" onclick="Approvalbtn();"></i>
                 </form></td>
                 <td><form action = "teamreject", method="post" name="Teamreject">
