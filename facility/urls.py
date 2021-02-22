@@ -15,7 +15,9 @@ urlpatterns = [
     path('adminurl/plus', quest.views.plus),  # views urls 패턴입력
     path('adminurl/minus', quest.views.minus),  # views urls 패턴입력
     path('adminroom/', quest.views.adminroom, name='adminroom'),  # views urls 패턴입력
+    path('adminroom/roominsert', quest.views.roominsert, name='roominsert'),  # views urls 패턴입력
     path('teammanager/', quest.views.teammanager, name='teammanager'),  # views urls 패턴입력
+    path('teammanager/managerinsert', quest.views.managerinsert, name='managerinsert'),  # views urls 패턴입력
     path('adminmenu/', quest.views.adminmenu, name='adminmenu'),  # views urls 패턴입력
     path('register/', quest.views.register, name='register'),  # views urls 패턴입력
     path('register/registeok', quest.views.registeok, name='registeok'),  # views urls 패턴입력

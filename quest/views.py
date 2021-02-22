@@ -209,6 +209,34 @@ def changeinfook(request):
         changeinfo.save() # 저장
         return render(request, 'changefinish.html')
 
+def roominsert(request):  # 검색창
+    if request.method == 'POST':  # 매소드값이 post인 값만 받는다
+        room( #워크테이블에 저장하기
+            roomname = request.POST.get("roomname"),
+            roomno = request.POST.get("roomno"),
+        ).save() #저장
+    rooms = room.objects.all().order_by('no') #db 동기화
+    context={'room':rooms}
+    return render(request, 'adminroom.html', context) #templates 내 html연결
+
+def managerinsert(request):  # 검색창
+    if request.method == 'POST':  # 매소드값이 post인 값만 받는다
+        try:
+            searchid = request.POST.get("id")
+            managermail1 = users.objects.get(userid = searchid)
+            useremail1 = [managermail1.useremail]  # 팀장메일주소 불러오기
+            manageremail = useremail1[0]
+            manager(  # 워크테이블에 저장하기
+                teamname=request.POST.get("teamname"),
+                name=request.POST.get("name"),
+                id=request.POST.get("id"),
+                email=manageremail,
+            ).save()  # 저장
+        except:
+            print("에러")
+        teamm = manager.objects.all() #db 동기화
+        context={'teammanager':teamm}
+        return render(request, 'teammanager.html', context) #templates 내 html연결
 
 ##############################################################################################################
 ################################################수리제작의뢰서###################################################
@@ -335,10 +363,14 @@ def insertok(request): #insertok 클릭시 동작 // 완료
                         "\n Link : http://dmbio.synology.me:803"
 
     # 팀장에게 메일보내기
-        managermail2 = manager.objects.get(teamname=team1)
-        managermail = [managermail2.email]
-        email2 = EmailMessage(titletext, emailtext, to=managermail)
-        email2.send()
+        manageremail2 = manager.objects.filter(teamname=team1)  # 레벨4권한담당자한테 메일보내기
+        repemail = manageremail2.values('email')  # sql문 dataframe으로 변경
+        df = pd.DataFrame.from_records(repemail)
+        dflen = len(df.index) #담당자 인원수 확인
+        for k in range(dflen):
+            managermail = df.iat[k, 0]
+            email2 = EmailMessage(titletext, emailtext, to=[managermail])
+            email2.send()
 
     #입력값 저장
         worktable( #워크테이블에 저장하기
@@ -403,16 +435,18 @@ def completebtn(request): #조치완료버튼 //
                 email2 = email1[0] #str변환
                 useremail2 = users.objects.get(userid=email2)
                 useremail = [useremail2.useremail] #이메일 주소 불러오기
-        # 팀장 이메일 주소 불러오기
-                team1 = [work2.team]  # team불러오기
-                team2= team1[0] #str변환
-                team3 = manager.objects.get(teamname=team2)
-                teamemail = [team3.email]  # team이메일불러오기
-        # 메일보내기
                 email1 = EmailMessage(titletext, emailtext, to=useremail)
                 email1.send()
-                email2 = EmailMessage(titletext, emailtext, to=teamemail)
-                email2.send()
+        # 팀장 이메일 주소 불러오기
+                team1 = [work2.team]  # team불러오기
+                manageremail2 = manager.objects.filter(teamname=team1)  # 레벨4권한담당자한테 메일보내기
+                repemail = manageremail2.values('email')  # sql문 dataframe으로 변경
+                df = pd.DataFrame.from_records(repemail)
+                dflen = len(df.index)  # 담당자 인원수 확인
+                for k in range(dflen):
+                    managermail = df.iat[k, 0]
+                    email2 = EmailMessage(titletext, emailtext, to=[managermail])
+                    email2.send()
         #스테이터스 값 업데이트 /조치완료내용 업로드
                 work2.status = "조치완료"
                 work2.summary = request.POST.get('result1')
@@ -447,7 +481,8 @@ def completebtn(request): #조치완료버튼 //
                 username = userinfo1[0]
                 userinfo2 = [userinfo.userteam]  # team명 str
                 userteam = userinfo2[0]
-                return render(request, 'complete.html',
+                messages.error(request, "WARNING: 수리제작의뢰서 [조치완료]는 수리제작담당자만 가능합니다.")  # 경고
+                return render(request, 'completealarm.html',
                             {'worktables': worktables, 'comp2': comp2, 'room2': room2, "idd2": idd2, "idd3": idd3,
                             "username": username, "userteam": userteam})
 
@@ -636,7 +671,6 @@ def completereject(request): #조치완료반려 // 완료
             repemail1 = users.objects.get(username = repcheck)
             repemail2 = [repemail1.useremail]
             repemail = repemail2[0]
-            print(repemail)
         # 이메일 내용 생성
             work2 = worktable.objects.get(job=jobno1)
             summary1 = [work2.summary]
@@ -705,7 +739,7 @@ def reject(request): #반려 //
             info66 = [search2.userid]
             info6 = info66[0]  # 유져아이디 str값
 
-            # 이메일 내용 작성
+        # 이메일 내용 작성
             titletext = "수리제작의뢰서 요청반려메일 // Job No:" + info1
             emailtext = "수리제작의뢰서 Job No:" + info1 + "가 반려되었습니다." + \
                         "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info6 + ")" + "\n위치: " + info4 + \
@@ -714,12 +748,12 @@ def reject(request): #반려 //
                         "\n반려사유: " + reason + \
                         "\n Link : http://dmbio.synology.me:803"
 
-            # 이메일 보내기
+        # 이메일 보내기
             repemail2 = users.objects.get(userid=info6)
             repemail = [repemail2.useremail]
             email1 = EmailMessage(titletext, emailtext, to=repemail)
             email1.send()
-            # status값 변경/저장
+        # status값 변경/저장
             work2 = worktable.objects.get(job=search)  # team명과 search값이 같은 항목을 필터링한다.
             work2.status = "반려"
             work2.engrep = userid
@@ -747,7 +781,7 @@ def accept(request): #접수 //
 
         if acceptauth == 4 or acceptauth == 5:
             if status =="신청완료":
-    #이메일 내용 정보 필터링
+        #이메일 내용 정보 필터링
                 search = request.POST.get('accept1')  # html job no 값을 받는다.
                 search2 = worktable.objects.get(job=search)
                 info11 = [search2.job]
@@ -771,12 +805,12 @@ def accept(request): #접수 //
                             "\n시스템운영팀 담당자: " + userid + \
                             "\n Link : http://dmbio.synology.me:803"
 
-                #이메일 보내기
+            #이메일 보내기
                 repemail2 = users.objects.get(userid=info6)
                 repemail = [repemail2.useremail]
                 email1 = EmailMessage(titletext, emailtext, to=repemail)
                 email1.send()
-                #status값 변경/저장
+            #status값 변경/저장
                 work2 = worktable.objects.get(job=search)  # team명과 search값이 같은 항목을 필터링한다.
                 work2.status = "접수"
                 work2.engrep = userid
@@ -827,53 +861,56 @@ def teamreject(request): #삭제 // 완료
         teamchk =[status2.team]
         team = teamchk[0] #status값 받기
     # 팀장여부 판단하기
-        managername = manager.objects.get(teamname=team)
-        managername1 = [managername.name]
-        managerchk = managername1[0]
         namechk = request.POST.get('manager1')
-        if namechk == managerchk:
-            if status3 == "신청":  # pw값 일치하는지 확인
-                # 신청완료 정보값 변경
-                today = date.datetime.today()
-                dates = today.strftime('%y%m%d')  # 결재일 받기
-                app = "반려" + " / 20" + dates
-                status2.approval = app
-                status2.status = "반려"
-                status2.save()
-                # 메일내용 작성
-                info1 = request.POST.get('jobno')
-                info22 = [status2.team]  # 팀
-                info2 = info22[0]
-                info33 = [status2.rep]  # 신청자
-                info3 = info33[0]
-                info44 = [status2.userid]  # 신청자 아이디
-                info4 = info44[0]
-                info55 = [status2.roomno]  # 룸번호
-                info5 = info55[0]
-                info66 = [status2.description]  # 내용
-                info6 = info66[0]
-                repemail2 = users.objects.get(userid=info4)
-                repemail1 = [repemail2.useremail]
-                repemail = repemail1[0] #신청인 이메일 주소
-                #메일 내용 확정 및 메일 보내기
-                titletext = "수리제작의뢰서 요청 반려메일 // Job No:" + info1
-                emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청서가 [반려]되었습니다." + \
-                        "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + \
-                        "\n요청내용: " + info6 +"\n반려사유: " + reason + \
-                        "\n Link : http://dmbio.synology.me:803"
-                email = EmailMessage(titletext, emailtext, to=[repemail])
-                email.send()
-                #화면 전환
-                worktables = worktable.objects.all().order_by('-no')  # db 동기화
-                idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
-                messages.error(request, "해당 Job No.가 반려처리 되었습니다.")  # 경고
-                return render(request, 'popupalarm.html', {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
-            else:
-                messages.error(request, "WARNING: [상태]값이 [신청]일 경우에만 진행됩니다.")  # 경고창
-                worktables = worktable.objects.all().order_by('-no')  # db 동기화
-                idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
-                return render(request, 'popupalarm.html',
-                              {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
+        managername = manager.objects.filter(teamname=team)
+        managerchk1 = managername.values('name')  # sql문 dataframe으로 변경
+        df1 = pd.DataFrame.from_records(managerchk1)
+        dflen1 = len(df1.index)  # 팀장 인원수 확인
+        for j in range(dflen1):
+            managerchk = df1.iat[j, 0]
+            if namechk == managerchk:
+                if status3 == "신청":  # pw값 일치하는지 확인
+                    # 신청완료 정보값 변경
+                    today = date.datetime.today()
+                    dates = today.strftime('%y%m%d')  # 결재일 받기
+                    app = "반려" + " / 20" + dates
+                    status2.approval = app
+                    status2.status = "반려"
+                    status2.save()
+                    # 메일내용 작성
+                    info1 = request.POST.get('jobno')
+                    info22 = [status2.team]  # 팀
+                    info2 = info22[0]
+                    info33 = [status2.rep]  # 신청자
+                    info3 = info33[0]
+                    info44 = [status2.userid]  # 신청자 아이디
+                    info4 = info44[0]
+                    info55 = [status2.roomno]  # 룸번호
+                    info5 = info55[0]
+                    info66 = [status2.description]  # 내용
+                    info6 = info66[0]
+                    repemail2 = users.objects.get(userid=info4)
+                    repemail1 = [repemail2.useremail]
+                    repemail = repemail1[0] #신청인 이메일 주소
+                    #메일 내용 확정 및 메일 보내기
+                    titletext = "수리제작의뢰서 요청 반려메일 // Job No:" + info1
+                    emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청서가 [반려]되었습니다." + \
+                            "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + \
+                            "\n요청내용: " + info6 +"\n반려사유: " + reason + \
+                            "\n Link : http://dmbio.synology.me:803"
+                    email = EmailMessage(titletext, emailtext, to=[repemail])
+                    email.send()
+                    #화면 전환
+                    worktables = worktable.objects.all().order_by('-no')  # db 동기화
+                    idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
+                    messages.error(request, "해당 Job No.가 반려처리 되었습니다.")  # 경고
+                    return render(request, 'popupalarm.html', {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
+                else:
+                    messages.error(request, "WARNING: [상태]값이 [신청]일 경우에만 진행됩니다.")  # 경고창
+                    worktables = worktable.objects.all().order_by('-no')  # db 동기화
+                    idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
+                    return render(request, 'popupalarm.html',
+                                  {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
         else:
             worktables = worktable.objects.all().order_by('-no')  # db 동기화
             idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
@@ -888,70 +925,73 @@ def approval(request): #삭제 // 완료
         statuschk =[status2.status]
         status3 = statuschk[0] #status값 받기
         teamchk =[status2.team]
-        team = teamchk[0] #status값 받기
+        team = teamchk[0] #team값 받기
     # 팀장여부 판단하기
-        managername = manager.objects.get(teamname=team)
-        managername1 = [managername.name]
-        managerchk = managername1[0]
         namechk = request.POST.get('manager1')
-        if namechk == managerchk:
-            if status3 == "신청":  # pw값 일치하는지 확인
-    #신청완료 정보값 변경
-                managers = request.POST.get('manager1')  # html 결재자 이름의 값을 받는다.
-                today = date.datetime.today()
-                dates = today.strftime('%y%m%d') #결재일 받기
-                app = managers + " / 20"+ dates
-                status2.approval = app
-                status2.status = "신청완료"
-                status2.save()
-    #메일내용 작성
-                info1 = request.POST.get('jobno')
-                info22 = [status2.team] #팀
-                info2 = info22[0]
-                info33 = [status2.rep] #신청자
-                info3 = info33[0]
-                info44 = [status2.userid] #신청자 아이디
-                info4 = info44[0]
-                info55 = [status2.roomno]   #룸번호
-                info5 = info55[0]
-                info66 = [status2.description] #내용
-                info6 = info66[0]
-    # level4 담당자에게 메일보내기
-                repemail2 = users.objects.filter(auth="4")  # 레벨4권한담당자한테 메일보내기
-                repemail = repemail2.values('useremail')  # sql문 dataframe으로 변경
-                df = pd.DataFrame.from_records(repemail)
-                dflen = len(df.index) #담당자 인원수 확인
+        managername = manager.objects.filter(teamname=team)
+        managerchk1 = managername.values('name')  # sql문 dataframe으로 변경
+        df1 = pd.DataFrame.from_records(managerchk1)
+        dflen1 = len(df1.index)  # 팀장 인원수 확인
+        for j in range(dflen1):
+            managerchk = df1.iat[j, 0]
+            if namechk == managerchk:
+                if status3 == "신청":  # pw값 일치하는지 확인
+        #신청완료 정보값 변경
+                    managers = request.POST.get('manager1')  # html 결재자 이름의 값을 받는다.
+                    today = date.datetime.today()
+                    dates = today.strftime('%y%m%d') #결재일 받기
+                    app = managers + " / 20"+ dates
+                    status2.approval = app
+                    status2.status = "신청완료"
+                    status2.save()
+        #메일내용 작성
+                    info1 = request.POST.get('jobno')
+                    info22 = [status2.team] #팀
+                    info2 = info22[0]
+                    info33 = [status2.rep] #신청자
+                    info3 = info33[0]
+                    info44 = [status2.userid] #신청자 아이디
+                    info4 = info44[0]
+                    info55 = [status2.roomno]   #룸번호
+                    info5 = info55[0]
+                    info66 = [status2.description] #내용
+                    info6 = info66[0]
+        # level4 담당자에게 메일보내기
+                    repemail2 = users.objects.filter(auth="4")  # 레벨4권한담당자한테 메일보내기
+                    repemail = repemail2.values('useremail')  # sql문 dataframe으로 변경
+                    df = pd.DataFrame.from_records(repemail)
+                    dflen = len(df.index) #담당자 인원수 확인
 
-    #룸오류값에 따른 메일보내기
-                info77 = [status2.roomname]
-                info7 = info77[0]
-                titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
-                emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청완료되었습니다." + \
-                        "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + " (" + info7 + ")" + \
-                        "\n요청내용: " + info6 + \
-                        "\n Link : http://dmbio.synology.me:803"
-                for k in range(dflen):
-                        mailaddress = df.iat[k, 0]
-                        email = EmailMessage(titletext, emailtext, to=[mailaddress])
-                        email.send()
-            #화면반환
-                search2 = request.POST.get('jobno')  # html jono의 값을 받는다.
-                roomno2 = request.POST.get('roomno')  # html roomno의 값을 받는다.
-                userid1 = request.POST.get('idd2')  # html userid의 값을 받는다.
-                idd2 = request.POST.get('idd2')  # html loginid의 값을 받는다.
-                worktables = worktable.objects.all().order_by('-no')  # db 동기화
-                work2 = worktable.objects.filter(job=search2)  # team명과 search값이 같은 항목을 필터링한다.
-                roomname = room.objects.filter(roomno=roomno2)
-                user = users.objects.filter(userid=userid1)
-                idd3 = users.objects.filter(userid=idd2)
-                return render(request, 'popup.html',
-                              {'worktables': worktables, 'work2': work2, 'roomname': roomname, 'user': user, 'idd2': idd2,
-                               'idd3': idd3})
-            else:
-                messages.error(request, "WARNING: [상태]값이 [신청]일 경우에만 진행됩니다.") #경고창
-                worktables = worktable.objects.all().order_by('-no')  # db 동기화
-                idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
-                return render(request, 'popupalarm.html', {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
+        #룸오류값에 따른 메일보내기
+                    info77 = [status2.roomname]
+                    info7 = info77[0]
+                    titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
+                    emailtext = "수리제작의뢰서 Job No:" + info1 + "가 신청완료되었습니다." + \
+                            "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + " (" + info7 + ")" + \
+                            "\n요청내용: " + info6 + \
+                            "\n Link : http://dmbio.synology.me:803"
+                    for k in range(dflen):
+                            mailaddress = df.iat[k, 0]
+                            email = EmailMessage(titletext, emailtext, to=[mailaddress])
+                            email.send()
+                #화면반환
+                    search2 = request.POST.get('jobno')  # html jono의 값을 받는다.
+                    roomno2 = request.POST.get('roomno')  # html roomno의 값을 받는다.
+                    userid1 = request.POST.get('idd2')  # html userid의 값을 받는다.
+                    idd2 = request.POST.get('idd2')  # html loginid의 값을 받는다.
+                    worktables = worktable.objects.all().order_by('-no')  # db 동기화
+                    work2 = worktable.objects.filter(job=search2)  # team명과 search값이 같은 항목을 필터링한다.
+                    roomname = room.objects.filter(roomno=roomno2)
+                    user = users.objects.filter(userid=userid1)
+                    idd3 = users.objects.filter(userid=idd2)
+                    return render(request, 'popup.html',
+                                  {'worktables': worktables, 'work2': work2, 'roomname': roomname, 'user': user, 'idd2': idd2,
+                                   'idd3': idd3})
+                else:
+                    messages.error(request, "WARNING: [상태]값이 [신청]일 경우에만 진행됩니다.") #경고창
+                    worktables = worktable.objects.all().order_by('-no')  # db 동기화
+                    idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
+                    return render(request, 'popupalarm.html', {'worktables': worktables, "idd2": idd2})  # templates 내 html연결
         else:
             worktables = worktable.objects.all().order_by('-no')  # db 동기화
             idd2 = request.POST.get('idd2')  # html idd의 값을 받는다.
@@ -1102,11 +1142,12 @@ def upload(request):
         #파일 업로드 하기!!!
         file1 = request.FILES["file1"]
         print(file1.name)
-        print(file1.name[-3:]) #확장명 추출하기
+        print(file1.name[-3:]) #파일 확장명 추출하기
         fs = FileSystemStorage()
         name = fs.save(file1.name, file1) #파일저장 // 이름저장
         #파일 읽어오기!!!
         url = fs.url(name)
+        print(url)
         context = {'url': url}
     else:
         file_name ="-"

@@ -8,7 +8,21 @@
         }
     </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+.myButton2 {
+    border:0px;
+	font-family: 'Do Hyeon', sans-serif;
+	font-size:16px;
+    background-color: rgba(255, 255, 255, 0.0);
+	cursor:pointer;
+	font-weight:bold;
+}
+#location{
+margin-top:10%;
+padding-left:71%;
+position:fixed;
+}
 
 </style>
 </head>
@@ -16,6 +30,14 @@
 <header>
     {% include "adminhead.html" %}
     <c align="center"> &nbsp;&nbsp;&nbsp;Room Name & Room No. Tap</c>
+    <div id="location">
+    <form action="roominsert" method="post" >
+        {% csrf_token %}
+        <input type="text" name="roomno" placeholder="Room No." required>
+        <input type="text" name="roomname" placeholder="Room Name" required>
+        <input type = "submit" class="myButton2" value="신규등록" >
+    </form>
+    </div>
 </header>
 
 <main>
@@ -51,7 +73,6 @@
                 <input type="hidden" value={{rm.roomname}} name="oldname">
                 <input type="hidden" value={{rm.roomno}} name="oldno">
                 <input type = "submit"  value="수정" onclick="changerm();"></td>
-
         </form>
         </tr>
         {% endfor %}
