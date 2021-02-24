@@ -118,7 +118,7 @@ b {
 <body>
 <main>
 <b>&nbsp;&nbsp;로그인 페이지</b><br>&nbsp;<br>
-<form action="home" method="post">
+<form action="{%url 'list'%}" method="post">
 {% csrf_token %}
 <input id="id" name="idd2" class="textcss" placeholder="Id를 입력하세요" required><br><br>
 <input id="pw" name="pww" type="password" class="textcss" placeholder="Password를 입력하세요" required><br><br>

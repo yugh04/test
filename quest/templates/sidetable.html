@@ -10,15 +10,15 @@
         <table id="tablehead" style="word-break:break-all">
             <tbody>
         <tr>
-            <td align="center" id="m1"><B>No.</B></td>
-            <td align="center" id="m2"><B>Job No.</B></td>
-            <td align="center" id="m3"><B>신청자</B></td>
-            <td align="center" id="m4"><B>Room</B></td>
-            <td align="center" id="m5"><B>접수내용</B></td>
-            <td align="center" id="m6"><B>상태</B></td>
-            <td align="center" id="m7"><B>확인</B></td>
-            <td align="center" id="m8"><B>접수</B></td>
-            <td align="center" id="m9"><B>완료</B></td>
+            <td align="center" class="m10"><B>No.</B></td>
+            <td align="center" class="m11"><B>Job No.</B></td>
+            <td align="center" class="m12"><B>신청자</B></td>
+            <td align="center" class="m13"><B>Room</B></td>
+            <td align="center" class="m14"><B>접수내용</B></td>
+            <td align="center" class="m15"><B>상태</B></td>
+            <td align="center" class="m16"><B>확인</B></td>
+            <td align="center" class="m17"><B>접수</B></td>
+            <td align="center" class="m18"><B>완료</B></td>
         </tr>
             </tbody>
         </table>
@@ -29,14 +29,14 @@
      <tbody>
         <tr>
         {% for worktable in worktables %}
-            <td width="5%" align="center" >{{worktable.no}}</td> <!--models.py에서 값받아오기-->
-            <td width="17%" align="center" >{{worktable.job}}</td>
-            <td width="10%" align="center" >{{worktable.rep}}</td>
-            <td width="10%" align="center" >{{worktable.roomno}}</td>
-            <td width="30%" >{{worktable.description}}</td>
-            <td width="10%" align="center">{{worktable.status}}</td>
+            <td class="m1" align="center" >{{worktable.no}}</td> <!--models.py에서 값받아오기-->
+            <td class="m2" align="center" >{{worktable.job}}</td>
+            <td class="m3" align="center" >{{worktable.rep}}</td>
+            <td class="m4" align="center" >{{worktable.roomno}}</td>
+            <td class="m5" >{{worktable.description}}</td>
+            <td class="m6" align="center">{{worktable.status}}</td>
 
-            <td width="5%" align="center"><form action="{%url 'check'%}" method="post" name="Info">
+            <td class="m7" align="center"><form action="{%url 'check'%}" method="post" name="Info">
                 {% csrf_token %}
                 <input type="hidden" value={{worktable.job}} name="jobno#" >
                 <input type="hidden" value={{worktable.roomno}} name="roomno#" >
@@ -46,7 +46,7 @@
                 </form>
             </td>
 
-            <td width="5%" align="center"><form action="{%url 'popup'%}" method="post" >
+            <td class="m8" align="center"><form action="{%url 'popup'%}" method="post" >
                 {% csrf_token %}
                 <input type="hidden" value={{worktable.job}} name="popup1" >
                 <input type="hidden" value={{worktable.roomno}} name="popup2" >
@@ -57,7 +57,7 @@
                 </form>
             </td>
 
-            <td width="5%" align="center"><form action="{%url 'complete'%}" method="post" >
+            <td class="m9" align="center"><form action="{%url 'complete'%}" method="post" >
                  {% csrf_token %}
                 <input type="hidden" value={{worktable.job}} name="job1" >
                 <input type="hidden" value={{worktable.roomno}} name="job2" >

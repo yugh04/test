@@ -55,33 +55,7 @@ tr:nth-child(even){
     margin-top:0%;
     clear:both;
 }
-@media all and (max-width:1600px){
-#tabledesc{
-    z-index:13;
-    font-size:0.869565217391304vw;
-    font-family:arial;
-    grid-area:tabledesc;
-    clear:both;
-    position:absolute;top:20%; left:11%;
-    overflow:auto;
-    height:75%;
-}
-#m1{padding-left:0.434782608695652vw;}
-#m2{padding-left:3.47826086956522vw;}
-#m3{padding-left:4.34782608695652vw;}
-#m4{padding-left:2.98136645962733vw;}
-#m5{padding-left:1.5527950310559vw;}
-#m6{padding-left:1.5527950310559vw;}
-#m7{padding-left:7.45341614906832vw;}
-#m8{padding-left:13.0434782608696vw;}
-#m9{padding-left:7.57763975155279vw;}
-#m10{padding-left:1.73913043478261vw;}
-#m11{padding-left:1.24223602484472vw;}
-#m12{padding-left:0.993788819875776vw;}
-#m13{padding-left:0.993788819875776vw;}
-}
 
-@media all and (min-width:1601px){
 #tabledesc{
     z-index:13;
     font-size:0.729166666666667vw;
@@ -89,24 +63,30 @@ tr:nth-child(even){
     grid-area:tabledesc;
     clear:both;
     position:absolute;top:17%; left:11%;
-    overflow:auto;
+    overflow:scroll;
     height:79%;
     width:89%;
 }
-#m1{padding-left:0.364583333333333vw;}
-#m2{padding-left:4.16666666666667vw;}
-#m3{padding-left:4.94791666666667vw;}
-#m4{padding-left:3.125vw;}
-#m5{padding-left:2.34375vw;}
-#m6{padding-left:2.60416666666667vw;}
-#m7{padding-left:7.8125vw;}
-#m8{padding-left:14.5833333333333vw;}
-#m9{padding-left:7.91666666666667vw;}
-#m10{padding-left:2.23958333333333vw;}
-#m11{padding-left:1.5625vw;}
-#m12{padding-left:1.5625vw;}
-#m13{padding-left:1.19791666666667vw;}
-}
+.m14{width:1.5625vw;}
+.m15{width:10.4166666666667vw;}
+.m16{width:4.16666666666667vw;}
+.m17{width:5.20833333333333vw;}
+.m18{width:5.20833333333333vw;}
+.m19{width:6.77083333333333vw;}
+.m20{width:15.625vw;}
+.m21{width:19.2708333333333vw;}
+.m22{width:3.125vw;}
+.m23{width:5.20833333333333vw;}
+.m24{width:3.125vw;}
+.m25{width:3.125vw;}
+.m26{width:3.125vw;}
+.m27{width:19.0104166666667vw;}
+.m28{width:2.86458333333333vw;}
+.m29{width:5.20833333333333vw;}
+.m30{width:3.07291666666667vw;}
+.m31{width:3.07291666666667vw;}
+.m32{width:3.07291666666667vw;}
+
 .container{
             display: grid;
             height: 100%;
@@ -152,19 +132,19 @@ body{overflow:hidden;}
      <table>
         <thead>
         <tr>
-            <td align="center" id="m1">No.</td>
-            <td align="center" id="m2">Job No.</td>
-            <td align="center" id="m3">팀</td>
-            <td align="center" id="m4">신청자</td>
-            <td align="center" id="m5">신청일자</td>
-            <td align="center" id="m6">Room No.</td>
-            <td align="center" id="m7">접수내용</td>
-            <td align="center" id="m8">조치내용</td>
-            <td align="center" id="m9">상태</td>
-            <td align="center" id="m10">담당자</td>
-            <td align="center" id="m11">확인</td>
-            <td align="center" id="m12">접수</td>
-            <td align="center" id="m13">완료</td>
+            <td align="center" class="m14">No.</td>
+            <td align="center" class="m15">Job No.</td>
+            <td align="center" class="m16">팀</td>
+            <td align="center" class="m17">신청자</td>
+            <td align="center" class="m18">신청일자</td>
+            <td align="center" class="m19">Room No.</td>
+            <td align="center" class="m20">접수내용</td>
+            <td align="center" class="m27">조치내용</td>
+            <td align="center" class="m28">상태</td>
+            <td align="center" class="m29">담당자</td>
+            <td align="center" class="m30">확인</td>
+            <td align="center" class="m31">접수</td>
+            <td align="center" class="m32">완료</td>
         </tr>
         </thead>
      </table>
@@ -174,18 +154,18 @@ body{overflow:hidden;}
      <tbody>
         <tr>
         {% for worktable in worktables %}
-            <td width="2%" align="center">{{worktable.no}}</td> <!--models.py에서 값받아오기-->
-            <td width="12%" align="center">{{worktable.job}}</td>
-            <td width="5%" align="center">{{worktable.team}} </td>
-            <td width="6%" align="center">{{worktable.rep}}</td>
-            <td width="6%" align="center">{{worktable.date}}</td>
-            <td width="8%" align="center">{{worktable.roomno}}</td>
-            <td width="20%" >{{worktable.description}}</td>
-            <td width="20%" >{{worktable.summary}}</td>
-            <td width="5%" align="center" id="test">{{worktable.status}}</td>
-            <td width="5%" align="center">{{worktable.engrep}}</td>
+            <td align="center" class="m14">{{worktable.no}}</td> <!--models.py에서 값받아오기-->
+            <td align="center" class="m15">{{worktable.job}}</td>
+            <td align="center" class="m16">{{worktable.team}} </td>
+            <td align="center" class="m17">{{worktable.rep}}</td>
+            <td align="center" class="m18">{{worktable.date}}</td>
+            <td align="center" class="m19">{{worktable.roomno}}</td>
+            <td align="center" class="m20">{{worktable.description}}</td>
+            <td align="center" class="m21">{{worktable.summary}}</td>
+            <td align="center" class="m22">{{worktable.status}}</td>
+            <td align="center" class="m23">{{worktable.engrep}}</td>
 
-            <td width="4%" align="center"><form action="{%url 'check'%}" method="post" >
+            <td align="center" class="m24"><form action="{%url 'check'%}" method="post" >
                 {% csrf_token %}
                 <input type="hidden" value={{worktable.job}} name="jobno#" >
                 <input type="hidden" value={{worktable.roomno}} name="roomno#" >
@@ -196,7 +176,7 @@ body{overflow:hidden;}
                 </form>
             </td>
 
-            <td width="3%" align="center"><form action="{%url 'popup'%}" method="post" >
+            <td class="m25" align="center"><form action="{%url 'popup'%}" method="post" >
                 {% csrf_token %}
                 <input type="hidden" value={{worktable.job}} name="popup1" >
                 <input type="hidden" value={{worktable.roomno}} name="popup2" >
@@ -208,7 +188,7 @@ body{overflow:hidden;}
                 </form>
             </td>
 
-            <td width="5%" align="center"><form action="{%url 'complete'%}" method="post" >
+            <td class="m26" align="center"><form action="{%url 'complete'%}" method="post" >
                  {% csrf_token %}
                 <input type="hidden" value={{worktable.job}} name="job1" >
                 <input type="hidden" value={{worktable.roomno}} name="job2" >

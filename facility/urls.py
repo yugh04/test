@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
 #홈페이지
     path('', quest.views.login, name='login'),  # views urls 패턴입력
-    path('home', quest.views.home, name='home'), #views urls 패턴입력
+    path('home', quest.views.list, name='list'), #views urls 패턴입력
     path('list/home2', quest.views.home2, name='home2'),  # views urls 패턴입력
     path('list/list', quest.views.list, name='list'),  # views urls 패턴입력
 #로그인페이지
