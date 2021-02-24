@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <title>등록</title>
    <script language="javascript">
 //변수 = 부모창에서 값받기 / 팝업창 폼이름.네임값 = 부모창에서 온 변수
@@ -77,7 +78,6 @@
         right:0;
         height:30px;
         background:burlywood;
-        color:whitesmoke;
         font-weight:bold;
         display:flex;
         justify-content:space-between;
@@ -92,30 +92,6 @@
         font-family: arial;
         font-size:24px;
         margin-right:20px;
-    }
- .btn3 {
-	box-shadow:inset 0px 1px 0px 0px #a6827e;
-	background:linear-gradient(to bottom, #c2864a 5%, #8c5923 100%);
-	background-color:#c2864a;
-	border-radius:18px;
-	border:2px solid #54381e;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:9px;
-	padding:5px 9px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #4d3534;
-	margin-left:90%;
-}
-.btn3:hover {
-	background:linear-gradient(to bottom, #8c5923 5%, #c2864a 100%);
-	background-color:#8c5923;
-}
-.btn3:active {
-	position:relative;
-	top:1px;
     }
 header2{
         height:1px;
@@ -141,12 +117,18 @@ textarea {
             margin-left: 30px;
         }
 .click {
+    font-family:'Hammersmith One', sans-serif;
+    font-size:20px;
+    background-color: rgba(255, 255, 255, 0.0);
 	cursor:pointer;
-	font-family:arial;
-	font-size:17px;
-	margin-left: 72%;
-    border: 1px solid #000;
-    font-weight:bold;
+	border:1px;
+	font-color:black;
+}
+#location{
+padding-left:70%;
+}
+i{
+padding-left:87%;
 }
 </style>
 
@@ -169,11 +151,13 @@ textarea {
 <br><a>&nbsp;◈ Room No. : <input name="roomno" class="textclass" type="text"></a>
 <br><a>&nbsp;◈ Description : <textarea name="description" class="textclass" ></textarea></a>
 <input name="loginid" type="hidden">
-<input type="submit" value="Change" class="click" onclick="Check();">
+        <div id="location">
+            <l class="xi-catched"><input type="submit" value="Change" class="click" onclick="Check();"></l>
+        </div>
 </form>
 </main>
 <footer>
-        <input type="button" class="btn3" value="Close" onclick="Close();">
+    <i class="xi-close-circle"><input type="button" class="click" value="Close" onclick="Close();"></i>
 </footer>
 </body>
 </html>
