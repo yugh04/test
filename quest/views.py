@@ -430,15 +430,17 @@ def completebtn(request): #조치완료버튼 //
                         "\n작업내용: " + resultmail + \
                         "\n Link : http://dmbio.synology.me:803"
 
-        # 이메일 주소 불러오기
+        # 신청자 이메일 주소 불러오기
                 email1 = [work2.userid] # 이메일 아이디 받아오기
                 email2 = email1[0] #str변환
                 useremail2 = users.objects.get(userid=email2)
                 useremail = [useremail2.useremail] #이메일 주소 불러오기
                 email1 = EmailMessage(titletext, emailtext, to=useremail)
                 email1.send()
-        # 팀장 이메일 주소 불러오기
-                team1 = [work2.team]  # team불러오기
+
+        # 신청팀장 이메일 주소 불러오기
+                team11 = [work2.team]  # team불러오기
+                team1 = team11[0]  # str변환
                 manageremail2 = manager.objects.filter(teamname=team1)  # 레벨4권한담당자한테 메일보내기
                 repemail = manageremail2.values('email')  # sql문 dataframe으로 변경
                 df = pd.DataFrame.from_records(repemail)
@@ -447,6 +449,17 @@ def completebtn(request): #조치완료버튼 //
                     managermail = df.iat[k, 0]
                     email2 = EmailMessage(titletext, emailtext, to=[managermail])
                     email2.send()
+
+        # SO팀장 이메일 주소 불러오기
+                repemail3 = users.objects.filter(auth="5")  # 레벨4권한담당자한테 메일보내기
+                repemail1 = repemail3.values('useremail')  # sql문 dataframe으로 변경
+                df1 = pd.DataFrame.from_records(repemail1)
+                dflen1 = len(df1.index)  # 담당자 인원수 확인
+                for j in range(dflen1):
+                    managermail1 = df.iat[j, 0]
+                    email3 = EmailMessage(titletext, emailtext, to=[managermail1])
+                    email3.send()
+
         #스테이터스 값 업데이트 /조치완료내용 업로드
                 work2.status = "조치완료"
                 work2.summary = request.POST.get('result1')
@@ -926,6 +939,7 @@ def approval(request): #삭제 // 완료
         status3 = statuschk[0] #status값 받기
         teamchk =[status2.team]
         team = teamchk[0] #team값 받기
+
     # 팀장여부 판단하기
         namechk = request.POST.get('manager1')
         managername = manager.objects.filter(teamname=team)
@@ -962,7 +976,13 @@ def approval(request): #삭제 // 완료
                     df = pd.DataFrame.from_records(repemail)
                     dflen = len(df.index) #담당자 인원수 확인
 
-        #룸오류값에 따른 메일보내기
+        # level5에게 메일보내기
+                    repemail22 = users.objects.filter(auth="5")  # 레벨4권한담당자한테 메일보내기
+                    repemail2 = repemail22.values('useremail')  # sql문 dataframe으로 변경
+                    df1 = pd.DataFrame.from_records(repemail2)
+                    dflen1 = len(df1.index) #담당자 인원수 확인
+
+        #메일보내기
                     info77 = [status2.roomname]
                     info7 = info77[0]
                     titletext = "수리제작의뢰서 요청메일 // Job No:" + info1
@@ -970,10 +990,23 @@ def approval(request): #삭제 // 완료
                             "\n\n팀:" + info2 + "\n신청자: " + info3 + "(" + info4 + ")" + "\n위치: " + info5 + " (" + info7 + ")" + \
                             "\n요청내용: " + info6 + \
                             "\n Link : http://dmbio.synology.me:803"
+
                     for k in range(dflen):
                             mailaddress = df.iat[k, 0]
                             email = EmailMessage(titletext, emailtext, to=[mailaddress])
                             email.send()
+                    for j in range(dflen1):
+                            mailaddress1 = df1.iat[j, 0]
+                            email2 = EmailMessage(titletext, emailtext, to=[mailaddress1])
+                            email2.send()
+
+        # 신청자에게 메일보내기
+                    repemail3 = users.objects.get(userid=info4)  # 레벨4권한담당자한테 메일보내기
+                    info88 = [repemail3.useremail]  # 신청자 아이디
+                    info8 = info88[0]
+                    email1 = EmailMessage(titletext, emailtext, to=[info8])
+                    email1.send()
+
                 #화면반환
                     search2 = request.POST.get('jobno')  # html jono의 값을 받는다.
                     roomno2 = request.POST.get('roomno')  # html roomno의 값을 받는다.
