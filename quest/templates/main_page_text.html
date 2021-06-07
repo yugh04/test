@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+#alarm_text{
+        position:fixed;top:45px; left:185px;
+        font-size:0.833333vw;
+        color:green;
+        font-weight:bold;
+        font-family:'Rubik', sans-serif;
+        }
+
+#bm_radius{
+        box-shadow: 3px 4px 0px 0px #A9A9A9;
+        position:fixed;top:6.944444vh; left:9.375vw;
+        border:2px solid #EEEEEE;
+        border-radius:3%;
+        width:89.32292vw;
+        height:41vh;
+    }
+.w1-2{width:5.208333vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.w2-2{width:7.8125vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.w1{width:5.208333vw;
+height:1.851852vh;}
+.w2{width:7.8125vw;
+height:1.851852vh;}
+.w1-1{width:5.208333vw;
+height:1.851852vh;
+font-weight:bold;
+text-decoration: underline;
+}
+.w2-1{width:7.8125vw;
+height:1.851852vh;
+font-weight:bold;
+text-decoration: underline;
+}
+.request{
+font-weight:bold;
+text-decoration: underline;
+}
+#bm_today_table{
+        position:fixed;top:10.18519vh; left:9.89593vw;
+        font-size:0.729167vw;
+        font-color:black;
+        font-family:arial;
+}
+#bm_finish_table{
+        position:fixed;top:10.18519vh; left:26.04167vw;
+        font-size:0.729167vw;
+        font-color:black;
+        font-family:arial;
+}
+#workrequst_table{
+        position:fixed;top:27.5vh; left:9.89593vw;
+        font-size:0.729167vw;
+        font-color:black;
+        font-family:arial;
+}
+#workorder_table{
+        position:fixed;top:277px; left:26.04167vw;
+        font-size:0.729167vw;
+        font-color:black;
+        font-family:arial;
+}
+#not_comp_text{
+        position:fixed;top:420px; left:9.89593vw;
+        font-size:0.833333vw;
+        font-color:black;
+        font-family:arial;
+        font-weight:bold;
+        color:darkblue;
+        text-decoration: underline;
+}
+#today_list_table{
+        position:fixed;top:10.18519vh; left:42.1875vw;
+        font-size:0.729167vw;
+        font-color:black;
+        font-family:arial;}
+.t1{width:5.208333vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.t2{width:7.8125vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.t3{width:5.208333vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.t4{width:10.41667vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.t5{width:20.83333vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.t6{width:5.208333vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.t1-1{height:1.851852vh;}
+#pmchart_radius{
+        box-shadow: 3px 4px 0px 0px #A9A9A9;
+        position:fixed;top:50vh; left:9.375vw;
+        border:2px solid #EEEEEE;
+        border-radius:5%;
+        width:31.25vw;
+        height:48vh;
+    }
+.pm_chart_css{
+        position:fixed;top:51.5vh; left:8.33333vw;
+        z-index:-10;
+        height:45vh;
+        width:34vw;
+}
+#bmchart_radius{
+        box-shadow: 3px 4px 0px 0px #A9A9A9;
+        position:fixed;top:50vh; left:41.33333vw;
+        border:2px solid #EEEEEE;
+        border-radius:5%;
+        width:31.25vw;
+        height:48vh;
+    }
+.bm_chart_css{
+        position:fixed;top:46.2963vh; left:40.625vw;
+        z-index:-10;
+}
+#spare_table{
+        position:fixed;top:53.5vh; left:42.44792vw;
+        font-size:0.729167vw;
+        font-color:black;
+        font-family:arial;
+}
+#spare_chart{
+        position:fixed;top:63.5vh; left:42.44792vw;
+}
+
+.s1{width:7.8125vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.s2{width:10.41667vw;
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+.s3{
+height:1.851852vh;
+font-weight:bold;
+background-color:#3DB7CC;
+color:white;}
+
+#mypage_radius{
+        box-shadow: 3px 4px 0px 0px #A9A9A9;
+        position:fixed;top:50vh; left:73.95833vw;
+        border:2px solid #3DB7CC;
+        border-radius:5%;
+        width:25vw;
+        height:22vh;
+    }
+#my_auth{
+        position:fixed;top:53.5vh; left:75vw;}
+#my_approve{
+        position:fixed;top:53.5vh; left:81.77083vw;}
+#not_comp{
+        position:fixed;top:69vh; left:75vw;
+        font-size:0.625vw;
+        font-family:arial;
+        color:red;
+        font-weight:bold;
+        text-decoration: underline;}
+#date{
+    position:fixed;top:75vh; left:88.54167vw;
+    box-shadow: 3px 4px 0px 0px #A9A9A9;
+    background-color:lightgrey;
+    width:10.41667vw;
+    height:23.14815vh;
+    border-radius:10%;
+}
+#date_title{
+    position:fixed;top:77vh; left:89.0625vw;
+    z-index:1000;
+    width:9.375vw;
+}
+#main_month{
+    font-family:arial;
+    font-size:2.083333vw;
+    font-weight:bold;
+    color:black;
+    background-color:lightgrey;
+}
+main_day{
+    position:fixed;top:82vh; left:90.10417vw;
+    font-family:arial;
+    font-size:6.770833vw;
+    font-weight:bold;
+    color:black;
+}
+table_title{
+        font-family:arial;
+        font-size:0.78125vw;
+        font-color:black;
+        text-decoration: underline;
+        font-weight:bold;
+}
+table_text{
+        font-family:arial;
+        font-size:0.729167vw;
+        font-color:black;
+        font-weight:bold;}
+text_main{
+        font-family:arial;
+        font-size:0.833333vw;
+        font-color:black;
+        font-weight:bold;
+}
+.m1-2{width:7.8125vw;
+height:1.481481vh;
+font-weight:bold;
+background-color:#3DB7CC;
+font-size:0.625vw;
+color:white;}
+.m1{width:5.208333vw;
+height:1.481481vh;
+font-size:0.625vw;
+font-weight:bold;}
+.m2{width:5.208333vw;
+height:1.481481vh;
+font-size:0.625vw;}
+
+a{
+        margin-top:0.925926vh;
+        align-text:left;
+        color:black;
+}
+.my_button {
+        font-family:arial;
+        font-size:0.625vw;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        padding-left:4%;
+        outline:0;
+}
+tr:nth-child(odd){
+    background-color:#EEEEEE;
+}
+</style>
+
+</head>
+<body>
+{% if user_div == "Engineer" %}
+<div id="alarm_text"></div>
+{%endif%}
+<main>
+
+<div id="bm_radius" >
+    &nbsp;&nbsp;<a class="xi-wrench"><text_main>&nbsp;수리제작의뢰서</text_main></a>
+</div>
+<div id="bm_today_table">
+    <table_title>오늘의 수리제작의뢰 건</table_title>
+<table>
+<tr>
+    <td align="center" class="w1-2">팀</td>
+    <td align="center" class="w2-2">요청 건수</td>
+</tr>
+    {% for bm_today in today_info %}
+<tr>
+    <td align="center" class="w1">{{bm_today.team}}</td>
+    <td align="center" class="w2">{{bm_today.team__count}}</td>
+</tr>
+    {%endfor%}
+</table>
+</div>
+
+<div id="bm_finish_table">
+    <table_title>오늘의 수리제작완료 건</table_title>
+<table>
+<tr>
+    <td align="center" class="w1-2">팀</td>
+    <td align="center" class="w2-2">완료건수</td>
+</tr>
+    {% for wo_today in finish_info %}
+<tr>
+    <td align="center" class="w1">{{wo_today.team}}</td>
+    <td align="center" class="w2">{{wo_today.team__count}}</td>
+</tr>
+    {%endfor%}
+</table>
+</div>
+
+<div id="workrequst_table">
+    <table_title>수리제작의뢰 현황표</table_title>
+<table>
+<tr>
+    <td align="center" class="w1-2">상태</td>
+    <td align="center" class="w2-2">전기</td>
+    <td align="center" class="w2-2">건축</td>
+    <td align="center" class="w2-2">종합</td>
+</tr>
+<tr>
+    <td align="center" class="w1">신청</td>
+    <td align="center" class="w2">{{t_e_1_len}}</td>
+    <td align="center" class="w2">{{t_c_1_len}}</td>
+    <td align="center" class="w2">{{t_1_len}}</td>
+</tr>
+<tr>
+    <td align="center" class="w1">접수</td>
+    <td align="center" class="w2">{{t_e_2_len}}</td>
+    <td align="center" class="w2">{{t_c_2_len}}</td>
+    <td align="center" class="w2">{{t_2_len}}</td>
+</tr>
+<tr>
+    <td align="center" class="w1">조치완료</td>
+    <td align="center" class="w2">{{t_e_3_len}}</td>
+    <td align="center" class="w2">{{t_c_3_len}}</td>
+    <td align="center" class="w2">{{t_3_len}}</td>
+</tr>
+<tr>
+    <td align="center" class="w1">종결</td>
+    <td align="center" class="w2">{{t_e_4_len}}</td>
+    <td align="center" class="w2">{{t_c_4_len}}</td>
+    <td align="center" class="w2">{{t_4_len}}</td>
+</tr>
+<tr>
+    <td align="center" class="w1">반려</td>
+    <td align="center" class="w2">{{t_e_6_len}}</td>
+    <td align="center" class="w2">{{t_c_6_len}}</td>
+    <td align="center" class="w2">{{t_6_len}}</td>
+</tr>
+<tr>
+    <td align="center" class="w1-1">종합</td>
+    <td align="center" class="w2-1">{{t_e_5_len}}</td>
+    <td align="center" class="w2-1">{{t_c_5_len}}</td>
+    <td align="center" class="w2-1">{{t_5_len}}</td>
+</tr>
+</table>
+
+<div id="today_list_table">
+    <table_title>오늘의 수리제작 접수내역</table_title>
+<table>
+<tr>
+    <td align="center" class="t1">팀</td>
+    <td align="center" class="t2">Job No.</td>
+    <td align="center" class="t3">신청자</td>
+    <td align="center" class="t4">Room Name (Room No.)</td>
+    <td align="center" class="t5">접수내용</td>
+    <td align="center" class="t6">구분</td>
+</tr>
+    {% for today_tables in today_table %}
+<tr>
+    <td align="center" class="t1-1">{{today_tables.team}}</td>
+    <td align="center" class="t2-1">{{today_tables.job}}</td>
+    <td align="center" class="t3-1">{{today_tables.rep}}</td>
+    <td align="center" class="t4-1">{{today_tables.roomname}} ({{today_tables.roomno}})</td>
+    <td align="center" class="t5-1">{{today_tables.description}}</td>
+    <td align="center" class="t6-1">{{today_tables.division}}</td>
+</tr>
+    {%endfor%}
+</table>
+</div>
+
+</div>
+
+<div id="not_comp_text">
+    <input type="hidden" value="{{wr_total_len}}" name="wr_total_len">
+    <input type="hidden" value="{{wo_not_len}}" name="wo_not_len">
+<div id="not_repair"></div></div>
+
+
+<div id="pmchart_radius" >
+    &nbsp;&nbsp;<a class="xi-chart-bar"><text_main>&nbsp;수리제작의뢰서 차트표</text_main></a>
+    <br> &nbsp;&nbsp; &nbsp;&nbsp;
+</div>
+{% load static %}
+        <img src="{% static 'bm_chart.png' %}" alt="My image"class="pm_chart_css">
+
+<div id="bmchart_radius" >
+        &nbsp;&nbsp;<a class="xi-package"><text_main>&nbsp;소모품관리</text_main></a>
+     <br> &nbsp;&nbsp; &nbsp;&nbsp;
+</div>
+
+<div id="spare_table">
+    <table_title>이번달 소모품 입출고 현황</table_title>
+<table>
+<tr>
+    <td align="center" class="s1" rowspan="2">팀</td>
+    <td align="center" class="s2" colspan="2">입고</td>
+    <td align="center" class="s2" colspan="2">출고</td>
+</tr>
+<tr>
+    <td align="center" class="s3">종류</td>
+    <td align="center" class="s3">수량</td>
+    <td align="center" class="s3">종류</td>
+    <td align="center" class="s3">수량</td>
+</tr>
+<tr>
+    <td align="center" class="s1-1">개발중{{sp_lists.team}}</td>
+    <td align="center" class="s3-1">개발중{{sp_lists.job}}</td>
+    <td align="center" class="s3-1">개발중{{sp_lists.rep}}</td>
+    <td align="center" class="s3-1">개발중{{sp_lists.roomname}}</td>
+    <td align="center" class="s3-1">개발중{{sp_lists.description}}</td>
+</tr>
+</table>
+</div>
+<div id="spare_chart">
+    <table_title>팀별 소모품 입출고 차트</table_title>
+</div>
+
+<div id="mypage_radius" >
+        &nbsp;&nbsp;<a class="xi-profile"><text_main>&nbsp;My Page</text_main></a>
+</div>
+<div id="my_auth">
+        <table_title>My Authority</table_title>
+        <table_text><br>&nbsp;{{auth}}</table_text>
+</div>
+
+<div id="my_approve">
+    <table_title>My Document</table_title>
+
+{% if auth == "Eng. Manager" %}
+    <table>
+<tr>
+    <td align="center" class="m1-2">문서 명</td>
+    <td align="center" class="m1-2">결재대기 문서</td>
+</tr>
+<tr>
+    <td align="center" class="m1">수리제작의뢰서</td>
+    <td align="center" class="m2">
+        <form action="work_job_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="hidden" value="yes" name="signal">
+        <input type="submit" value="{{wr_so_m_len}}" class="my_button"></form></td>
+</tr>
+</table>
+    {%endif%}
+
+{% if auth == "Eng. Supervisor" %}
+    <table>
+<tr>
+    <td align="center" class="m1-2">문서 명</td>
+    <td align="center" class="m1-2">결재대기 문서</td>
+</tr>
+<tr>
+    <td align="center" class="m1">수리제작의뢰서</td>
+    <td align="center" class="m2">
+        <form action="work_job_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="hidden" value="yes" name="signal">
+        <input type="submit" value="{{wr_so_m_len}}" class="my_button"></form></td>
+</tr>
+</table>
+    {%endif%}
+
+{% if auth == "Team Manager" %}
+    <table>
+<tr>
+    <td align="center" class="m1-2">문서 명</td>
+    <td align="center" class="m1-2">결재대기 문서</td>
+</tr>
+<tr>
+    <td align="center" class="m1">수리제작의뢰서</td>
+    <td align="center" class="m2">
+        <form action="work_job_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="hidden" value="yes" name="signal">
+        <input type="submit" value="{{wr_team_m_len}}" class="my_button"></form></td>
+</tr>
+</table>
+    {%endif%}
+
+{% if auth == "Staff" %}
+    <table>
+<tr>
+    <td align="center" class="m1-2">상 태</td>
+    <td align="center" class="m1-2">수리제작의뢰 건수</td>
+</tr>
+        {% for staff_infos in staff_info %}
+<tr>
+    <td align="center" class="m1">{{staff_infos.status}}</td>
+    <td align="center" class="m2">{{staff_infos.status__count}}</td>
+</tr>
+        {% endfor %}
+</table>
+{%endif%}
+
+{% if auth == "Team Supervisor" %}
+    <table>
+<tr>
+    <td align="center" class="m1-2">상 태</td>
+    <td align="center" class="m1-2">수리제작의뢰 건수</td>
+</tr>
+        {% for staff_infos in staff_info %}
+<tr>
+    <td align="center" class="m1">{{staff_infos.status}}</td>
+    <td align="center" class="m2">{{staff_infos.status__count}}</td>
+</tr>
+        {% endfor %}
+</table>
+{%endif%}
+
+{% if auth == "Engineer" %}
+<table>
+<tr>
+    <td align="center" class="m1-2">문서 명</td>
+    <td align="center" class="m1-2">결재대기 문서</td>
+</tr>
+<tr>
+    <td align="center" class="m1">수리제작의뢰서</td>
+    <td align="center" class="m2">
+        <form action="work_job_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="hidden" value="yes" name="signal">
+        <input type="submit" value="{{wr_eng_len}}" class="my_button"></form></td>
+</tr>
+</table>
+
+<div id="not_comp">
+나의 미완료 수리 건: {{not_comp_len}}건
+</div>
+{%endif%}
+
+</div>
+
+<div id="date">
+    </div>
+<table id="date_title">
+    <tr>
+        <td align="center" id="main_month"><div id="month_today"></div></td>
+    </tr>
+</table>
+    <main_day><div id="day_today"></div></main_day>
+
+
+</main>
+<script>
+         function init(){
+
+     ///달력 오늘날짜 산출
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            if(dd<10) {
+                dd='0'+dd
+            }
+            if(mm<10) {
+                mm='0'+mm
+            }
+            month = mm;
+            if (month=="01"){
+            month="January";}
+            if (month=="02"){
+            month="February";}
+            if (month=="03"){
+            month="March";}
+            if (month=="04"){
+            month="April";}
+            if (month=="05"){
+            month="May";}
+            if (month=="06"){
+            month="June";}
+            if (month=="07"){
+            month="July";}
+            if (month=="08"){
+            month="August";}
+            if (month=="09"){
+            month="September";}
+            if (month=="10"){
+            month="October";}
+            if (month=="11"){
+            month="November";}
+            if (month=="12"){
+            month="December";}
+            day = dd;
+            document.getElementById("month_today").innerHTML=month;
+            document.getElementById("day_today").innerHTML=day;
+
+     // 알림창 설정
+            if (mm == '05'){
+            var alarm = "!_Message : [PM Period - Review] & [Spare Parts List - Safety Stock] has been activated."
+            document.getElementById("alarm_text").innerHTML=alarm;
+            }
+            }
+
+      onload=init
+
+</script>
+</body>
+</html>

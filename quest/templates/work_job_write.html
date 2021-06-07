@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Complete</title>
+
+<style>
+#view_text{
+position:fixed; position:fixed;top:6.5%; left:68%;
+font-family:arial;
+font-size:1.66667vw;
+font-weight:bold;
+text-decoration:underline;
+}
+#view_table{
+position:fixed; position:fixed;top:13%; left:55%;
+}
+#btn_location{
+position:fixed; position:fixed;top:83%; left:96.2%;
+}
+#table_msg{
+position:fixed; position:fixed;top:89.5%; left:55.2%;
+font-size:0.833333vw;
+font-family:arial;
+color:blue;
+font-weight:bold;
+}
+.text_title{
+width:13.02083vw;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#EEEEEE;
+height:2.777778vh;
+}
+.text_title2{
+width:13.02083vw;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#EEEEEE;
+height:16.6667vh;
+}
+.text_title_top{
+width:13.02083vw;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#3DB7CC;
+height:2.777778vh;
+color:white;
+}
+.text_text_top{
+width:30.20833vw;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#3DB7CC;
+height:2.777778vh;
+color:white;
+}
+
+.text_text{
+width:30.20833vw;
+font-size:0.833333vw;
+font-family:arial;
+padding-left:0.260417vw;
+background-color:#F6F6F6;
+height:2.777778vh;
+}
+
+textarea{
+        margin-top:0.462963vh;
+        padding-left:0.260417vw;
+        width:30.20833vw;
+        height:16.81481vh;
+        font-size:0.833333vw;
+        font-family:arial;
+}
+.button_acc{
+        width:3.125vw;
+        height:2vh;
+        cursor:pointer;
+}
+</style>
+
+
+<body>
+<main>
+
+<div id="view_text">
+    수리제작의뢰서 신청서 작성
+</div>
+
+<form method="post" name="submit_form">
+    {% csrf_token %}
+<div id="view_table">
+    {% for work in view_table %}
+        <table>
+        <tr>
+        <td align="center" class="text_title_top">Title</td><td class="text_text_top" align="center">Description</td>
+        </tr>
+        <tr>
+        <td align="center" class="text_title">Job No.</td><td align="left" class="text_text">{{work.job}}</td>
+        </tr>
+            <tr>
+        <td align="center" class="text_title">팀명</td><td align="left" class="text_text">{{work.team}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">신청자</td><td align="left" class="text_text">{{work.rep}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">Room Name</td><td align="left" class="text_text">{{work.roomname}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">Room No.</td><td align="left" class="text_text">{{work.roomno}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">담당자</td><td align="left" class="text_text">{{work.engrep}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">구분</td><td align="left" class="text_text">{{work.division}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">조치완료일</td><td align="left" class="text_text">{{work.finish_date}}</td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title2">수리요청내용</td>
+        <td align="left" class="text_text">{{work.description}}</td>
+            </tr>
+        <tr>
+        <td align="center" class="text_title">고장사유</td><td align="left" class="text_text">{{work.reason}}</td>
+            </tr>
+        <tr>
+        <td align="center" class="text_title">첨부파일</td><td align="left" class="text_text">
+                        {% if attach_view == "Y" %}
+        없음
+                        {%else%}
+        <a href="{{work.attached_file}}" target="_blank">{{work.attached_tag}}</a>
+                        {%endif%}</td>
+        </tr>
+        <tr>
+        <td align="center" class="text_title2">조치내용</td>
+            {% if msg_signal == "Y" %}
+        <td><textarea name="summary" style="resize:none;" readonly>{{summary}}</textarea></td>
+            {%else%}
+        <td><textarea name="summary" style="resize:none;" required></textarea></td>
+            {%endif%}
+            <input type="hidden" value="{{work.job}}" name="jobno">
+        </table>
+    {% endfor %}
+</div>
+    <input type="hidden" value="{{loginid}}" name="loginid">
+</form>
+
+{% if msg_signal == "Y" %}
+<div id="table_msg">
+    {{table_signal_div}}
+</div>
+{%else%}
+<div id="btn_location">
+    <input type="button"  class="button_acc" value="Submit" onclick="Submit();">
+</div>
+{%endif%}
+
+</main>
+
+<script language="javascript">
+     function Submit(){
+      var check_again = window.confirm("승인 시 신청자에게 메일이 자동발송됩니다.\n조치내용을 전송하시겠습니까?","");
+        if (check_again == true){
+            document.submit_form.action="work_job_submit";
+            document.submit_form.submit();}
+     }
+</script>
+</body>
+</html>

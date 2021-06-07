@@ -2,102 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <style>
-#sidemenubar{
-dislapy:inline-block;
-    grid-area:sidemenu;
-    height:100%;
+    <title>Title</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+comment_css{
+background:#EEEEEE;
+left:0;
+right:0;
+justify-content:space-between;
+position:fixed; right:91%; bottom:92.4%;
+height:3.5%;
+text-align:center;
+padding-top:0.5%;
+font-size:0.833333vw;
+z-index:100;
+font-family:'Rubik', sans-serif;
 }
+
+#sidetap{
+height:100%;
+position:fixed; left:0.5%; top:7%;
+overflow-y:auto;}
+
 #sideline{
 background:#EEEEEE;
-height:2000px;
-grid-area:sideline;
-top:0;
-bottom:0;
-justify-content:space-between;
-dislapy:inline-block;
+position:fixed; right:91%;
+height:100%;
+width:5px;
 }
-.container2{
-            display: grid;
-            height: 100%;
-            grid-template-columns: 98.5% 1.5%;
-            grid-gap:0.520833333333333vw;
-            grid-template-areas:
-            "sidemenubar sideline";
-      }
 
-@media all and (max-width:1600px){
-comment{
-background:#EEEEEE;
-left:0;
-right:0;
-justify-content:space-between;
-position:fixed; right:89.5%;
-height:5%;
-text-align:center;
-font-weight:bold;
-padding-top:1%;
-font-size:0.9375vw;
-}}
+.Button {
+        font-family:'Rubik', sans-serif;
+        font-size:0.625vw;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        font-color:black;
+        padding-left:4%;
+        outline:0;
+}
+.Button:hover {
+	background-color:#EEEEEE;
+	border-radius:10%;
+}
+side_text{
+        font-family:'Do Hyeon', sans-serif;
+        font-size:0.833333vw;
+        font-color:black;
+}
+::-webkit-scrollbar{
+}
 
-@media all and (min-width:1610px){
-comment{
-background:#EEEEEE;
-left:0;
-right:0;
-justify-content:space-between;
-position:fixed; right:89.7%;
-height:5%;
-text-align:center;
-font-weight:bold;
-padding-top:1%;
-font-size:0.9375vw;
-}}
-
-.f{
-    font-family:'Do Hyeon', sans-serif;
-    font-size:1.04166666666667vw;
-    background-color: rgba(255, 255, 255, 0.0);
-	cursor:pointer;
-	border:0px;
+i{
+        align-text:left;
+        color:black;
 }
 </style>
-<script language="javascript">
-     function Info(){
-        window.open("","DM Bio Register", "width=880, height=1000, left=50, top=10, location=no, resizable=no");
-        }
-</script>
+
 </head>
-<body3>
-<div class="container2">
+<body>
 
-<div id="sidemenubar">
-<comment>Go To Applications</comment><br><br><br><br>
-    <form action="{%url 'list'%}" method="post">
-        {% csrf_token %}
-        <i class="xi-wrench">
-        <input type="hidden" value={{idd2}} name="idd2">
-        <input type="hidden" value={{username}} name="username">
-        <input type="hidden" value={{userteam}} name="userteam">
-        <input type="submit"value="수리제작의뢰서" class="f"></i></form><br>
 
-    <form action="{%url 'supply'%}" method="post">
+<comment_css>Go To Applications</comment_css>
+<div id="sidetap">
+    <table id="sidetable">
+        <tr>
+<br><i class="xi-wrench"><side_text>&nbsp;수리제작의뢰서</side_text></i><br>
+    <form action="work_list_main" method="post">
         {% csrf_token %}
-        <i class="xi-package">
-        <input type="hidden" value={{idd2}} name="idd2">
-        <input type="hidden" value={{username}} name="username">
-        <input type="hidden" value={{userteam}} name="userteam">
-        <input type="button"value="사무용품신청" class="f"></i></form><br>
-    <form>
-        <i class="xi-lightbulb">
-        <input type="button"value="알 림" class="f" onclick="Info();"></i></form><br>
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit"value="수리제작의뢰서 리스트" class="Button"></form><br>
+    <form action="work_job_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit"value="수리제작의뢰서 작성" class="Button"></form><br>
+</tr>
+        <tr>
+<br><i class="xi-package"><side_text>&nbsp;소모품관리</side_text></i><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="button"value="소모품리스트(개발중)" class="Button"></form><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="button"value="출고(개발중)" class="Button"></form><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="button"value="입고(개발중)" class="Button"></form><br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="button"value="업체리스트(개발중)" class="Button"></form>
+</tr><br>
+
+    {% if auth == "Eng. Supervisor"%}
+        <tr>
+<br><i class="xi-key"><side_text>&nbsp;Admin</side_text></i><br>
+    <form action="user_info_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit" value="사용자 정보" class="Button"></form><br>
+</tr>
+    {% endif %}
+
+    {% if auth == "Team Supervisor"%}
+        <tr>
+<br><i class="xi-key"><side_text>&nbsp;Admin</side_text></i><br>
+    <form action="user_info_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit" value="사용자 정보" class="Button"></form><br>
+</tr>
+    {% endif %}
+
+    {% if auth == "Admin"%}
+        <tr>
+<br><i class="xi-key"><side_text>&nbsp;Admin</side_text></i><br>
+    <form action="user_info_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit" value="사용자 정보" class="Button"></form><br>
+    <form action="roomlist_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit"value="룸 정보" class="Button"></form><br>
+</tr>
+    {% endif %}
+
+  <tr>
+<br><i class="xi-profile"><side_text>&nbsp;마이페이지</side_text></i><br>
+        <input type="button"value="개인정보 변경" class="Button" onclick="Change_info();"></form><br>
+</tr>
+
+    </table>
+            <input type="hidden" value="{{loginid}}" id="loginidcheck">
+            <input type="hidden" value="{{auth}}" id="authcheck">
+            <input type="hidden" value="{{username}}" id="usernamecheck">
+            <input type="hidden" value="{{password}}" id="passwordcheck">
 </div>
+    <form name="login_division" method="post">
+                     {% csrf_token %}
+    <input type="hidden" name="login_division" id="login_division_up"></form>
+
 <div id="sideline">
 <mainline>
 </mainline>
 </div>
-</div>
-</body3>
+
+<script>
+        function Change_info(){
+            var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=320,height=250,location=0,top=400,left=800';
+            window.open("/login_again", "Log-In Check", settings);}
+</script>
+
+</body>
 </html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+titletext{
+        position:fixed;top:4%; left:10.7%;
+    	font-family:'Rubik', sans-serif;
+        font-size:1.041667vw;
+        font-weight:bold;
+}
+.selecttext{
+        width:5.46875vw;
+        height:2.1vh;
+        cursor:pointer;
+}
+.searchtext{
+        width:10.41667vw;
+        height:2.1vh;
+}
+.searchbutton{
+        width:3.125vw;
+        height:2vh;
+        font-size:0.7vw;
+        cursor:pointer;
+}
+#searchbar{
+        position:fixed;top:4.9%; left:79.5%;
+    	font-family: arial;
+        font-family:arial;
+        font-size:0.520833vw;
+}
+
+#tablemenu{
+    	font-family: arial;
+        font-size:0.572917vw;
+        position:fixed;top:7.5%; left:9%;
+        width:90.7%;
+        background-color:#3DB7CC;
+        color:white;
+        font-weight:bold;
+}
+#tabledesc{
+        position:fixed;top:10.2%; left:9%;
+        z-index:10;
+        width:90.7%;
+        font-family: arial;
+        font-size:0.572917vw;
+        overflow-y:scroll;
+        height:90%;
+}
+
+body{overflow:hidden;}
+
+tr:nth-child(even){
+    background-color:#EEEEEE;
+}
+#manualchange{
+        position:fixed; top:94%; left:9%;
+        width:90.7%;
+    	font-family: arial;
+        font-size:0.572917vw;
+        background-color:#6F6F6F;
+        color:white;
+        height:1.851852vh;
+}
+
+#manualchangeinput{
+        position:fixed; top:96.5%; left:9%;
+        width:80%;
+    	font-family: arial;
+        font-size:0.572917vw;
+        height:40px;
+}
+
+.m1{width:7.8125vw;
+height:1.851852vh;}
+.m2{width:10.41667vw;}
+.m3{width:135px;}
+.m4{width:10.41667vw;}
+.m5{width:15.625vw;}
+.m6{width:250px;}
+.m7{width:5.208333vw;}
+
+
+.m1-1{width:7.8125vw;
+height:25px;}
+.m2-1{width:10.41667vw;}
+.m3-1{width:135px;}
+.m4-1{width:10.41667vw;}
+.m5-1{width:15.625vw;}
+.m6-1{width:250px;}
+.m7-1{width:5.208333vw;}
+
+.delete_button{
+    	font-family: arial;
+        font-size:0.572917vw;
+        cursor:pointer;
+}
+
+.submit_button{
+    	font-family: arial;
+        cursor:pointer;
+        font-size:0.729167vw;
+        height:24px;
+        margin-left:1800px;
+        margin-top:930px;
+}
+
+.authtext{
+    	font-family: arial;
+        padding-top:2px;
+        padding-bottom:3px;
+        width:140px;
+        }
+b{
+        position:fixed;top:5.2%; left:71.5%;
+        align-text:left;
+        color:black;
+}
+.new{
+        font-family:'Rubik', sans-serif;
+        font-size:0.78125vw;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        font-color:black;
+        text-decoration:underline;
+}
+a{position:fixed;top:4%; left:9%;}
+</style>
+<body>
+<main>
+{% include "tablecss.html"%}
+{% include "topmenu.html"%}
+{% include "sidemenubar.html"%}
+
+<a class="xi-group xi-2x"></a>
+<titletext>사용자 정보</titletext>
+<b class="xi-pen"><input type="button" value="New Registration" class="new" onclick="Registration_new();"></b>
+
+<div id="searchbar">
+        <form action="" method="post">
+            {% csrf_token %}
+            <select class="selecttext" name="selecttext">&nbsp;
+            <option value="userid">User ID</option>
+            <option value="username">User Name</option>
+            </select>
+            <input type="search"  class="searchtext" placeholder="Keywords" name="searchtext">
+            <input type="hidden" value="{{loginid}}" name="loginid">
+            <input type="submit"  class="searchbutton" value="Search"></form>
+</div>
+
+
+<div id="tablemenu">
+     <table  style="word-break:break-all">
+        <thead>
+        <tr>
+            <td align="center" class="m1">User ID</td>
+            <td align="center" class="m2">User Name</td>
+            <td align="center" class="m3">User Team</td>
+            <td align="center" class="m4">Password</td>
+            <td align="center" class="m5">User e-mail</td>
+            <td align="center" class="m6">User Tel No.</td>
+            <td align="center" class="m6">Authority</td>
+            <td align="center" class="m7">Change</td>
+            <td align="center" class="m7">Delete</td>
+        </tr>
+        </thead>
+     </table>
+</div>
+<div id="tabledesc">
+ <table style="word-break:break-all">
+     <tbody>
+                      {% for user in user_info %}
+        <tr>
+            <td align="center" class="m1-1">{{user.userid}}</td>
+            <td align="center" class="m2-1">{{user.username}}</td>
+            <td align="center" class="m3-1">{{user.userteam}}</td>
+            <td align="center" class="m4-1">{{user.password}}</td>
+            <td align="center" class="m5-1">{{user.useremail}}</td>
+            <td align="center" class="m6-1">{{user.usertel}}</td>
+            <td align="center" class="m6-1">{{user.auth}}</td>
+            <td align="center" class="m7-1">
+                <input type="hidden" value="{{user.userteam}}" name="userteam_give">
+                <input type="hidden" value="{{user.password}}" name="password_give">
+                <input type="hidden" value="{{user.useremail}}" name="useremail_give">
+                <input type="hidden" value="{{user.usertel}}" name="usertel_give">
+                <input type="hidden" value="{{loginid}}" name="loginid_give">
+                <input type="hidden" value="{{user.userid}}" name="userid_give">
+                <input type="hidden" value="{{user.auth}}" name="auth_give">
+                <input type="button" class="delete_button" value="Change" onclick="Id_change(this);"></td>
+            <td align="center" class="m7-1">
+                <input type="button" class="delete_button" value="Delete" onclick="Id_delete(this);"></td>
+        </tr>
+                        {%endfor%}
+        </tbody>
+ </table>
+</div>
+
+</div>
+    <form name="user_info_change" method="post">
+                     {% csrf_token %}
+        <input type="hidden" name="userteam_up" id="userteam_up">
+        <input type="hidden" name="password_up" id="password_up">
+        <input type="hidden" name="useremail_up" id="useremail_up">
+        <input type="hidden" name="usertel_up" id="usertel_up">
+        <input type="hidden" name="userid_up" id="userid_up">
+        <input type="hidden" value="{{loginid}}" id="loginid_up">
+        <input type="hidden" name="auth_up" id="auth_up"></form>
+
+    <form name="user_info_delete" method="post">
+                     {% csrf_token %}
+       <input type="hidden" value="{{loginid}}" name="loginid">
+       <input type="hidden" name="userid"></form>
+
+
+</main>
+<script>
+    function Id_change(obj){
+                // 행위치값과 플랜데이트 받기
+            var i = obj.parentNode.parentNode.rowIndex;
+            var userteam= document.getElementsByName('userteam_give')[i].value;
+            var password= document.getElementsByName('password_give')[i].value;
+            var useremail= document.getElementsByName('useremail_give')[i].value;
+            var usertel= document.getElementsByName('usertel_give')[i].value;
+            var auth= document.getElementsByName('auth_give')[i].value;
+            var userid= document.getElementsByName('userid_give')[i].value;
+                // html로 값보내기
+            document.user_info_change.userteam_up.value = userteam;
+            document.user_info_change.password_up.value = password;
+            document.user_info_change.useremail_up.value = useremail;
+            document.user_info_change.usertel_up.value = usertel;
+            document.user_info_change.auth_up.value = auth;
+            document.user_info_change.userid_up.value = userid;
+                        // 팝업창열기
+            var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=550, height=280, left=50, top=10';
+            window.open("/user_info_change", "User Information Change", settings);
+    }
+
+    function Id_delete(obj){
+            var i = obj.parentNode.parentNode.rowIndex;
+            var userid= document.getElementsByName('userid_give')[i].value;
+            document.user_info_delete.userid.value = userid;
+            var text_msg =  "[" + userid +"] 해당 아이디를 삭제하시겠습니까?"
+            var check_again = window.confirm(text_msg,"");
+            if (check_again == true){
+            // 서버로 전송
+            document.user_info_delete.action="user_info_change_delete";
+            document.user_info_delete.submit();}
+    }
+
+    function Registration_new(){
+                        // 팝업창열기
+            var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=380, height=380, left=50, top=10';
+            window.open("/user_info_new", "User Information Registration", settings);
+    }
+</script>
+</body>
+</html>

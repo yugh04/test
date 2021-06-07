@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+b{position:fixed;top:4%; left:9%;}
+#tabletop{
+    	font-family: arial;
+        position:fixed;top:3.9%; left:10.5%;
+        height:5%;
+}
+titletext{
+    	font-family:'Rubik', sans-serif;
+        font-size:1.041667vw;
+        font-weight:bold;
+}
+.selecttext{
+        margin-left:14.95vw;
+        width:6.25vw;
+        height:1.851852vh;
+        cursor:pointer;
+}
+.searchtext{
+        width:10.41667vw;
+        height:1.851852vh;
+}
+.searchbutton{
+        width:3.125vw;
+        height:1.851852vh;
+        cursor:pointer;
+}
+#searchbar{
+        padding-top:5px;
+        font-family:'Rubik', sans-serif;
+        font-size:0.520833vw;
+}
+
+tr:nth-child(even){
+    background-color:#EEEEEE;
+}
+#tablemenu{
+    	font-family: arial;
+        font-size:0.572917vw;
+        position:fixed;top:7.5%; left:9%;
+        background-color:#3DB7CC;
+        color:white;
+        font-weight:bold;
+}
+#tablemenu_top{
+        border:1px solid white;
+        border-collapse:collapse;
+        height:2.5vh;
+}
+#tabledesc{
+        position:absolute;top:10.31%; left:9%;
+        font-family: arial;
+        font-size:0.572917vw;
+        overflow-y:scroll;
+        height:89.8%;
+}
+.m1{width:4.166667vw;}
+.m2{width:2.7083333vw;}
+.m3{width:3.75vw;}
+.m4{width:5.3125vw;}
+.m5{width:3.125vw;}
+.m6{width:4.166667vw;}
+.m7{width:13.125vw;}
+.m8{width:3.645vw;}
+.m9{width:2.864vw;
+padding-left:0.78125vw;}
+
+.m7_e{width:10.52083vw;}
+.m8_e{width:3.645833vw;}
+.m9_e{width:2.604167vw;}
+.m10_e{width:2.760417vw;
+padding-left:0.625vw;}
+
+.m1-1{width:4.114583vw;
+height:2.314815vh;}
+.m2-1{width:2.604167vw;}
+.m3-1{width:3.75vw;}
+.m4-1{width:5.208333vw;}
+.m5-1{width:3.125vw;}
+.m6-1{width:4.0625vw;}
+.m7-1{width:13.125vw;}
+.m8-1{width:3.541667vw;}
+.m9-1{width:2.604167vw;}
+
+.m7-1_e{width:10.52083vw;}
+.m8-1_e{width:3.59375vw;}
+.m9-1_e{width:2.5vw;}
+.m10-1_e{width:2.5vw;}
+
+body{overflow:hidden;}
+
+#sideline2{
+        background:#EEEEEE;
+        position:fixed; left:53.87vw;
+        height:100%;
+        width:0.260417vw;
+}
+.button_view{
+    	font-family: arial;
+        font-size:0.572917vw;
+        cursor:pointer;
+}
+
+d{
+        position:fixed;top:5.3%; left:48.7%;
+        align-text:left;
+        color:black;
+}
+.new{
+        font-family:'Rubik', sans-serif;
+        font-size:0.78125vw;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        font-color:black;
+        text-decoration:underline;
+}
+.button{
+    	font-family: arial;
+        font-size:0.572917vw;
+        cursor:pointer;
+}
+</style>
+</head>
+<body>
+<b class="xi-wrench xi-2x"></b>
+<div id="tabletop" style="word-break:break-all">
+<table>
+    <tr>
+        <td><titletext>수리제작의뢰서</titletext></td>
+    </tr>
+</table>
+</div>
+
+<d class="xi-pen"><input type="button" value="Request" class="new" onclick="Registration_new();"></d>
+
+<div id="tablemenu">
+     <table  style="word-break:break-all" border="1" id="tablemenu_top">
+        <tr>
+            <td align="center" class="m1">Job No.</td>
+            <td align="center" class="m2">팀명</td>
+            <td align="center" class="m3">요청자</td>
+            <td align="center" class="m4">Room Name<br>(Room No.)</td>
+            <td align="center" class="m5">상태</td>
+            <td align="center" class="m6">구분</td>
+            {% if auth == "Engineer" %}
+            <td align="center" class="m7_e">수리요청내용</td>
+            <td align="center" class="m8_e">담당자</td>
+            <td align="center" class="m9_e">View</td>
+            <td align="left" class="m10_e">Write</td>
+            {% elif auth == "Eng. Manager" %}
+            <td align="center" class="m7_e">수리요청내용</td>
+            <td align="center" class="m8_e">담당자</td>
+            <td align="center" class="m9_e">View</td>
+            <td align="left" class="m10_e">App.</td>
+            {%else%}
+            <td align="center" class="m7">수리요청내용</td>
+            <td align="center" class="m8">담당자</td>
+            <td align="left" class="m9">View</td>
+            {%endif%}
+        </tr>
+     </table>
+</div>
+
+<div id="tabledesc">
+ <table style="word-break:break-all">
+     <tbody>
+                {% for worklists in worklist %}
+        <tr>
+            <td align="center" class="m1-1">{{worklists.job}}</td>
+            <td align="center" class="m2-1">{{worklists.team}}</td>
+            <td align="center" class="m3-1">{{worklists.rep}}</td>
+            <td align="center" class="m4-1">{{worklists.roomname}}<br>({{worklists.roomno}})</td>
+            <td align="center" class="m5-1">{{worklists.status}}</td>
+            <td align="center" class="m6-1">{{worklists.division}}</td>
+            {% if auth == "Engineer" %}
+            <td align="center" class="m7-1_e">{{worklists.description}}</td>
+            <td align="center" class="m8-1_e">{{worklists.engrep}}</td>
+            <td align="center" class="m9-1_e">
+            <form action="work_job_view" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value="{{loginid}}" name="loginid">
+                <input type="hidden" value="{{worklists.job}}" name="jobno">
+                <input type="hidden" value="{{signal}}" name="signal">
+                <input type="submit" class="button" value="View">
+                </form>
+            </td>
+            <td align="center" class="m10-1_e">
+            <form action="work_job_write" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value="{{loginid}}" name="loginid">
+                <input type="hidden" value="{{worklists.job}}" name="jobno">
+                <input type="hidden" value="{{signal}}" name="signal">
+                <input type="submit" class="button" value="Write">
+                </form>
+            </td>
+            {% elif auth == "Eng. Manager" %}
+            <td align="center" class="m7-1_e">{{worklists.description}}</td>
+            <td align="center" class="m8-1_e">{{worklists.engrep}}</td>
+            <td align="center" class="m9-1_e">
+            <form action="work_job_view" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value="{{loginid}}" name="loginid">
+                <input type="hidden" value="{{worklists.job}}" name="jobno">
+                <input type="hidden" value="{{signal}}" name="signal">
+                <input type="submit" class="button" value="View">
+                </form>
+            </td>
+            <td align="center" class="m10-1_e">
+            <form action="work_job_app" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value="{{loginid}}" name="loginid">
+                <input type="hidden" value="{{worklists.job}}" name="jobno">
+                <input type="hidden" value="{{signal}}" name="signal">
+                <input type="submit" class="button" value="App.">
+                </form>
+            </td>
+            {%else%}
+            <td align="center" class="m7-1">{{worklists.description}}</td>
+            <td align="center" class="m8-1">{{worklists.engrep}}</td>
+            <td align="center" class="m9-1">
+            <form action="work_job_view" method="post" >
+                {% csrf_token %}
+                <input type="hidden" value="{{loginid}}" name="loginid" >
+                <input type="hidden" value="{{worklists.job}}" name="jobno">
+                <input type="hidden" value="{{signal}}" name="signal">
+                <input type="submit" class="button" value="View">
+                </form>
+            </td>
+            {%endif%}
+        </tr>
+                {% endfor %}
+        </tbody>
+ </table>
+</div>
+
+<div id="sideline2">
+</div>
+
+ <input type="hidden" value="{{loginid}}" id="loginid_up">
+ <input type="hidden" value="{{userteam}}" id="userteam_up">
+ <input type="hidden" value="{{username}}" id="username_up">
+
+<script>
+
+        function Registration_new(){
+                        // 팝업창열기
+            var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=870, height=605, left=50, top=10';
+            window.open("/work_job_new", "Request", settings);
+            }
+</script>
+</body>
+</html>

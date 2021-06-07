@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Complete</title>
+    <script language="javascript">
+    function Teamrejectbtn(){
+    var reason = window.prompt("반려사유를 입력해주세요.","");
+        document.Compreject.comprejectreason.value = reason;
+        let status = document.getElementsByName('status2')[0].value;
+            if (status == '조치완료'){
+                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+    </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+header{
+        height:2.777778vh;
+        background:#3DB7CC;
+        justify-content:space-between;
+        align-items:center;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:10;
+        }
+header2{
+        height:0.3px;
+        padding-top:3px;
+        background:#EEEEEE;
+        display:flex;
+        justify-content:space-between;
+        position:fixed;
+        top:30px;
+        left:0;
+        right:0;
+        z-index:10;
+}
+toptext{
+        font-family: 'Rubik', sans-serif;
+        font-size:0.9375vw;
+        vertical-align:top;
+        font-weight:bold;
+        padding-left:0.260417vw;
+        color:white;
+}
+#logindata{
+        position:fixed; top:1px; left:90px;
+        font-family: 'Rubik', sans-serif;
+        font-size:0.9375vw;
+        vertical-align:top;
+        font-weight:bold;
+        color:white;
+}
+.Button {
+        position:fixed; left:820px;
+        font-family:'Rubik', sans-serif;
+        font-size:0.9375vw;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        color:white;
+        font-weight:bold;
+}
+
+#view_text{
+position:fixed; position:fixed;top:40px; left:10px;
+font-family:arial;
+font-size:32px;
+font-weight:bold;
+text-decoration:underline;
+}
+#view_table{
+position:fixed; position:fixed;top:100px; left:10px;
+}
+#btn_location{
+position:fixed; position:fixed;top:430px; left:820px;
+}
+#table_msg{
+position:fixed; position:fixed;top:46.2963vh; left:10px;
+font-size:0.833333vw;
+font-family:arial;
+color:blue;
+}
+.text_title{
+width:250px;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#EEEEEE;
+height:2.777778vh;
+}
+.text_title2{
+width:250px;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#EEEEEE;
+height:16.6667vh;
+}
+.text_title_top{
+width:250px;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#3DB7CC;
+height:2.777778vh;
+color:white;
+}
+.text_text_top{
+width:15.625vw;
+font-size:0.833333vw;
+font-family:arial;
+font-weight:bold;
+padding-left:0.260417vw;
+background-color:#3DB7CC;
+height:2.777778vh;
+color:white;
+}
+
+.text_text{
+width:15.625vw;
+font-size:0.833333vw;
+font-family:arial;
+padding-left:0.260417vw;
+background-color:#F6F6F6;
+height:2.777778vh;
+}
+.text_text2{
+font-size:0.833333vw;
+font-family:arial;
+padding-left:0.260417vw;
+background-color:#F6F6F6;
+height:2.777778vh;
+}
+textarea{
+        margin-top:5px;
+        padding-left:0.260417vw;
+        width:15.625vw;
+        height:160px;
+        font-size:0.833333vw;
+        font-family:arial;
+}
+.button_acc{
+        width:3.125vw;
+        height:2vh;
+        cursor:pointer;
+}
+
+.text_css{
+        background-color:#F6F6F6;
+        border:0;
+        height:25px;
+        width:15.625vw;
+        font-size:0.833333vw;
+}
+</style>
+
+
+<body>
+<main>
+<header>
+<toptext>Welcome,&nbsp;</toptext>
+<div id="logindata"></div>
+
+<input type="button"value="Close" class="Button" onclick="Close();">
+
+</header>
+<header2>
+</header2>
+
+<div id="view_text">
+    수리제작의뢰서 변경
+</div>
+
+<div id="view_table">
+        <table>
+        <form name="work_job_change_form" method="post">
+            {% csrf_token %}
+        <tr>
+        <td align="center" class="text_title_top">Title</td>
+            <td align="center" class="text_title_top">Now Description</td>
+            <td class="text_text_top" align="center">New Description</td>
+        </tr>
+            <tr>
+        <td align="center" class="text_title">Room No.</td>
+                <td align="left" class="text_text"><div id="roomno"></div>
+        <td align="left" class="text_text">
+                <input type="text" name="roomno" class="text_css" required>
+            </td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">Room Name</td>
+        <td align="left" class="text_text"><div id="roomname"></div>
+                <td align="left" class="text_text">
+                <input type="text" name="roomname" class="text_css"  required>
+            </td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title2">수리요청내용</td>
+        <td align="left" class="text_text"><div id="description"></div>
+        <td><textarea name="description" style="resize:none;" required>{{description}}</textarea></td>
+            </tr>
+                    <tr>
+        <td align="center" class="text_title">고장사유</td>
+        <td align="left" class="text_text"><div id="reason"></div>
+        <td align="left" class="text_text"><input type="text" name="reason" class="text_css" required></td>
+            </tr>
+        <input type="hidden" name="job">
+        <input type="hidden" name="loginid">
+        </form>
+        </table>
+</div>
+
+
+<div id="btn_location">
+    <input type="button"  class="button_acc" value="Submit" onclick="Submit();">
+</div>
+
+</main>
+
+<input type="hidden" value="{{comp_signal}}" name="comp_signal">
+<input type="hidden" value="{{text_signal}}" name="text_signal">
+
+
+<script>
+        //////////// 기본초기값 불러오기//////////////
+     function init(){
+            var loginid = opener.document.getElementById("loginid_up").value;
+            var roomno = opener.document.getElementById("roomno_up").value;
+            var roomname = opener.document.getElementById("roomname_up").value;
+            var description = opener.document.getElementById("description_up").value;
+            var reason = opener.document.getElementById("reason_up").value;
+            var job = opener.document.getElementById("job_up").value;
+
+       ////기본 정보 보내기
+            document.getElementById("logindata").innerHTML=loginid;
+            document.getElementById("roomno").innerHTML=roomno;
+            document.getElementById("roomname").innerHTML=roomname;
+            document.getElementById("description").innerHTML=description;
+            document.getElementById("reason").innerHTML=reason;
+            document.work_job_change_form.roomno.value = roomno;
+            document.work_job_change_form.roomname.value = roomname;
+            document.work_job_change_form.description.value = description;
+            document.work_job_change_form.reason.value = reason;
+            document.work_job_change_form.job.value = job;
+            document.work_job_change_form.loginid.value = loginid;
+
+       ////완료신호주기
+            var close_signal= document.getElementsByName('comp_signal')[0].value;
+            if (close_signal=="Y"){
+                window.resizeTo(600,200);
+                alert("수리제작의뢰서가 변경되었습니다.");
+                opener.document.location.reload();
+                self.close();}
+            }
+
+      onload=init
+
+    function Close(){
+            self.close();
+    }
+
+     function Submit(){
+           var check_again = window.confirm("해당 수리제작의뢰서를 변경하시겠습니까?","");
+           if (check_again == true){
+                document.work_job_change_form.action="work_job_change_submit";
+                document.work_job_change_form.submit();}
+     }
+</script>
+
+</body>
+</html>

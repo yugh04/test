@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <title>Complete</title>
+    <script language="javascript">
+    function Teamrejectbtn(){
+    var reason = window.prompt("반려사유를 입력해주세요.","");
+        document.Compreject.comprejectreason.value = reason;
+        let status = document.getElementsByName('status2')[0].value;
+            if (status == '조치완료'){
+                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            }
+        }
+    </script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+header{
+        height:30px;
+        background:#3DB7CC;
+        justify-content:space-between;
+        align-items:center;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:10;
+        }
+header2{
+        height:0.3px;
+        padding-top:3px;
+        background:#EEEEEE;
+        display:flex;
+        justify-content:space-between;
+        position:fixed;
+        top:30px;
+        left:0;
+        right:0;
+        z-index:10;
+}
+toptext{
+        font-family: 'Rubik', sans-serif;
+        font-size:18px;
+        vertical-align:top;
+        font-weight:bold;
+        padding-left:5px;
+        color:white;
+}
+#logindata{
+        position:fixed; top:1px; left:90px;
+        font-family: 'Rubik', sans-serif;
+        font-size:18px;
+        vertical-align:top;
+        font-weight:bold;
+        color:white;
+}
+.Button {
+        position:fixed; left:800px;
+        font-family:'Rubik', sans-serif;
+        font-size:18px;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        color:white;
+        font-weight:bold;
+}
+
+#view_text{
+position:fixed; position:fixed;top:40px; left:10px;
+font-family:arial;
+font-size:32px;
+font-weight:bold;
+text-decoration:underline;
+}
+#view_table{
+position:fixed; position:fixed;top:100px; left:10px;
+}
+#btn_location{
+position:fixed; position:fixed;top:575px; left:800px;
+}
+#table_msg{
+position:fixed; position:fixed;top:500px; left:10px;
+font-size:16px;
+font-family:arial;
+color:blue;
+}
+.text_title{
+width:250px;
+font-size:16px;
+font-family:arial;
+font-weight:bold;
+padding-left:5px;
+background-color:#EEEEEE;
+height:30px;
+}
+.text_title2{
+width:250px;
+font-size:16px;
+font-family:arial;
+font-weight:bold;
+padding-left:5px;
+background-color:#EEEEEE;
+height:180px;
+}
+.text_title_top{
+width:250px;
+font-size:16px;
+font-family:arial;
+font-weight:bold;
+padding-left:5px;
+background-color:#3DB7CC;
+height:30px;
+color:white;
+}
+.text_text_top{
+width:580px;
+font-size:16px;
+font-family:arial;
+font-weight:bold;
+padding-left:5px;
+background-color:#3DB7CC;
+height:30px;
+color:white;
+}
+
+.text_text{
+width:580px;
+font-size:16px;
+font-family:arial;
+padding-left:5px;
+background-color:#F6F6F6;
+height:30px;
+}
+.text_text2{
+font-size:16px;
+font-family:arial;
+padding-left:5px;
+background-color:#F6F6F6;
+height:30px;
+}
+textarea{
+        margin-top:5px;
+        padding-left:5px;
+        width:580px;
+        height:160px;
+        font-size:16px;
+        font-family:arial;
+}
+.button_acc{
+        width:60px;
+        height:20px;
+        cursor:pointer;
+}
+textarea{
+        margin-top:5px;
+        padding-left:5px;
+        width:580px;
+        height:160px;
+        font-size:16px;
+        font-family:arial;
+}
+.room_css{
+        background-color:#F6F6F6;
+        border:0;
+        height:25px;
+        width:400px;
+        font-size:16px;
+}
+.reason_css{
+        background-color:#F6F6F6;
+        border:0;
+        height:25px;
+        width:520px;
+        font-size:16px;
+}
+.radio{
+        cursor:pointer;
+}
+.check_css{
+cursor:pointer;}
+na_css{
+font-size:12px;}
+.upload_btn{
+        cursor:pointer;
+        font-size:15px;
+}
+.upload_complete_css{
+font-size:16px;}
+
+</style>
+
+
+<body>
+<main>
+<header>
+<toptext>Welcome,&nbsp;</toptext>
+<div id="logindata"></div>
+
+<input type="button"value="Close" class="Button" onclick="Close();">
+
+</header>
+<header2>
+</header2>
+
+<div id="view_text">
+    수리제작의뢰서 신청
+</div>
+
+<div id="view_table">
+        <table>
+        <form name="work_job_new_form" method="post">
+            {% csrf_token %}
+        <tr>
+        <td align="center" class="text_title_top">Title</td><td class="text_text_top" align="center">Description</td>
+        </tr>
+            <tr>
+        <td align="center" class="text_title">팀명</td><td align="left" class="text_text"><div id="team_get"></div>
+            </td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">신청자</td><td align="left" class="text_text"><div id="user_get"></div></td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">Room No.</td><td align="left" class="text_text">
+                <input type="text" name="roomno" class="room_css" placeholder="Room No.를 입력하세요." value="{{roomno}}" onchange="Room_no();">
+            </td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">Room Name</td><td align="left" class="text_text">
+                {% if text_signal == "Y" %}
+                <input type="text" name="roomname_2"  value="{{roomname_2}}" class="room_css" placeholder="Room Name을 입력하세요." required>
+                {% else %}
+                {{roomname}}
+                {% endif %}
+            </td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title">구분</td><td align="left" class="text_text">
+            <input type="radio" class="radio" name="division" value="전기-콘센트" {{radio_1}}>전기-콘센트&emsp;
+            <input type="radio" class="radio" name="division" value="전기-형광등" {{radio_2}}>전기-형광등&emsp;
+            <input type="radio" class="radio" name="division" value="전기-기타" {{radio_3}}>전기-기타&emsp;<br>
+            <input type="radio" class="radio" name="division" value="건축-도어" {{radio_4}}>건축-도어&emsp;&emsp;
+            <input type="radio" class="radio" name="division" value="건축-바닥보수" {{radio_5}}>건축-바닥보수
+            <input type="radio" class="radio" name="division" value="건축-벽보수" {{radio_6}}>건축-벽보수&emsp;
+            <input type="radio" class="radio" name="division" value="건축-기타" {{radio_7}}>건축-기타&emsp;
+            </td>
+                </tr>
+            <tr>
+        <td align="center" class="text_title2">수리요청내용</td>
+        <td><textarea name="description" style="resize:none;" required>{{description}}</textarea></td>
+            </tr>
+                    <tr>
+        <td align="center" class="text_title">고장사유</td>
+        <td align="left" class="text_text"><input type="text" name="reason" value="{{reason}}" class="reason_css" placeholder="고장사유를 입력하세요." onchange="Reason_change();">
+            <input type="checkbox" name="reason_na" class="check_css" onclick="Reason_na();" {{na_check}}><na_css>N/A</na_css></td>
+            </tr>
+        <input type="hidden" name="division_give">
+        <input type="hidden" value="{{url}}" name="url">
+        <input type="hidden" value="{{roomname}}" name="roomname">
+        <input type="hidden" name="loginid">
+        </form>
+                    <tr>
+        <td align="center" class="text_title">첨부파일</td>
+        <td align="left" class="text_text" >
+                           {% if url_comp == "Y" %}
+            <a href="{{url}}" target="_blank" class="upload_complete_css">Upload_ Complete</a>
+                            {%else%}
+             <form method="post" enctype="multipart/form-data" class="uploadfile" name="uploadfile_form">
+                    {% csrf_token %}
+            <input type="file" name="upload_file" id="upload_file" class="button_css1">
+            <input type="hidden" name="division_give">
+            <input type="hidden" name="roomno_give">
+            <input type="hidden" name="description_give">
+            <input type="hidden" name="reason_give">
+            <input type="hidden" name="roomname_2_give">
+            <input type="hidden" name="loginid">
+            <input type="hidden" value="{{roomname}}" name="roomname">
+            <input type="button" value="Upload" class="upload_btn" onclick="Upload_file();"></form>
+                        {%endif%}
+        </td>
+            </tr>
+        </table>
+</div>
+
+
+<div id="btn_location">
+    <input type="button"  class="button_acc" value="Submit" onclick="Submit();">
+</div>
+
+</main>
+
+<form name="work_job_room_form" method="post">
+    {% csrf_token %}
+<input type="hidden" name="division_give">
+<input type="hidden" name="roomno_give">
+<input type="hidden" name="description_give">
+<input type="hidden" name="reason_give">
+<input type="hidden" value="{{url}}" name="url">
+<input type="hidden" name="loginid">
+</form>
+
+<input type="hidden" value="{{comp_signal}}" name="comp_signal">
+<input type="hidden" value="{{text_signal}}" name="text_signal">
+<input type="hidden" value="{{url_comp}}" name="url_comp">
+
+
+<script>
+        //////////// 기본초기값 불러오기//////////////
+     function init(){
+            var loginid = opener.document.getElementById("loginid_up").value;
+            var userteam = opener.document.getElementById("userteam_up").value;
+            var username = opener.document.getElementById("username_up").value;
+            document.work_job_new_form.loginid.value = loginid;
+            document.work_job_room_form.loginid.value = loginid;
+            var url_comp= document.getElementsByName('url_comp')[0].value;
+                if (url_comp=="Y"){}
+                else{document.uploadfile_form.loginid.value = loginid;}
+       ////아이디 정보 보내기
+            document.getElementById("logindata").innerHTML=loginid;
+            document.getElementById("team_get").innerHTML=userteam;
+            document.getElementById("user_get").innerHTML=username;
+       ////완료신호주기
+            var close_signal= document.getElementsByName('comp_signal')[0].value;
+            if (close_signal=="Y"){
+                window.resizeTo(600,200);
+                alert("수리제작의뢰서가 신청되었습니다.");
+                opener.document.location.reload();
+                self.close();}
+            }
+
+      onload=init
+
+    function Close(){
+            self.close();
+    }
+
+    function Room_no(){
+                    // 값받아오기
+            var roomno= document.getElementsByName('roomno')[0].value;
+            var description= document.getElementsByName('description')[0].value;
+            var reason= document.getElementsByName('reason')[0].value;
+            var obj_length = document.getElementsByName("division").length;
+                for (var i=0; i<obj_length; i++) {
+                    if (document.getElementsByName("division")[i].checked == true) {
+                        var division = document.getElementsByName("division")[i].value;
+                        }
+                    }
+                // 값보내기
+                document.work_job_room_form.roomno_give.value = roomno;
+                document.work_job_room_form.division_give.value = division;
+                document.work_job_room_form.description_give.value = description;
+                document.work_job_room_form.reason_give.value = reason;
+                    // 서버연결
+                document.work_job_room_form.action="work_job_room";
+                document.work_job_room_form.submit();
+    }
+
+     function Submit(){
+            var reason= document.getElementsByName('reason')[0].value;
+            if (reason == ""){
+                alert("수리제작의뢰서에서 [고장사유]가 입력되지 않았습니다.");}
+            else{
+            var obj_length = document.getElementsByName("division").length;
+                for (var i=0; i<obj_length; i++) {
+                    if (document.getElementsByName("division")[i].checked == true) {
+                        var division = document.getElementsByName("division")[i].value;
+                        var alarm_signal = "n";
+                        document.work_job_new_form.division_give.value = division;
+                        var check_again = window.confirm("해당 수리제작의뢰서를 제출하시겠습니까?","");
+                        if (check_again == true){
+                            document.work_job_new_form.action="work_job_new_submit";
+                            document.work_job_new_form.submit();}
+                        }
+                    }
+            if (alarm_signal == "n"){}
+            else{
+            alert("수리제작의뢰서에서 [구분]이 선택되지 않았습니다.");}}
+     }
+
+
+     function Reason_na(){
+                if (document.work_job_new_form.reason_na.checked == true){
+                document.work_job_new_form.reason.value = "N/A";
+                }
+                if (document.work_job_new_form.reason_na.checked == false){
+                document.work_job_new_form.reason.value = "";
+                }
+              }
+
+     function Reason_change(){
+              if (document.work_job_new_form.reason.value == "N/A"){}
+              else{
+                 document.getElementsByName('reason_na')[0].checked=false;}
+              }
+
+     //////////// 파일업로드하기//////////////
+            function Upload_file(){
+                 var text_signal= document.getElementsByName('text_signal')[0].value;
+                    if (text_signal=="Y"){
+                        var roomname_2= document.getElementsByName('roomname_2')[0].value;
+                        document.uploadfile_form.roomname_2_give.value = roomname_2;}
+                var roomno= document.getElementsByName('roomno')[0].value;
+                var description= document.getElementsByName('description')[0].value;
+                var reason= document.getElementsByName('reason')[0].value;
+                var obj_length = document.getElementsByName("division").length;
+                    for (var i=0; i<obj_length; i++) {
+                        if (document.getElementsByName("division")[i].checked == true) {
+                            var division = document.getElementsByName("division")[i].value;
+                            }
+                        }
+                // 값보내기
+                document.uploadfile_form.roomno_give.value = roomno;
+                document.uploadfile_form.division_give.value = division;
+                document.uploadfile_form.description_give.value = description;
+                document.uploadfile_form.reason_give.value = reason;
+                // 서버연결
+                document.uploadfile_form.action="work_job_new_upload";
+                document.uploadfile_form.submit();
+            }
+</script>
+
+</body>
+</html>

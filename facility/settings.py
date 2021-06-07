@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '^srikvkw=1%n=@l@9owblr-)+3qy4@jud3w4hwo%0e#&fa-0v^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -133,12 +133,16 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "Qq043823!"
-STATCI_ROOT = os.path.join(BASE_DIR, 'static')
 
 ######################이미지 업로드 세팅###########################
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+    os.path.join(BASE_DIR,'static')
+]
+STATIC_ROOT = os.path.join('staticfiles')
 
 
 

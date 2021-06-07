@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Program Informantion</title>
+</head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
+
+header{
+        height:30px;
+        background:#3DB7CC;
+        justify-content:space-between;
+        align-items:center;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:10;
+        }
+
+.t1-2{width:50px;
+height:20px;
+background-color:#3DB7CC;
+color:white;}
+.t2-2{width:200px;
+height:20px;
+background-color:#3DB7CC;
+color:white;}
+.t3-2{width:120px;
+height:20px;
+background-color:#3DB7CC;
+color:white;}
+
+.t1{width:50px;
+height:20px;}
+.t2{width:10.41667vw;
+height:20px;}
+.t3{width:120px;
+height:20px;}
+
+table_title{
+        font-family:'Rubik', sans-serif;
+        font-size:15px;
+        font-color:black;
+        text-decoration: underline;
+        font-weight:bold;
+}
+table_title{
+        font-family:'Rubik', sans-serif;
+        font-size:16px;
+        font-color:black;
+}
+text_main{
+        padding-left:5px;
+        font-family:'Rubik', sans-serif;
+        font-size:20px;
+        color:white;
+}
+#update_info{
+        margin-top:40px;
+        font-family:'Rubik', sans-serif;
+        font-size:12px;
+}
+#alarm_info{
+        margin-top:120px;
+        font-family:'Rubik', sans-serif;
+        font-size:12px;
+}
+#version_info{
+        position:fixed; top:470px; left:250px;
+        font-family:'Rubik', sans-serif;
+        font-size:12px;
+}
+tr:nth-child(odd){
+    background-color:#EEEEEE;
+}
+</style>
+<body>
+<header>
+<text_main>Program Information</text_main>
+</header>
+
+<div id="update_info">
+    <table_title>업데이트 내역</table_title>
+<table>
+<tr>
+    <td align="center" class="t1-2">No.</td>
+    <td align="center" class="t2-2">Description</td>
+     <td align="center" class="t3-2">Date</td>
+</tr>
+<tr>
+    <td align="center" class="t1">1</td>
+    <td align="center" class="t2">Beta Version 오픈</td>
+    <td align="center" class="t3">2021.03.05</td>
+</tr>
+<tr>
+    <td align="center" class="t1">2</td>
+    <td align="center" class="t2">정식버전 오픈</td>
+    <td align="center" class="t3">2021.06.07</td>
+</tr>
+</table>
+</div>
+
+<div id="alarm_info">
+    <table_title>알림사항</table_title>
+<table>
+<tr>
+    <td align="center" class="t1-2">No.</td>
+    <td align="center" class="t2-2">Description</td>
+     <td align="center" class="t3-2">Link</td>
+</tr>
+<tr>
+    <td align="center" class="t1">1</td>
+    <td align="center" class="t2">수리제작의뢰서 진행Flow</td>
+    <td align="center" class="t3">
+         <a href="/media/flowchart.jpg" target="_blank">Link</a>
+    </td>
+</tr>
+<tr>
+    <td align="center" class="t1">2</td>
+    <td align="center" class="t2">수리제작의뢰 신청방법</td>
+    <td align="center" class="t3">
+         <a href="/media/manual.pdf" target="_blank">Link</a>
+    </td>
+</tr>
+<tr>
+    <td align="center" class="t1">3</td>
+    <td align="center" class="t2">수리제작의뢰 승인방법</td>
+    <td align="center" class="t3">
+         <a href="/media/approval.pdf" target="_blank">Link</a>
+    </td>
+</tr>
+<tr>
+    <td align="center" class="t1">4</td>
+    <td align="center" class="t2">수리제작의뢰 가입방법</td>
+    <td align="center" class="t3">
+         <a href="/media/reg.pdf" target="_blank">Link</a>
+    </td>
+</tr>
+</table>
+</div>
+
+<div id="version_info">
+    <table_title>버전정보</table_title>
+    <table_text>Version V1.1</table_text>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% include "tablecss.html"%}
+{% include "topmenu.html"%}
+{% include "sidemenubar.html"%}
+{% include "work_job_table.html"%}
+
+{% if table_signal == "view" %}
+{% include "work_job_view.html"%}
+{% elif table_signal == "accept"  %}
+{% include "work_job_accept.html"%}
+{% elif table_signal == "write"  %}
+{% include "work_job_write.html"%}
+{% elif table_signal == "approval"  %}
+{% include "work_job_approval.html"%}
+{%endif%}
+
+</body>
+</html>

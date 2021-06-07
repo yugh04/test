@@ -7,16 +7,22 @@ class worktable(models.Model): #수리제작의뢰서 테이블
     job = models.CharField(max_length=30)
     team = models.CharField(max_length=255)
     rep = models.CharField(max_length=255)
-    roomname = models.CharField(max_length=255)
+    roomname = models.CharField(max_length=255, default="")
     roomno = models.CharField(max_length=50)
-    description = models.TextField(max_length=255)
-    summary = models.TextField(max_length=255, default="미완료")
+    description = models.TextField()
+    summary = models.TextField(default="미완료")
     status = models.CharField(max_length=50, default="신청")
     userid = models.CharField(max_length=64)
     approval = models.CharField(max_length=64, default="미승인")
     check = models.CharField(max_length=64, default="미승인")
     engrep = models.CharField(max_length=64, default="미지정")
     date = models.CharField(max_length=64, default="")
+    finish_date = models.CharField(max_length=64, default="미완료")
+    division = models.CharField(max_length=64, default="")
+    get_date = models.CharField(max_length=64, default="미접수")
+    attached_file = models.CharField(max_length=255)
+    reason = models.TextField()
+    attached_tag = models.CharField(max_length=255)
 
     class Meta:
         managed = False
@@ -24,13 +30,16 @@ class worktable(models.Model): #수리제작의뢰서 테이블
 
 class users(models.Model): # 유저 테이블
     no = models.AutoField(primary_key=True)
-    userid = models.CharField(max_length=64)
-    username = models.CharField(max_length=64)
-    userteam = models.CharField(max_length=64)
-    password = models.CharField(max_length=64)
-    useremail = models.CharField(max_length=128)
-    usertel = models.CharField(max_length=64)
-    auth = models.IntegerField(default=0)
+    userid = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    userteam = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    useremail = models.CharField(max_length=255)
+    usertel = models.CharField(max_length=255)
+    auth = models.CharField(max_length=255)
+    password_date = models.DateField()
+    fail_count = models.CharField(max_length=255, default=0)
+    login_lock = models.CharField(max_length=255, default="Unlock")
 
     class Meta:
         managed = False

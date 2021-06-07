@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+titletext{
+        position:fixed;top:4%; left:10.7%;
+    	font-family:'Rubik', sans-serif;
+        font-size:1.041667vw;
+        font-weight:bold;
+}
+.selecttext{
+        width:5.46875vw;
+        height:2.1vh;
+        cursor:pointer;
+}
+.searchtext{
+        width:10.41667vw;
+        height:2.1vh;
+}
+.searchbutton{
+        width:3.125vw;
+        height:2vh;
+        font-size:0.7vw;
+        cursor:pointer;
+}
+#searchbar{
+        position:fixed;top:4.9%; left:79.5%;
+    	font-family: arial;
+        font-family:arial;
+        font-size:0.520833vw;
+}
+
+#tablemenu{
+    	font-family: arial;
+        font-size:0.572917vw;
+        position:fixed;top:7.5%; left:9%;
+        width:90.7%;
+        background-color:#3DB7CC;
+        color:white;
+}
+#tabletop{
+        border:1px solid white;
+        border-collapse:collapse;}
+#tabledesc{
+        position:fixed;top:10.8%; left:9%;
+        z-index:10;
+        width:90.7%;
+        font-family: arial;
+        font-size:0.572917vw;
+        overflow-y:scroll;
+        height:88.5%;
+}
+
+body{overflow:hidden;}
+
+tr:nth-child(even){
+    background-color:#EEEEEE;
+}
+
+.m1{width:18.85417vw;
+height:1.388889vh;
+background-color:#3DB7CC;}
+.m2{width:15.625vw;
+background-color:#3DB7CC;}
+.m3{width:10.41667vw;
+background-color:#3DB7CC;}
+.m3_1{padding-left:3.90625vw;
+width:6.510417vw;
+background-color:#3DB7CC;}
+
+.m1-1{width:18.69792vw;}
+.m2-1{width:15.57292vw;}
+.m1-2{width:18.75vw;}
+.m2-2{width:15.625vw;}
+.m3-1{width:10.41667vw;}
+.m3-2{width:9.375vw;}
+
+.delete_button{
+    	font-family: arial;
+        font-size:0.572917vw;
+        cursor:pointer;
+}
+
+.submit_button{
+    	font-family: arial;
+        cursor:pointer;
+        font-size:0.729167vw;
+        height:2.22222vh;
+        margin-left:93.75vw;
+        margin-top:86.111111vh;
+}
+
+.authtext{
+    	font-family: arial;
+        padding-top:0.104167vw;
+        padding-bottom:0.2777778vh;
+        width:7.291667vw;
+        }
+b{
+        position:fixed;top:5.2%; left:71.5%;
+        align-text:left;
+        color:black;
+}
+.new{
+        font-family:'Rubik', sans-serif;
+        font-size:0.78125vw;
+        background-color: rgba(255, 255, 255, 0.0);
+        cursor:pointer;
+        border:0px;
+        font-color:black;
+        text-decoration:underline;
+        padding-top:0.185185vh;
+}
+.input_css1{width:16.66667vw;}
+.input_css2{width:8.33333vw;}
+a{position:fixed;top:4%; left:9%;}
+</style>
+<body>
+<main>
+{% include "tablecss.html"%}
+{% include "topmenu.html"%}
+{% include "sidemenubar.html"%}
+
+<a class="xi-bank xi-2x"></a>
+<titletext>룸 정보</titletext>
+<b class="xi-pen"><input type="button" value="New Registration" class="new" onclick="Registration_new();"></b>
+
+<div id="searchbar">
+        <form action="roomlist_main" method="post">
+            {% csrf_token %}
+            <select class="selecttext" name="selecttext" value="{{selecttext}}">&nbsp;
+            <option value="roomname">Room Name</option>
+            <option value="roomno">Room No.</option>
+            </select>
+            <input type="search"  class="searchtext" placeholder="Keywords" name="searchtext" value="{{searchtext}}">
+            <input type="hidden" value="{{loginid}}" name="loginid">
+            <input type="submit"  class="searchbutton" value="Search"></form>
+</div>
+
+
+<div id="tablemenu">
+     <table  id="tabletop" style="word-break:break-all" border="1">
+        <thead>
+        <tr>
+        <td align="center" class="m4" colspan="2">Now</td>
+        <td align="center" class="m4" colspan="2">Change</td>
+        <td align="center" class="m4" colspan="2">Button</td>
+        </tr>
+        <tr>
+            <td align="center" class="m1">Room Name</td>
+            <td align="center" class="m2">Room No.</td>
+            <td align="center" class="m1">Room Name</td>
+            <td align="center" class="m2">Room No.</td>
+            <td align="center" class="m3">Change</td>
+            <td align="left" class="m3_1">Delete</td>
+        </tr>
+        </thead>
+     </table>
+</div>
+<div id="tabledesc">
+ <table style="word-break:break-all">
+     <tbody>
+            {% for room_lists in room_list %}
+        <tr>
+            <td align="center" class="m1-1">{{room_lists.roomname}}</td>
+            <td align="center" class="m2-1">{{room_lists.roomno}}</td>
+
+            <td align="center" class="m1-2">
+                <input type="text" name="new_name" class="input_css1" required></td>
+            <td align="center" class="m2-2">
+                <input type="text" name="new_no" class="input_css2" required></td>
+            <td align="center" class="m3-1">
+                <input type="hidden" value="{{loginid}}" name="loginid">
+                <input type="hidden" value="{{loginid}}" id="loginid_up">
+                <input type="hidden" value="{{room_lists.roomno}}" name="roomno_give">
+                <input type="hidden" value="{{room_lists.no}}" name="no_give">
+                <input type="button" class="delete_button" value="Change" onclick="roomlist_change(this);">
+            </td>
+            <td align="center" class="m3-2">
+                <input type="button" class="delete_button" value="Delete" onclick="roomlist_delete(this);">
+            </td>
+        </tr>
+            {% endfor %}
+        </tbody>
+ </table>
+</div>
+
+</div>
+
+                <form method="post" name="roomlist_change_form">
+                    {% csrf_token %}
+                 <input type="hidden" value="{{loginid}}" name="loginid">
+                 <input type="hidden" name="roomno">
+                 <input type="hidden" name="new_name">
+                 <input type="hidden" name="new_no">
+                 <input type="hidden" name="no">
+                </form>
+
+                <form method="post" name="roomlist_delete_form">
+                    {% csrf_token %}
+                 <input type="hidden" value="{{loginid}}" name="loginid">
+                 <input type="hidden" name="no">
+                </form>
+</main>
+<script>
+
+    function Registration_new(){
+                        // 팝업창열기
+            var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,width=380, height=180, left=50, top=10';
+            window.open("/roomlist_new", "Room Information Registration", settings);
+    }
+
+    function roomlist_change(obj){
+      var i = obj.parentNode.parentNode.rowIndex;
+            var roomno= document.getElementsByName('roomno_give')[i].value;
+            var new_name= document.getElementsByName('new_name')[i].value;
+            var new_no= document.getElementsByName('new_no')[i].value;
+            var no= document.getElementsByName('no_give')[i].value;
+            document.roomlist_change_form.no.value = no;
+            document.roomlist_change_form.roomno.value = roomno;
+            document.roomlist_change_form.new_name.value = new_name;
+            document.roomlist_change_form.new_no.value = new_no;
+      var check_again = window.confirm("Room 정보를 변경하시겠습니까?","");
+        if (check_again == true){
+            document.roomlist_change_form.action="roomlist_change";
+            document.roomlist_change_form.submit();}
+     }
+
+    function roomlist_delete(obj){
+      var i = obj.parentNode.parentNode.rowIndex;
+            var no= document.getElementsByName('no_give')[i].value;
+            document.roomlist_delete_form.no.value = no;
+      var check_again = window.confirm("해당 Room을 삭제하시겠습니까?","");
+        if (check_again == true){
+            document.roomlist_delete_form.action="roomlist_delete";
+            document.roomlist_delete_form.submit();}
+     }
+</script>
+</body>
+</html>
