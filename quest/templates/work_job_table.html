@@ -179,7 +179,7 @@ d{
             <td align="center" class="m5-1">{{worklists.status}}</td>
             <td align="center" class="m6-1">{{worklists.division}}</td>
             {% if auth == "Engineer" %}
-            <td align="center" class="m7-1_e">{{worklists.description}}</td>
+            <td align="left" class="m7-1_e">{{worklists.description}}</td>
             <td align="center" class="m8-1_e">{{worklists.engrep}}</td>
             <td align="center" class="m9-1_e">
             <form action="work_job_view" method="post" >
@@ -200,7 +200,7 @@ d{
                 </form>
             </td>
             {% elif auth == "Eng. Manager" %}
-            <td align="center" class="m7-1_e">{{worklists.description}}</td>
+            <td align="left" class="m7-1_e">{{worklists.description}}</td>
             <td align="center" class="m8-1_e">{{worklists.engrep}}</td>
             <td align="center" class="m9-1_e">
             <form action="work_job_view" method="post" >
@@ -221,7 +221,7 @@ d{
                 </form>
             </td>
             {%else%}
-            <td align="center" class="m7-1">{{worklists.description}}</td>
+            <td align="left" class="m7-1">{{worklists.description}}</td>
             <td align="center" class="m8-1">{{worklists.engrep}}</td>
             <td align="center" class="m9-1">
             <form action="work_job_view" method="post" >
