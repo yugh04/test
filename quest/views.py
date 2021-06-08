@@ -1335,6 +1335,8 @@ def user_info_new_submit(request):
                 return render(request, 'user_info_new.html', context)  # templates 내 html연결
             else:
     ######################## 값 저장하기
+                today = date.datetime.today()
+                today_date = "20" + today.strftime('%y') + "-" + today.strftime('%m') + "-" + today.strftime('%d')
                 users(
                       userid=userid_up,
                       username=username_up,
@@ -1343,6 +1345,7 @@ def user_info_new_submit(request):
                       useremail=useremail_up,
                       auth=auth_up,
                       usertel=usertel_up,
+                      password_date=today_date,
                       ).save()
                 comp_signal="Y"
                 context = {"loginid":loginid,"comp_signal":comp_signal}
