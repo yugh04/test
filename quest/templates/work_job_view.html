@@ -26,7 +26,7 @@ text-decoration:underline;
 position:fixed;top:13%; left:55%;
 }
 #btn_location{
-position:fixed;top:95%; left:92.5%;
+position:fixed;top:95.3%; left:92.7%;
 }
 #btn_location_2{
 position:fixed;top:95%; left:92.5%;
@@ -100,6 +100,13 @@ height:2.777778vh;
         cursor:pointer;
         font-size:0.7vw;
 }
+.button_acc_r{
+        width:3.125vw;
+        height:2vh;
+        cursor:pointer;
+        font-size:0.7vw;
+        color:red;
+}
 </style>
 
 
@@ -172,8 +179,7 @@ height:2.777778vh;
     {% endfor %}
 </div>
 
-    {%if auth == "Team Manager" %}
-    {%elif btn_view == "Y"%}
+
 <div id="btn_location">
     <form name="work_job_delete" method="post">
                 {% csrf_token %}
@@ -186,13 +192,18 @@ height:2.777778vh;
     <input type="hidden" value="{{loginid}}" name="loginid">
     {% endfor %}
     </form>
-    <input type="button"  class="button_acc" value="Change" onclick="Change_req();">
-    <input type="button"  class="button_acc" value="Delete" onclick="Delete_req();">
-</div>
-    {%endif%}
-
     {%if auth == "Team Manager" %}
-        {%if btn_view_2 == "Y"%}
+    {%elif btn_view == "Y"%}
+    <input type="button"  class="button_acc" value="Change" onclick="Change_req();">
+    <input type="button"  class="button_acc_r" value="Delete" onclick="Delete_req();">
+    {%endif%}
+    {%if auth == "Team Supervisor" %}
+    {%elif btn_view == "Y"%}
+    <input type="button"  class="button_acc" value="Change" onclick="Change_req();">
+    <input type="button"  class="button_acc_r" value="Delete" onclick="Delete_req();">
+    {%endif%}
+</div>
+
 <div id="btn_location_2">
     <table>
                 {% for work in view_table %}
@@ -203,7 +214,16 @@ height:2.777778vh;
                 <input type="hidden" value="{{loginid}}" name="loginid">
                 <input type="hidden" value="{{work.job}}" name="jobno">
                 <input type="hidden" value="{{signal}}" name="signal">
+                {%if auth == "Team Manager" %}
+                {%if btn_view_2 == "Y"%}
                 <input type="button"  class="button_acc" value="Accept" onclick="Accept();"></form>
+                {%endif%}
+                {%endif%}
+                {%if auth == "Team Supervisor" %}
+                {%if btn_view_2 == "Y"%}
+                <input type="button"  class="button_acc" value="Accept" onclick="Accept();"></form>
+                {%endif%}
+                {%endif%}
             </td>
             <td>
                 <form name="work_job_new_reject_form" method="post">
@@ -212,14 +232,22 @@ height:2.777778vh;
                 <input type="hidden" value="{{work.job}}" name="jobno">
                 <input type="hidden" name="reject_reason">
                 <input type="hidden" value="{{signal}}" name="signal">
-                <input type="button"  class="button_acc" value="Reject" onclick="Reject();"></form>
+                {%if auth == "Team Manager" %}
+                {%if btn_view_2 == "Y"%}
+                <input type="button"  class="button_acc_r" value="Reject" onclick="Reject();"></form>
+                {%endif%}
+                {%endif%}
+                {%if auth == "Team Supervisor" %}
+                {%if btn_view_2 == "Y"%}
+                <input type="button"  class="button_acc_r" value="Reject" onclick="Reject();"></form>
+                {%endif%}
+                {%endif%}
             </td>
         </tr>
                 {%endfor%}
     </table>
 </div>
-        {%endif%}
-    {%endif%}
+
 
 <input type="hidden" value="{{delete_signal}}" name="delete_signal">
 

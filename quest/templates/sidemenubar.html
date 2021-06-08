@@ -116,6 +116,10 @@ i{
         {% csrf_token %}
         <input type="hidden" value="{{loginid}}" name="loginid">
         <input type="submit" value="사용자 정보" class="Button"></form><br>
+    <form action="roomlist_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="submit"value="룸 정보" class="Button"></form><br>
 </tr>
     {% endif %}
 

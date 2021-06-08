@@ -518,6 +518,21 @@ tr:nth-child(odd){
     <td align="center" class="m2">{{staff_infos.status__count}}</td>
 </tr>
         {% endfor %}
+</table><br>
+      <table>
+<tr>
+    <td align="center" class="m1-2">문서 명</td>
+    <td align="center" class="m1-2">결재대기 문서</td>
+</tr>
+<tr>
+    <td align="center" class="m1">수리제작의뢰서</td>
+    <td align="center" class="m2">
+        <form action="work_job_main" method="post">
+        {% csrf_token %}
+        <input type="hidden" value="{{loginid}}" name="loginid">
+        <input type="hidden" value="yes" name="signal">
+        <input type="submit" value="{{wr_team_m_len}}" class="my_button"></form></td>
+</tr>
 </table>
 {%endif%}
 

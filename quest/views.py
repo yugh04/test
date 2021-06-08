@@ -344,7 +344,7 @@ def work_job_main(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -374,7 +374,7 @@ def work_job_write(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -417,7 +417,7 @@ def work_job_view(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -427,11 +427,11 @@ def work_job_view(request):
         table_signal = "view"
         view_table = worktable.objects.filter(job=jobno)
         btn_check = worktable.objects.get(job=jobno)
-        if (btn_check.rep == username) and (btn_check.status == "신청"):
+        if (btn_check.rep == username) and (btn_check.status == "신청"):  ##체인지 / 델레트 버튼
             btn_view="Y"
         else:
             btn_view = "N"
-        if btn_check.status == "신청":
+        if (btn_check.status == "신청") and (btn_view == "N"): ###엑셉트 / 리젝트 버튼
             btn_view_2 = "Y"
         else:
             btn_view_2 = "N"
@@ -463,7 +463,7 @@ def work_job_app(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -501,18 +501,18 @@ def work_job_accept(request):
         save_data.status = "접수"
         save_data.save()
     ###신청자에게 메일보내기###
-        title_text = "(자동메일)수리제작의뢰서 접수의 건 [Job No.: " + save_data.job + "]"
-        email_text = "Job No: " + save_data.job + "가 접수되었습니다." + \
-                     "\n\nJob No: " + save_data.job + \
-                     "\n팀: " + save_data.team + \
-                     "\n요청자: " + save_data.rep + \
-                     "\n요청일자: " + save_data.date + \
-                     "\nRoom Name (Room No.): " + save_data.roomname + " (" + save_data.roomno + ")" \
-                     "\n구분: " + save_data.division + \
-                     "\n요청내용: " + save_data.description + \
-                     "\n고장사유: " + save_data.reason + \
-                     "\n담당자: " + save_data.engrep + \
-                     "\n접수일자: " + save_data.get_date + \
+        title_text = "(자동메일)수리제작의뢰서 접수의 건 [Job No.: " + str(save_data.job) + "]"
+        email_text = "Job No: " + str(save_data.job) + "가 접수되었습니다." + \
+                     "\n\nJob No: " + str(save_data.job) + \
+                     "\n팀: " + str(save_data.team) + \
+                     "\n요청자: " + str(save_data.rep) + \
+                     "\n요청일자: " + str(save_data.date) + \
+                     "\nRoom Name (Room No.): " + str(save_data.roomname) + " (" + str(save_data.roomno) + ")" \
+                     "\n구분: " + str(save_data.division) + \
+                     "\n요청내용: " + str(save_data.description) + \
+                     "\n고장사유: " + str(save_data.reason) + \
+                     "\n담당자: " + str(save_data.engrep) + \
+                     "\n접수일자: " + str(save_data.get_date) + \
                      "\n\n ※ 상기 메일 자동발신 메일이며 회신은 불가합니다." + \
                      "\n ※ Link: http://dmbio.synology.me:803"
     ##신청자 메일주소 불러오기##
@@ -538,7 +538,7 @@ def work_job_accept(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -574,17 +574,17 @@ def work_job_reject(request):
         save_data.status = "반려"
         save_data.save()
     ###신청자에게 메일보내기###
-        title_text = "(자동메일)수리제작의뢰서 반려의 건 [Job No.: " + save_data.job + "]"
-        email_text = "Job No: " + save_data.job + "가 반려되었습니다." + \
-                     "\n\nJob No: " + save_data.job + \
-                     "\n팀: " + save_data.team + \
-                     "\n요청자: " + save_data.rep + \
-                     "\n요청일자: " + save_data.date + \
-                     "\nRoom Name (Room No.): " + save_data.roomname + " (" + save_data.roomno + ")" \
-                     "\n구분: " + save_data.division + \
-                     "\n요청내용: " + save_data.description + \
-                     "\n반려사유: " + reject_reason + \
-                     "\n담당자: " + save_data.engrep + \
+        title_text = "(자동메일)수리제작의뢰서 반려의 건 [Job No.: " + str(save_data.job) + "]"
+        email_text = "Job No: " + str(save_data.job) + "가 반려되었습니다." + \
+                     "\n\nJob No: " + str(save_data.job) + \
+                     "\n팀: " + str(save_data.team) + \
+                     "\n요청자: " + str(save_data.rep) + \
+                     "\n요청일자: " + str(save_data.date) + \
+                     "\nRoom Name (Room No.): " + str(save_data.roomname) + " (" + str(save_data.roomno) + ")" \
+                     "\n구분: " + str(save_data.division) + \
+                     "\n요청내용: " + str(save_data.description) + \
+                     "\n반려사유: " + str(reject_reason) + \
+                     "\n담당자: " + str(save_data.engrep) + \
                      "\n\n ※ 상기 메일 자동발신 메일이며 회신은 불가합니다." + \
                      "\n ※ Link: http://dmbio.synology.me:803"
     ##신청자 메일주소 불러오기##
@@ -610,7 +610,7 @@ def work_job_reject(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -646,20 +646,20 @@ def work_job_submit(request):
         save_data.status = "조치완료"
         save_data.save()
     ###엔지니어에게 메일보내기###
-        title_text = "(자동메일)수리제작의뢰서 조치완료의 건 [Job No.: " + save_data.job + "]"
-        email_text = "Job No: " + save_data.job + "가 조치가 완료되었습니다." + \
-                     "\n\nJob No: " + save_data.job + \
-                     "\n팀: " + save_data.team + \
-                     "\n요청자: " + save_data.rep + \
-                     "\n요청일자: " + save_data.date + \
-                     "\nRoom Name (Room No.): " + save_data.roomname + " (" + save_data.roomno + ")" \
-                     "\n구분: " + save_data.division + \
-                     "\n요청내용: " + save_data.description + \
-                     "\n고장사유: " + save_data.reason + \
-                     "\n담당자: " + save_data.engrep + \
-                     "\n접수일자: " + save_data.get_date + \
-                     "\n조치내용: " + save_data.summary + \
-                     "\n조치완료일: " + save_data.finish_date + \
+        title_text = "(자동메일)수리제작의뢰서 조치완료의 건 [Job No.: " + str(save_data.job) + "]"
+        email_text = "Job No: " + str(save_data.job) + "가 조치가 완료되었습니다." + \
+                     "\n\nJob No: " + str(save_data.job) + \
+                     "\n팀: " + str(save_data.team) + \
+                     "\n요청자: " + str(save_data.rep) + \
+                     "\n요청일자: " + str(save_data.date) + \
+                     "\nRoom Name (Room No.): " + str(save_data.roomname) + " (" + str(save_data.roomno) + ")" \
+                     "\n구분: " + str(save_data.division) + \
+                     "\n요청내용: " + str(save_data.description) + \
+                     "\n고장사유: " + str(save_data.reason) + \
+                     "\n담당자: " + str(save_data.engrep) + \
+                     "\n접수일자: " + str(save_data.get_date) + \
+                     "\n조치내용: " + str(save_data.summary) + \
+                     "\n조치완료일: " + str(save_data.finish_date) + \
                      "\n\n ※ 상기 메일 자동발신 메일이며 회신은 불가합니다."+ \
                      "\n ※ Link: http://dmbio.synology.me:803"
     ##전체 메일주소 불러오기##
@@ -685,7 +685,7 @@ def work_job_submit(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -727,7 +727,7 @@ def work_job_approval(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -764,7 +764,7 @@ def work_job_app_reject(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -832,7 +832,7 @@ def work_job_delete_submit(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status', 'team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"):  ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager":  #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -999,16 +999,16 @@ def work_job_new_submit(request):
             attached_tag=attached_tag,
         ).save()  # 저장
     ###해당팀장에게 메일보내기###
-        title_text = "(자동메일)수리제작의뢰서 신청의 건 [Job No.: " + jobno + "]"
-        email_text = "Job No: " + jobno + "가 신청되었습니다." + \
-                     "\n\nJob No: " + jobno + \
-                     "\n팀: " + userteam + \
-                     "\n요청자: " + username + \
-                     "\n요청일자: " + jobdate + \
-                     "\nRoom Name (Room No.): " + roomname_true + " (" + roomno + ")" \
-                     "\n구분: " + division + \
-                     "\n요청내용: " + description + \
-                     "\n고장사유: " + reason + \
+        title_text = "(자동메일)수리제작의뢰서 신청의 건 [Job No.: " + str(jobno) + "]"
+        email_text = "Job No: " + str(jobno) + "가 신청되었습니다." + \
+                     "\n\nJob No: " + str(jobno) + \
+                     "\n팀: " + str(userteam) + \
+                     "\n요청자: " + str(username) + \
+                     "\n요청일자: " + str(jobdate) + \
+                     "\nRoom Name (Room No.): " + str(roomname_true) + " (" + str(roomno) + ")" \
+                     "\n구분: " + str(division) + \
+                     "\n요청내용: " + str(description) + \
+                     "\n고장사유: " + str(reason) + \
                      "\n\n ※ 상기 메일 자동발신 메일이며 회신은 불가합니다." + \
                      "\n ※ Link: http://dmbio.synology.me:803"
     ##팀장 메일주소 불러오기##
@@ -1048,16 +1048,16 @@ def work_job_new_accept(request):
         save_data.status = "신청완료"
         save_data.save()
     ###엔지니어에게 메일보내기###
-        title_text = "(자동메일)수리제작의뢰서 신청의 건 [Job No.: " + save_data.job + "]"
-        email_text = "Job No: " + save_data.job + "가 신청되었습니다." + \
-                     "\n\nJob No: " + save_data.job + \
-                     "\n팀: " + save_data.team + \
-                     "\n요청자: " + save_data.rep + \
-                     "\n요청일자: " + save_data.date + \
-                     "\nRoom Name (Room No.): " + save_data.roomname + " (" + save_data.roomno + ")" \
-                     "\n구분: " + save_data.division + \
-                     "\n요청내용: " + save_data.description + \
-                     "\n고장사유: " + save_data.reason + \
+        title_text = "(자동메일)수리제작의뢰서 신청의 건 [Job No.: " + str(save_data.job) + "]"
+        email_text = "Job No: " + str(save_data.job) + "가 신청되었습니다." + \
+                     "\n\nJob No: " + str(save_data.job) + \
+                     "\n팀: " + str(save_data.team) + \
+                     "\n요청자: " + str(save_data.rep) + \
+                     "\n요청일자: " + str(save_data.date) + \
+                     "\nRoom Name (Room No.): " + str(save_data.roomname) + " (" + str(save_data.roomno) + ")" \
+                     "\n구분: " + str(save_data.division) + \
+                     "\n요청내용: " + str(save_data.description) + \
+                     "\n고장사유: " + str(save_data.reason) + \
                      "\n\n ※ 상기 메일 자동발신 메일이며 회신은 불가합니다." + \
                      "\n ※ Link: http://dmbio.synology.me:803"
     #엔지니어 메일주소 불러오기##
@@ -1083,7 +1083,7 @@ def work_job_new_accept(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -1115,16 +1115,16 @@ def work_job_new_reject(request):
         save_data.status = "반려"
         save_data.save()
     ###신청자에게 메일보내기###
-        title_text = "(자동메일)수리제작의뢰서 반려의 건 [Job No.: " + save_data.job + "]"
-        email_text = "Job No: " + save_data.job + "가 반려되었습니다." + \
-                     "\n\nJob No: " + save_data.job + \
-                     "\n팀: " + save_data.team + \
-                     "\n요청자: " + save_data.rep + \
-                     "\n요청일자: " + save_data.date + \
-                     "\nRoom Name (Room No.): " + save_data.roomname + " (" + save_data.roomno + ")" \
-                      "\n구분: " + save_data.division + \
-                     "\n요청내용: " + save_data.description + \
-                     "\n반려사유: " + reject_reason + \
+        title_text = "(자동메일)수리제작의뢰서 반려의 건 [Job No.: " + str(save_data.job) + "]"
+        email_text = "Job No: " + str(save_data.job) + "가 반려되었습니다." + \
+                     "\n\nJob No: " + str(save_data.job) + \
+                     "\n팀: " + str(save_data.team) + \
+                     "\n요청자: " + str(save_data.rep) + \
+                     "\n요청일자: " + str(save_data.date) + \
+                     "\nRoom Name (Room No.): " + str(save_data.roomname) + " (" + str(save_data.roomno) + ")" \
+                      "\n구분: " + str(save_data.division) + \
+                     "\n요청내용: " + str(save_data.description) + \
+                     "\n반려사유: " + str(reject_reason) + \
                      "\n\n ※ 상기 메일 자동발신 메일이며 회신은 불가합니다." + \
                      "\n ※ Link: http://dmbio.synology.me:803"
     #신청자 메일주소 불러오기##
@@ -1150,7 +1150,7 @@ def work_job_new_reject(request):
                 worklist = worktable.objects.filter(Q(status="신청완료") | Q(status="접수")).order_by('status','team')
         elif (auth == "Eng. Manager") or (auth == "Eng. Supervisor"): ###엔지니어 팀장 슈퍼바이져
             worklist = worktable.objects.filter(status="조치완료").order_by('team', '-job')
-        elif auth == "Team Manager": #### 일반 팀장
+        elif (auth == "Team Manager") or (auth == "Team Supervisor"): #### 일반 팀장
             if signal == "yes":
                 worklist = worktable.objects.filter(team=userteam, status="신청").order_by('status', '-job')
             else:
@@ -1419,12 +1419,20 @@ def roomlist_main(request):
         selecttext = request.POST.get('selecttext')  # html 선택조건의 값을 받는다
         searchtext = request.POST.get('searchtext')  # html 입력 값을 받는다
         try:
-            if selecttext == "roomname":
-                room_list = room.objects.filter(roomname__icontains=searchtext).order_by("roomno")
-            elif selecttext == "roomno":
-                room_list = room.objects.filter(roomno__icontains=searchtext).order_by("roomno")
+            if auth == "Team Supervisor":
+                if selecttext == "roomname":
+                    room_list = room.objects.filter(roomname__icontains=searchtext).order_by("roomno")
+                elif selecttext == "roomno":
+                    room_list = room.objects.filter(roomno__icontains=searchtext).order_by("roomno")
+                else:
+                    room_list = room.objects.all().order_by("roomno")
             else:
-                room_list = room.objects.all().order_by("roomno")
+                if selecttext == "roomname":
+                    room_list = room.objects.filter(roomname__icontains=searchtext).order_by("roomno")
+                elif selecttext == "roomno":
+                    room_list = room.objects.filter(roomno__icontains=searchtext).order_by("roomno")
+                else:
+                    room_list = room.objects.all().order_by("roomno")
         except:
             room_list = room.objects.all().order_by("roomno")
         if str(searchtext) == "None":
