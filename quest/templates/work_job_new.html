@@ -3,17 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <title>Complete</title>
-    <script language="javascript">
-    function Teamrejectbtn(){
-    var reason = window.prompt("반려사유를 입력해주세요.","");
-        document.Compreject.comprejectreason.value = reason;
-        let status = document.getElementsByName('status2')[0].value;
-            if (status == '조치완료'){
-                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
-            }
-        }
-    </script>
+    <title>수리제작의뢰서 신청</title>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
 
@@ -369,7 +360,7 @@ font-size:16px;}
                         var division = document.getElementsByName("division")[i].value;
                         var alarm_signal = "n";
                         document.work_job_new_form.division_give.value = division;
-                        var check_again = window.confirm("해당 수리제작의뢰서를 제출하시겠습니까?","");
+                        var check_again = window.confirm("해당 수리제작의뢰서를 제출하시겠습니까?\n메일발송 완료창이 나올때까지 잠시만 기다려 주시기 바랍니다.","");
                         if (check_again == true){
                             document.work_job_new_form.action="work_job_new_submit";
                             document.work_job_new_form.submit();}

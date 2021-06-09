@@ -87,6 +87,12 @@ textarea{
         height:2vh;
         cursor:pointer;
 }
+.button_acc_r{
+        width:3.125vw;
+        height:2vh;
+        cursor:pointer;
+        color:red;
+}
 </style>
 
 
@@ -172,13 +178,15 @@ textarea{
     <input type="hidden" value="{{work.job}}" name="jobno">
     <input type="hidden" value="{{signal}}" name="signal">
     <input type="hidden" name="reject_reason">
-    <input type="button"  class="button_acc" value="Reject" onclick="Reject();"></form>
+    <input type="button"  class="button_acc_r" value="Reject" onclick="Reject();"></form>
             </td>
             {%endfor%}
         </tr>
     </table>
 </div>
     {%endif%}
+
+<input type="hidden" value="{{comp_signal}}" name="comp_signal">
 
 </main>
 
@@ -187,12 +195,21 @@ textarea{
         var reason = window.prompt("반려사유를 입력해주세요.","");
         document.work_job_reject_form.reject_reason.value = reason;
         if (reason != null){
-                alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+                alert("반려메일을 발송 중에 있습니다.\n메일발송 완료창이 나올때까지 잠시만 기다려 주시기 바랍니다.");
                 document.work_job_reject_form.action="work_job_reject";
                 document.work_job_reject_form.submit();
             }
         }
-    </script>
+
+    function init(){
+            var comp_signal= document.getElementsByName('comp_signal')[0].value;
+            if (comp_signal=="Y"){
+                alert("메일발송이 완료되었습니다.");}
+            }
+
+      onload=init
+
+</script>
 
 </body>
 </html>

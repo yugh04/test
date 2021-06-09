@@ -193,15 +193,12 @@ height:2.777778vh;
     {% endfor %}
     </form>
     {%if auth == "Team Manager" %}
+    {%elif auth == "Team Supervisor" %}
     {%elif btn_view == "Y"%}
     <input type="button"  class="button_acc" value="Change" onclick="Change_req();">
     <input type="button"  class="button_acc_r" value="Delete" onclick="Delete_req();">
     {%endif%}
-    {%if auth == "Team Supervisor" %}
-    {%elif btn_view == "Y"%}
-    <input type="button"  class="button_acc" value="Change" onclick="Change_req();">
-    <input type="button"  class="button_acc_r" value="Delete" onclick="Delete_req();">
-    {%endif%}
+
 </div>
 
 <div id="btn_location_2">
@@ -250,23 +247,23 @@ height:2.777778vh;
 
 
 <input type="hidden" value="{{delete_signal}}" name="delete_signal">
+<input type="hidden" value="{{comp_signal}}" name="comp_signal">
 
 </main>
 <script>
 
          function Accept(){
-        var check_again = window.confirm("승인 시 시스템운영팀에게 메일이 자동발송됩니다.","");
+        var check_again = window.confirm("승인 시 시스템운영팀에게 메일이 자동발송됩니다\n메일발송 완료창이 나올때까지 잠시만 기다려 주시기 바랍니다.","");
         if (check_again == true){
             document.work_job_new_accept_form.action="work_job_new_accept";
-            document.work_job_new_accept_form.submit();
-            alert("메일발송이 완료되었습니다.");}
+            document.work_job_new_accept_form.submit();}
         }
 
          function Reject(){
         var reason = window.prompt("반려사유를 입력해주세요.","");
         document.work_job_new_reject_form.reject_reason.value = reason;
         if (reason != null){
-            alert("반려메일을 발송 중에 있습니다.\n잠시만 기다려주시기 바랍니다.");
+            alert("반려메일을 발송 중에 있습니다.\n메일발송 완료창이 나올때까지 잠시만 기다려 주시기 바랍니다.");
             document.work_job_new_reject_form.action="work_job_new_reject";
             document.work_job_new_reject_form.submit();}
         }
@@ -290,8 +287,10 @@ height:2.777778vh;
      function init(){
             var delete_signal= document.getElementsByName('delete_signal')[0].value;
             if (delete_signal=="Y"){
-                alert("수리제작의뢰 삭제가 완료되었습니다.");
-                self.close();}
+                alert("수리제작의뢰 삭제가 완료되었습니다.");}
+            var comp_signal= document.getElementsByName('comp_signal')[0].value;
+            if (comp_signal=="Y"){
+                alert("메일발송이 완료되었습니다.");}
             }
 
       onload=init

@@ -169,6 +169,7 @@ textarea{
 </div>
 {%endif%}
 
+<input type="hidden" value="{{comp_signal}}" name="comp_signal">
 </main>
 
 <script language="javascript">
@@ -178,6 +179,14 @@ textarea{
             document.submit_form.action="work_job_submit";
             document.submit_form.submit();}
      }
+
+     function init(){
+            var comp_signal= document.getElementsByName('comp_signal')[0].value;
+            if (comp_signal=="Y"){
+                alert("메일발송이 완료되었습니다.");}
+            }
+
+      onload=init
 </script>
 </body>
 </html>

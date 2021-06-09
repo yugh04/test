@@ -621,8 +621,9 @@ def work_job_reject(request):
         table_signal_div = "Job No.: " + save_data.job + "가 반려되었습니다."
         msg_signal = "Y"
         view_table = worktable.objects.filter(job=jobno)
+        comp_signal="Y"
         context = {"loginid": loginid, "worklist": worklist, "table_signal": table_signal, "view_table": view_table,
-                   "table_signal_div": table_signal_div,"msg_signal":msg_signal,"signal":signal}
+                   "table_signal_div": table_signal_div,"msg_signal":msg_signal,"signal":signal,"comp_signal":comp_signal}
         context.update(user)
         return render(request, 'work_job_main.html', context)  # templates 내 html연결
 
@@ -696,8 +697,9 @@ def work_job_submit(request):
         table_signal_div = save_data.job + "가 조치완료 되었습니다."
         msg_signal = "Y"
         view_table = worktable.objects.filter(job=jobno)
+        comp_signal="Y"
         context = {"loginid": loginid, "worklist": worklist,"table_signal":table_signal,"view_table":view_table,
-                   "table_signal_div":table_signal_div,"summary":summary,"msg_signal":msg_signal,"signal":signal}
+                   "table_signal_div":table_signal_div,"summary":summary,"msg_signal":msg_signal,"signal":signal,"comp_signal":comp_signal}
         context.update(user)
         return render(request, 'work_job_main.html', context)  # templates 내 html연결
 
@@ -1092,7 +1094,9 @@ def work_job_new_accept(request):
             worklist = worktable.objects.filter(Q(rep=username)&~Q(status="종결")&~Q(status="반려")).order_by('status', '-job')
         table_signal = ""
         view_table = worktable.objects.filter(job=jobno)
-        context = {"loginid": loginid, "worklist": worklist, "table_signal": table_signal, "view_table": view_table,"signal":signal}
+        comp_signal="Y"
+        context = {"loginid": loginid, "worklist": worklist, "table_signal": table_signal, "view_table": view_table,
+                   "signal":signal,"comp_signal":comp_signal}
         context.update(user)
         return render(request, 'work_job_main.html', context)  # templates 내 html연결
 
@@ -1159,7 +1163,9 @@ def work_job_new_reject(request):
             worklist = worktable.objects.filter(Q(rep=username)&~Q(status="종결")&~Q(status="반려")).order_by('status', '-job')
         table_signal = ""
         view_table = worktable.objects.filter(job=jobno)
-        context = {"loginid": loginid, "worklist": worklist, "table_signal": table_signal, "view_table": view_table,"signal":signal}
+        comp_signal = "Y"
+        context = {"loginid": loginid, "worklist": worklist, "table_signal": table_signal, "view_table": view_table,
+                   "signal":signal,"comp_signal":comp_signal}
         context.update(user)
         return render(request, 'work_job_main.html', context)  # templates 내 html연결
 
